@@ -6,7 +6,7 @@ import { Text, View } from "@/components/Themed";
 export default function TabFourScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Four</Text>
+      <Text style={styles.title}>Conquistas</Text>
       <View
         style={styles.separator}
         lightColor="#eee"

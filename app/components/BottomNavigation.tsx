@@ -1,0 +1,76 @@
+// components/BottomNavigation.tsx
+import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation, usePathname } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+export default function BottomNavigation() {
+  const navigation = useNavigation();
+  const pathname = usePathname();
+
+  const navItems = [
+    { id: "home", label: "Início", icon: "home", route: "/" },
+    { id: "stories", label: "Histórias", icon: "book", route: "/stories" },
+    {
+      id: "library",
+      label: "Biblioteca",
+      icon: "book-open",
+      route: "/library",
+    },
+  ];
+
+  return (
+    <View style={styles.container}>
+      {navItems.map((item) => {
+        const isActive = pathname === item.route;
+
+        return (
+          <TouchableOpacity
+            key={item.id}
+            style={[styles.navItem, isActive && styles.activeNavItem]}
+            onPress={() => navigation.navigate(item.route as any)}
+          >
+            <FontAwesome5
+              name={item.icon}
+              size={20}
+              color={isActive ? "#007AFF" : "#8E8E93"}
+            />
+            <Text style={[styles.navLabel, isActive && styles.activeNavLabel]}>
+              {item.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderTopWidth: 1,
+    borderTopColor: "#E5E5E5",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    height: 70,
+  },
+  navItem: {
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  activeNavItem: {
+    // Estilo adicional para item ativo se necessário
+  },
+  navLabel: {
+    fontSize: 12,
+    marginTop: 4,
+    color: "#8E8E93",
+  },
+  activeNavLabel: {
+    color: "#007AFF",
+    fontWeight: "600",
+  },
+});
