@@ -1,6 +1,8 @@
 // app/(tabs)/index.tsx
-import { useRouter } from "expo-router";
+import { useNavigation } from "expo-router";
 import {
+  Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,23 +11,55 @@ import {
 } from "react-native";
 
 export default function HomeScreen() {
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const menuItems = [
-    { id: 1, title: "Desafios", icon: "📜", route: "/(tabs)/challenges" },
-    { id: 2, title: "Histórias", icon: "📖", route: "/(tabs)/stories" },
-    { id: 3, title: "Missões", icon: "🎯", route: "/(tabs)/missions" },
-    { id: 4, title: "Biblioteca", icon: "🏆", route: "/(tabs)/library" },
-    { id: 5, title: "Conquistas", icon: "🆘", route: "/(tabs)/achievements" },
-    { id: 6, title: "SOS", icon: "ℹ️", route: "/(tabs)/sos" },
+    {
+      id: 1,
+      title: "Desafios",
+      image: require("../../assets/images/challenges.png"),
+      route: "challenges", // Apenas o nome da rota
+    },
+    {
+      id: 2,
+      title: "Histórias",
+      image: require("../../assets/images/stories.png"),
+      route: "stories",
+    },
+    {
+      id: 3,
+      title: "Missões",
+      image: require("../../assets/images/missions.png"),
+      route: "missions",
+    },
+    {
+      id: 4,
+      title: "Biblioteca",
+      image: require("../../assets/images/library.png"),
+      route: "library",
+    },
+    {
+      id: 5,
+      title: "Conquistas",
+      image: require("../../assets/images/achievements.png"),
+      route: "achievements",
+    },
+    {
+      id: 6,
+      title: "SOS",
+      image: require("../../assets/images/sos.png"),
+      route: "sos",
+    },
   ];
 
   const navigateTo = (route: string) => {
-    router.push(route as any);
+    navigation.navigate(route as any);
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Bem vindo, Guardião</Text>
+
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.grid}>
           {menuItems.map((item) => (
@@ -33,8 +67,14 @@ export default function HomeScreen() {
               key={item.id}
               style={styles.gridItem}
               onPress={() => navigateTo(item.route)}
+              activeOpacity={0.7}
             >
-              <Text style={styles.icon}>{item.icon}</Text>
+              {/* Usando Image component para as imagens */}
+              <Image
+                source={item.image}
+                style={styles.image}
+                resizeMode="contain"
+              />
               <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
           ))}
@@ -73,19 +113,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    padding: 15,
+    // Sombra compatível
+    ...Platform.select({
+      web: {
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      },
+      default: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+      },
+    }),
   },
-  icon: {
-    fontSize: 40,
+  image: {
+    width: 60, // Tamanho da imagem
+    height: 60,
     marginBottom: 10,
   },
   itemTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
+    textAlign: "center",
   },
 });
