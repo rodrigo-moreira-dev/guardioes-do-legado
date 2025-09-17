@@ -1,16 +1,20 @@
-// components/SplashScreen.js
+// components/SplashScreen.tsx
 import React, { useEffect, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { Animated, ImageSourcePropType, StyleSheet, View } from "react-native";
 
-export const SplashScreen = ({ onFinish }) => {
+interface SplashScreenProps {
+  onFinish: () => void;
+}
+
+export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const fadeAnim = new Animated.Value(0);
 
-  // Imagens da sequência de splash (substitua pelas suas imagens)
-  const splashImages = [
-    require("../../assets/images/broto.png"),
-    require("../../assets/images/Icones_Caminho.png"),
-    require("../../assets/images/Icones_Casa.png"),
+  // Imagens da sequência de splash
+  const splashImages: ImageSourcePropType[] = [
+    require("../../assets/splash/ag_coala800.png"),
+    require("../../assets/splash/env_terri800.png"),
+    require("../../assets/splash/mdhc800.png"),
   ];
 
   useEffect(() => {
