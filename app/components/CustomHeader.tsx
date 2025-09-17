@@ -1,55 +1,61 @@
 // components/CustomHeader.tsx
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation, usePathname } from "expo-router";
+import { useNavigation, usePathname, useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-interface CustomHeaderProps {
-  canGoBack: boolean;
-}
-
-export default function CustomHeader({ canGoBack }: CustomHeaderProps) {
+export default function CustomHeader() {
   const navigation = useNavigation();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const canGoBack = navigation.canGoBack();
 
   // Não mostrar header na tela inicial
-  if (pathname === "/") {
+  if (pathname === "/" || pathname === "/(tabs)") {
     return null;
   }
 
+  const navigateTo = (route: string) => {
+    router.push(route as any);
+  };
+
   const getHeaderTitle = () => {
-    switch (pathname) {
-      case "/challenges":
+    const routeName = pathname.split("/").pop();
+
+    switch (routeName) {
+      case "challenges":
         return "Desafios";
-      case "/stories":
+      case "stories":
         return "Histórias";
-      case "/missions":
+      case "missions":
         return "Missões";
-      case "/library":
+      case "library":
         return "Biblioteca";
-      case "/achievements":
+      case "achievements":
         return "Conquistas";
-      case "/sos":
+      case "sos":
         return "SOS";
       default:
-        return "Voltar";
+        return routeName || "Voltar";
     }
   };
 
   return (
     <View style={styles.header}>
-      {canGoBack && (
+      {!canGoBack ? (
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigateTo("/")}
         >
           <FontAwesome5 name="arrow-left" size={20} color="#007AFF" />
           <Text style={styles.backText}>Voltar</Text>
         </TouchableOpacity>
+      ) : (
+        <View style={styles.placeholder} />
       )}
 
       <Text style={styles.title}>{getHeaderTitle()}</Text>
 
-      {/* Espaço vazio para alinhamento */}
       <View style={styles.placeholder} />
     </View>
   );
@@ -85,6 +91,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-    width: 80, // Largura do botão de voltar para manter alinhamento
+    width: 80,
   },
 });

@@ -1,11 +1,16 @@
 // components/BottomNavigation.tsx
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation, usePathname } from "expo-router";
+import { useNavigation, usePathname, useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function BottomNavigation() {
   const navigation = useNavigation();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const navigateTo = (route: string) => {
+    router.push(route as any);
+  };
 
   const navItems = [
     { id: "home", label: "Início", icon: "home", route: "/" },
@@ -27,7 +32,7 @@ export default function BottomNavigation() {
           <TouchableOpacity
             key={item.id}
             style={[styles.navItem, isActive && styles.activeNavItem]}
-            onPress={() => navigation.navigate(item.route as any)}
+            onPress={() => navigateTo(item.route)}
           >
             <FontAwesome5
               name={item.icon}

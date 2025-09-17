@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import BottomNavigation from "../components/BottomNavigation";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -41,8 +40,6 @@ export default function HomeScreen() {
           ))}
         </View>
       </ScrollView>
-
-      <BottomNavigation />
     </View>
   );
 }

@@ -1,5 +1,5 @@
 // components/RootLayout.tsx
-import { Slot, useNavigation } from "expo-router";
+import { Slot } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import BottomNavigation from "./BottomNavigation";
 import CustomHeader from "./CustomHeader";
@@ -9,13 +9,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const navigation = useNavigation();
-  const canGoBack = navigation.canGoBack();
-
   return (
     <View style={styles.container}>
-      {/* Header personalizado */}
-      <CustomHeader canGoBack={canGoBack} />
+      {/* Header personalizado - agora gerencia canGoBack internamente */}
+      <CustomHeader />
 
       {/* Conteúdo principal */}
       <View style={styles.content}>
@@ -35,6 +32,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginBottom: 70, // Altura da BottomNavigation
+    marginBottom: 70,
   },
 });

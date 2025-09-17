@@ -1,9 +1,14 @@
+// app/_layout.tsx
 import { Stack } from "expo-router";
+import RootLayout from "./components/RootLayout";
 
-export default function RootLayout() {
+export default function AppLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <RootLayout>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        {/* Adicione outras telas se necessário */}
+      </Stack>
+    </RootLayout>
   );
 }
