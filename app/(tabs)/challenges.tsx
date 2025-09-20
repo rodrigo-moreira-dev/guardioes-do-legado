@@ -1,6 +1,7 @@
 // app/(tabs)/challenges.tsx
-import { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Platform,
   ScrollView,
   StyleSheet,
@@ -8,54 +9,112 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
-// Interface para o tipo Challenge
-interface Challenge {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { useChallenges } from "../hooks/useChallenges";
+import { Challenge } from "../types/challenges.type";
 
 export default function ChallengesScreen() {
-  // Estado para gerenciar os desafios
-  const [challenges, setChallenges] = useState<Challenge[]>([
-    { id: 1, title: "Desafio Matemático", completed: true },
-    { id: 2, title: "Quebra-cabeça Lógico", completed: false },
-    { id: 3, title: "Desafio de Memória", completed: false },
-    { id: 4, title: "Teste de Velocidade", completed: true },
-    { id: 5, title: "Desafio Criativo", completed: false },
-  ]);
+  const { challenges, loading, toggleChallenge, unlockNextChallenge } =
+    useChallenges();
 
-  // Função para alternar o estado completed
-  const toggleChallenge = (id: number) => {
-    setChallenges((prevChallenges) =>
-      prevChallenges.map((challenge) =>
-        challenge.id === id
-          ? { ...challenge, completed: !challenge.completed }
-          : challenge
-      )
-    );
+  const handleChallengePress = async (challenge: any) => {
+    if (!challenge.unlocked) {
+      Alert.alert(
+        "Desafio Bloqueado",
+        "Complete os desafios anteriores para desbloquear este."
+      );
+      return;
+    }
+
+    if (!challenge.completed) {
+      Alert.alert(
+        "Completar Desafio",
+        `Deseja marcar "${challenge.title}" como concluído?`,
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Confirmar",
+            onPress: async () => {
+              await toggleChallenge(challenge.id);
+              // Desbloquear próximo desafio após completar
+              unlockNextChallenge();
+              Alert.alert("Parabéns!", "Desafio concluído com sucesso!");
+            },
+          },
+        ]
+      );
+    } else {
+      Alert.alert(
+        "Desmarcar Desafio",
+        `Deseja marcar "${challenge.title}" como não concluído?`,
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Confirmar",
+            onPress: async () => {
+              await toggleChallenge(challenge.id);
+              Alert.alert(
+                "Desafio reaberto",
+                "Agora você pode tentar novamente."
+              );
+            },
+          },
+        ]
+      );
+    }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Desafios</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text>Carregando seus desafios...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Desafios</Text>
+      <Text style={styles.subtitle}>
+        {challenges.filter((c: Challenge) => c.completed).length} de{" "}
+        {challenges.length} concluídos
+      </Text>
+
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {challenges.map((challenge) => (
+        {challenges.map((challenge: Challenge) => (
           <TouchableOpacity
             key={challenge.id}
             style={[
               styles.challengeCard,
               challenge.completed && styles.completedCard,
+              !challenge.unlocked && styles.lockedCard,
             ]}
-            onPress={() => toggleChallenge(challenge.id)} // Adicione o onPress aqui
+            onPress={() => handleChallengePress(challenge)}
+            disabled={!challenge.unlocked}
             activeOpacity={0.7}
           >
             <Text style={styles.challengeTitle}>{challenge.title}</Text>
+            <Text style={styles.challengeDescription}>
+              {challenge.description}
+            </Text>
             <Text style={styles.challengeStatus}>
-              {challenge.completed ? "✅ Concluído" : "🟡 Pendente"}
+              {challenge.completed
+                ? "✅ Concluído"
+                : challenge.unlocked
+                ? "🟡 Disponível"
+                : "🔒 Bloqueado"}
             </Text>
           </TouchableOpacity>
         ))}
@@ -72,24 +131,34 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
     textAlign: "center",
+    marginVertical: 10,
     color: "#333",
-    marginTop: 10, // Espaço para o header
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#666",
+    marginBottom: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     padding: 16,
-    paddingBottom: 80, // Espaço para a bottom navigation
+    paddingBottom: 80,
   },
   challengeCard: {
     backgroundColor: "white",
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    // Estilos de sombra compatíveis
     ...Platform.select({
       web: {
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -108,14 +177,24 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: "#4CAF50",
   },
+  lockedCard: {
+    backgroundColor: "#f5f5f5",
+    opacity: 0.6,
+  },
   challengeTitle: {
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 8,
     color: "#333",
   },
+  challengeDescription: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+  },
   challengeStatus: {
     fontSize: 14,
+    fontWeight: "500",
     color: "#666",
   },
 });
