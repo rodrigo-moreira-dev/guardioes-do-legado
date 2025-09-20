@@ -1,7 +1,9 @@
 // app/(tabs)/challenges.tsx
+import { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -9,66 +11,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useChallenges } from "../hooks/useChallenges";
+import { useProgress } from "../hooks/useProgress";
 import { Challenge } from "../types/challenges.type";
 
 export default function ChallengesScreen() {
-  const { challenges, loading, toggleChallenge, unlockNextChallenge } =
-    useChallenges();
+  const { challenges, loading, completeChallenge, checkAnswer } = useProgress();
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
+    null
+  );
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleChallengePress = async (challenge: any) => {
-    if (!challenge.unlocked) {
-      Alert.alert(
-        "Desafio Bloqueado",
-        "Complete os desafios anteriores para desbloquear este."
-      );
-      return;
-    }
-
-    if (!challenge.completed) {
-      Alert.alert(
-        "Completar Desafio",
-        `Deseja marcar "${challenge.title}" como concluído?`,
-        [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          {
-            text: "Confirmar",
-            onPress: async () => {
-              await toggleChallenge(challenge.id);
-              // Desbloquear próximo desafio após completar
-              unlockNextChallenge();
-              Alert.alert("Parabéns!", "Desafio concluído com sucesso!");
-            },
-          },
-        ]
-      );
-    } else {
-      Alert.alert(
-        "Desmarcar Desafio",
-        `Deseja marcar "${challenge.title}" como não concluído?`,
-        [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          {
-            text: "Confirmar",
-            onPress: async () => {
-              await toggleChallenge(challenge.id);
-              Alert.alert(
-                "Desafio reaberto",
-                "Agora você pode tentar novamente."
-              );
-            },
-          },
-        ]
-      );
-    }
-  };
-
+  // ✅ Verificação de segurança
   if (loading) {
     return (
       <View style={styles.container}>
@@ -81,44 +34,135 @@ export default function ChallengesScreen() {
     );
   }
 
+  // ✅ Verificar se challenges é um array válido
+  if (!challenges || !Array.isArray(challenges)) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Desafios</Text>
+        <View style={styles.errorContainer}>
+          <Text>Erro ao carregar desafios. Tente novamente.</Text>
+        </View>
+      </View>
+    );
+  }
+
+  const handleChallengePress = (challenge: Challenge) => {
+    if (!challenge.unlocked) {
+      Alert.alert(
+        "Desafio Bloqueado",
+        "Complete os desafios anteriores para desbloquear este."
+      );
+      return;
+    }
+
+    if (challenge.completed) {
+      Alert.alert("Desafio Concluído", "Você já completou este desafio!");
+      return;
+    }
+
+    console.log("Desafio selecionado:", challenge);
+    console.log("Opções de resposta:", challenge.answerOptions);
+
+    setSelectedChallenge(challenge);
+    setModalVisible(true);
+  };
+
+  const handleAnswer = async (selectedAnswer: number) => {
+    if (!selectedChallenge) return;
+
+    const isCorrect = checkAnswer(selectedChallenge.id, selectedAnswer);
+
+    if (isCorrect) {
+      await completeChallenge(selectedChallenge.id, true);
+      Alert.alert("Parabéns!", "Resposta correta! História desbloqueada.");
+    } else {
+      Alert.alert("Tente Novamente", "Resposta incorreta. Tente novamente!");
+    }
+
+    setModalVisible(false);
+  };
+
+  // ✅ Calcular progresso com verificação
+  const completedCount = challenges.filter((c) => c.completed).length;
+  const totalCount = challenges.length;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Desafios</Text>
       <Text style={styles.subtitle}>
-        {challenges.filter((c: Challenge) => c.completed).length} de{" "}
-        {challenges.length} concluídos
+        {completedCount} de {totalCount} concluídos
       </Text>
 
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {challenges.map((challenge: Challenge) => (
-          <TouchableOpacity
-            key={challenge.id}
-            style={[
-              styles.challengeCard,
-              challenge.completed && styles.completedCard,
-              !challenge.unlocked && styles.lockedCard,
-            ]}
-            onPress={() => handleChallengePress(challenge)}
-            disabled={!challenge.unlocked}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.challengeTitle}>{challenge.title}</Text>
-            <Text style={styles.challengeDescription}>
-              {challenge.description}
-            </Text>
-            <Text style={styles.challengeStatus}>
-              {challenge.completed
-                ? "✅ Concluído"
-                : challenge.unlocked
-                ? "🟡 Disponível"
-                : "🔒 Bloqueado"}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        {/* ✅ Verificação adicional antes do map */}
+        {challenges.length === 0 ? (
+          <Text style={styles.emptyText}>Nenhum desafio disponível</Text>
+        ) : (
+          challenges.map((challenge) => (
+            <TouchableOpacity
+              key={challenge.id}
+              style={[
+                styles.challengeCard,
+                challenge.completed && styles.completedCard,
+                !challenge.unlocked && styles.lockedCard,
+              ]}
+              onPress={() => handleChallengePress(challenge)}
+              disabled={!challenge.unlocked}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.challengeTitle}>{challenge.title}</Text>
+              <Text style={styles.challengeDescription}>
+                {challenge.description}
+              </Text>
+              <Text style={styles.challengeStatus}>
+                {challenge.completed
+                  ? "✅ Concluído"
+                  : challenge.unlocked
+                  ? "🟡 Disponível"
+                  : "🔒 Bloqueado"}
+              </Text>
+            </TouchableOpacity>
+          ))
+        )}
       </ScrollView>
+
+      {/* Modal do Quiz */}
+      <Modal visible={modalVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedChallenge && (
+              <>
+                <Text style={styles.modalTitle}>{selectedChallenge.title}</Text>
+                <Text style={styles.questionText}>
+                  {selectedChallenge.questionText}
+                </Text>
+
+                {/* ✅ Verificar se answerOptions existe */}
+                {selectedChallenge.answerOptions &&
+                  selectedChallenge.answerOptions.map((option, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.optionButton}
+                      onPress={() => handleAnswer(index)}
+                    >
+                      <Text style={styles.optionText}>{option}</Text>
+                    </TouchableOpacity>
+                  ))}
+
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Fechar</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -147,6 +191,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    textAlign: "center",
+    color: "#666",
+    fontSize: 16,
+    marginTop: 50,
+  },
   scrollView: {
     flex: 1,
   },
@@ -160,9 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     ...Platform.select({
-      web: {
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      },
+      web: { boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" },
       default: {
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -196,5 +249,50 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     color: "#666",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 12,
+    width: "90%",
+    maxHeight: "80%",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  questionText: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  optionButton: {
+    backgroundColor: "#f0f0f0",
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  optionText: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  closeButton: {
+    marginTop: 20,
+    padding: 12,
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
