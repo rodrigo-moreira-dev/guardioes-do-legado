@@ -37,10 +37,10 @@ export interface Story {
   sections: StorySection[]; // Conteúdo detalhado com textos e imagens
 }
 
-export const DEFAULT_CHALLENGES: Challenge[] = [
+export const DEFAULT_CHALLENGES: Array<Challenge> = [
   {
     id: "1",
-    title: "Desafio Matemático",
+    title: "Desafio Exemplo",
     description: "Resolva problemas matemáticos básicos",
     questionText: "Quanto é 8 + 5?",
     answerOptions: ["12", "13", "14", "15"],
@@ -50,21 +50,175 @@ export const DEFAULT_CHALLENGES: Challenge[] = [
   },
   {
     id: "2",
-    title: "Quebra-cabeça Lógico",
-    description: "Use sua lógica para resolver enigmas",
+    title: "Venda indevida de bens do idoso - Sr. João",
+    description:
+      "Sr. João confiou ao neto a administração dos seus documentos e cartões, após uma cirurgia. Com o tempo, percebeu que parte dos seus bens havia sido vendida sem seu consentimento. A justificativa do neto? “Era melhor resolver logo isso antes que ele esquecesse”.",
     questionText:
-      "Se todos os homens são mortais e Sócrates é um homem, então:",
+      "Diante da situação vivida por Sr. João, qual é a análise mais adequada sobre os direitos da pessoa idosa?",
     answerOptions: [
-      "Sócrates é imortal",
-      "Sócrates é mortal",
-      "Sócrates não existe",
-      "Nenhuma das alternativas",
+      "Ser cuidador da pessoa idosa dá automaticamente o direito de gerenciar e vender seus bens.",
+      "Vender bens de familiares idosos pode ser aceitável se for feito com boas intenções e pensando no futuro.",
+      "Como Sr. João estava debilitado, o neto podia tomar decisões em seu nome, mesmo sem autorização formal.",
+      "O neto agiu de forma ilegal, desrespeitando o direito à autonomia e ao patrimônio da pessoa idosa.",
+    ],
+    correctAnswer: 3,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "3",
+    title: "Agressão verbal e isolamento - Dona Lúcia",
+    description:
+      "Dona Lúcia mora com a filha e o genro, mas quase não sai do quarto. A família diz que é por segurança, mas vizinhos escutam gritos e ofensas vindas da casa. Quando perguntada, Dona Lúcia apenas sorri e responde: “Eles só estão estressados”.",
+    questionText:
+      "Ao analisar o caso de Dona Lúcia, o que pode estar acontecendo e qual deve ser a postura correta diante dessa situação?",
+    answerOptions: [
+      "Como é uma situação familiar, não cabe a ninguém interferir, já que cada família lida à sua maneira com o cuidado da pessoa idosa.",
+      "É normal que pessoas idosas fiquem mais reclusas e sensíveis; o isolamento pode ser apenas uma escolha pessoal.",
+      "Dona Lúcia pode estar sofrendo violência psicológica e isolamento social, formas de violência contra a pessoa idosa previstas em lei.",
+      "Se Dona Lúcia não denuncia, é porque provavelmente não vê problema na forma como está sendo tratada",
+    ],
+    correctAnswer: 2,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "4",
+    title: "Abrigo negligente - Abrigo São José",
+    description:
+      "No Abrigo São José, o atendimento aos idosos é marcado por atrasos, má alimentação e ausência de cuidados médicos. Os funcionários justificam: “São muitos e todos já estão no fim da vida mesmo. Não dá pra fazer milagre.”",
+    questionText:
+      "Diante da realidade do Abrigo São José, como esse tipo de conduta deve ser interpretado à luz dos direitos da pessoa idosa?",
+    answerOptions: [
+      "O abrigo está praticando negligência institucional, violando os direitos básicos da pessoa idosa previstos no Estatuto do Idoso.",
+      "Como o abrigo possui muitos residentes, é natural que alguns cuidados sejam menos rigorosos do que em casa.",
+      "A sobrecarga de trabalho justifica parcialmente a precariedade no atendimento, desde que haja boas intenções.",
+      "Em instituições com poucos recursos, é aceitável oferecer apenas o básico, mesmo que falte acompanhamento médico.",
+    ],
+    correctAnswer: 0,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "5",
+    title: "Família negligente - Dona Tereza",
+    description:
+      "Dona Tereza passou a viver com os sobrinhos após a morte do marido. Com o tempo, foi deixada sozinha por longos períodos, sem acompanhamento ou afeto. Mesmo lúcida, ouve com frequência: “Não dá pra ficar o tempo todo cuidando de velho”.",
+    questionText:
+      "O que a situação vivida por Dona Tereza revela e como ela deve ser encarada do ponto de vista dos direitos da pessoa idosa?",
+    answerOptions: [
+      "Como os sobrinhos já acolheram Dona Tereza em casa, eles não têm obrigação de atenção constante ou afeto.",
+      "O caso representa negligência e abandono familiar, configurando uma forma de violência contra a pessoa idosa prevista em lei.",
+      "É comum que idosos viúvos fiquem mais solitários, o que pode justificar sua reclusão.",
+      "O cuidado emocional não é uma responsabilidade da família, desde que as necessidades básicas estejam sendo atendidas.",
     ],
     correctAnswer: 1,
     completed: false,
     unlocked: false,
   },
-  // Adicione mais 8 desafios...
+  {
+    id: "6",
+    title: "Empréstimos indevidos - Sr. Antônio",
+    description:
+      "Sr. Antônio é aposentado e ajuda com as contas de casa. Um dia, descobriu que haviam feito vários empréstimos em seu nome. Quando tentou reclamar, a resposta foi: “Você não usa mesmo esse dinheiro. Estamos só adiantando.”",
+    questionText:
+      "O que podemos identificar na situação vivida por Sr. Antônio e qual deve ser a conduta correta nesse tipo de caso?",
+    answerOptions: [
+      "Caso a pessoa idosa não perceba de imediato, não há problema em usar o dinheiro para “adiantar” necessidades da casa",
+      "Quando o idoso já tem quem cuide dele, é normal que os familiares também administrem sua aposentadoria.",
+      "Se o idoso mora com a família, é natural que parte da sua renda seja usada para ajudar nas despesas, mesmo sem avisá-lo.",
+      "Fazer empréstimos em nome da pessoa idosa sem consentimento é crime e configura abuso financeiro.",
+    ],
+    correctAnswer: 3,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "7",
+    title: "Idosa sobrecarregada e explorada - Dona Maria",
+    description:
+      "Dona Maria cuida dos netos, cozinha, limpa a casa e ainda faz pequenos bicos para completar a renda. Apesar da idade avançada e de dores constantes, escuta da filha: “Você só fica em casa, não tem com o que se preocupar”.",
+    questionText:
+      "Como podemos interpretar a situação de Dona Maria à luz dos direitos da pessoa idosa?",
+    answerOptions: [
+      "Dona Maria está sendo explorada pela família, com excesso de tarefas e ausência de reconhecimento, o que pode configurar violência.",
+      "Por estar em casa, é natural que Dona Maria assuma todas as tarefas do lar, independentemente da idade.",
+      "A ajuda de avós na criação dos netos é tradicional na cultura brasileira e não deve ser vista como exploração.",
+      "Se ela faz pequenos bicos, é sinal de que está ativa e feliz com a rotina, o que invalida a ideia de abuso.",
+    ],
+    correctAnswer: 0,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "8",
+    title: "Discriminação no mercado de trabalho - Srta. Irene",
+    description:
+      "Srta. Irene é uma profissional com mais de 30 anos de experiência. Mesmo com excelente currículo, já ouviu em entrevistas: “Estamos buscando alguém mais moderno, com energia de jovem”. A vaga foi dada a uma pessoa com metade da idade e menos qualificação.",
+    questionText:
+      "O que esse episódio revela sobre o ambiente profissional e os direitos das pessoas com mais idade?",
+    answerOptions: [
+      "O mercado de trabalho valoriza juventude e inovação, por isso é natural preferir candidatos mais novos.",
+      "A escolha por alguém mais jovem é estratégica, pois pessoas com mais idade tendem a ter mais dificuldades com tecnologia.",
+      "Pessoas com muita experiência podem se tornar inflexíveis, então é razoável a empresa evitar esse tipo de contratação",
+      "Nenhuma das alternativas",
+    ],
+    correctAnswer: 3,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "9",
+    title: "Negação de autonomia - Sr. Sebastião",
+    description:
+      "Sr. Sebastião sempre foi independente, mas após uma queda leve, passou a ter todas as suas decisões questionadas. Quer sair sozinho? “Não pode mais”. Quer participar das finanças da casa? “Melhor deixar com os filhos”. Ele sente que perdeu o direito de escolher.",
+    questionText:
+      "O que a situação de Sr. Sebastião demonstra e como ela deve ser tratada em relação aos direitos da pessoa idosa?",
+    answerOptions: [
+      "Após uma queda, é prudente que a família assuma o controle de todas as decisões, mesmo que temporariamente.",
+      "Negar a autonomia de uma pessoa idosa lúcida é uma forma de violência sutil, conhecida como infantilização ou tutela indevida",
+      "Quando a pessoa idosa envelhece, é normal que seus familiares passem a decidir o que é melhor para ela.",
+      "Se a família tem boas intenções, não há problema em limitar a liberdade da pessoa idosa para protegê-la.",
+    ],
+    correctAnswer: 1,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "10",
+    title: "Violência institucional em hospital - Dona Elza",
+    description:
+      "Dona Elza chegou ao hospital com dores fortes. A médica, sem sequer examiná-la, disse: “Isso é normal para sua idade. Vá pra casa e descanse.” Nenhum exame foi pedido. Ela voltou pra casa sem diagnóstico e com a dor cada vez mais forte.",
+    questionText:
+      "Como essa situação deve ser compreendida à luz dos direitos da pessoa idosa no atendimento à saúde?",
+    answerOptions: [
+      "É compreensível que profissionais da saúde priorizem pacientes mais jovens, que têm mais chances de recuperação.",
+      "A fala da médica foi apenas um mal-entendido e não configura nenhuma forma de violência.",
+      "Dona Elza foi vítima de violência institucional, caracterizada pela negligência e pelo preconceito etário no atendimento médico.",
+      "O corpo envelhecido sente mais dores mesmo, então nem sempre é necessário investigar com exames.",
+    ],
+    correctAnswer: 2,
+    completed: false,
+    unlocked: false,
+  },
+  {
+    id: "11",
+    title:
+      "Relacionamentos e afetos entre pessoas idosas - Sr. Benedito e Dona Nair",
+    description:
+      "Benedito e Nair se reencontraram em um curso de dança e começaram a namorar. Os netos riram: “Namorar com essa idade? Que vergonha!” O casal se sentiu ridicularizado por querer viver algo bonito e verdadeiro, apenas por estarem em uma fase mais avançada da vida.",
+    questionText:
+      "Como essa situação deve ser compreendida do ponto de vista do respeito à afetividade das pessoas idosas?",
+    answerOptions: [
+      "Pessoas idosas têm o direito de viver relacionamentos afetivos e amorosos com dignidade e sem julgamentos.",
+      "Demonstrar afeto nessa idade pode gerar desconforto na família, então é melhor manter a discrição.",
+      "Embora pareça estranho no início, os netos têm razão em se preocupar com a imagem dos avós.",
+      "É compreensível que a sociedade estranhe esse tipo de comportamento, mas o casal deve saber lidar com isso.",
+    ],
+    correctAnswer: 1,
+    completed: false,
+    unlocked: false,
+  }, // Adicione mais 8 desafios...
 ];
 
 export const DEFAULT_STORIES: Story[] = [
@@ -80,7 +234,7 @@ export const DEFAULT_STORIES: Story[] = [
       {
         type: "text",
         content:
-          "Em uma terra distante, onde a magia ainda florescia, um jovem aventureiro recebia sua primeira missão.",
+          "Na noite estrelada, a lua iluminava uma planície de nuvens com seu belo brilho prateado. Flutuando alto no céu, o mago Alonso brincava com as antigas nuvens, tão fofas como algodão, elas arremessavam o mago para cima como se fosse um trampolim. Em meio à brincadeira, o mago pensa avistar algo pequeno e voando até lá ele percebe que é uma semente de girassol. Ele já estava deveras feliz, mas um sorriso ainda maior cresce em seu rosto e então diz:",
         style: {
           fontSize: 18,
           fontWeight: "bold",
