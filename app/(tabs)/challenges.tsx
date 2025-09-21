@@ -21,6 +21,10 @@ export default function ChallengesScreen() {
   );
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Adicionando logs para depuração
+  console.log("ChallengesScreen - challenges:", challenges);
+  console.log("ChallengesScreen - loading:", loading);
+
   if (loading) {
     return (
       <View style={styles.container}>
@@ -45,6 +49,7 @@ export default function ChallengesScreen() {
   }
 
   const handleChallengePress = (challenge: Challenge) => {
+    console.log(`Clicou no desafio ${challenge.id}`);
     if (!challenge.unlocked) {
       Alert.alert(
         "Desafio Bloqueado",
@@ -58,6 +63,9 @@ export default function ChallengesScreen() {
       return;
     }
 
+    console.log("Desafio selecionado:", challenge);
+    console.log("Opções de resposta:", challenge.answerOptions);
+
     setSelectedChallenge(challenge);
     setModalVisible(true);
   };
@@ -65,9 +73,14 @@ export default function ChallengesScreen() {
   const handleAnswer = async (selectedAnswer: number) => {
     if (!selectedChallenge) return;
 
+    console.log(
+      `Resposta selecionada: ${selectedAnswer} para o desafio ${selectedChallenge.id}`
+    );
     const isCorrect = checkAnswer(selectedChallenge.id, selectedAnswer);
+    console.log(`Resposta correta? ${isCorrect}`);
 
     if (isCorrect) {
+      console.log(`Completando desafio ${selectedChallenge.id}`);
       await completeChallenge(selectedChallenge.id, true);
       Alert.alert("Parabéns!", "Resposta correta! História desbloqueada.");
     } else {
@@ -122,7 +135,6 @@ export default function ChallengesScreen() {
         )}
       </ScrollView>
 
-      {/* Modal do Quiz */}
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>

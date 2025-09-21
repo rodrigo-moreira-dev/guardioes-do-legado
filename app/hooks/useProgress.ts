@@ -1,16 +1,11 @@
 // hooks/useProgress.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import {
-  Challenge,
-  DEFAULT_CHALLENGES,
-  DEFAULT_STORIES,
-  Story,
-} from "../types/challenges.type";
+import { Challenge, DEFAULT_CHALLENGES } from "../types/challenges.type";
+import { useStories } from "./useStories";
 
 interface UseProgressReturn {
   challenges: Challenge[];
-  stories: Story[];
   loading: boolean;
   completeChallenge: (challengeId: string, isCorrect: boolean) => Promise<void>;
   resetProgress: () => Promise<void>;
@@ -19,8 +14,8 @@ interface UseProgressReturn {
 
 export const useProgress = (): UseProgressReturn => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
+  const { unlockStory } = useStories();
 
   useEffect(() => {
     loadData();
@@ -28,14 +23,7 @@ export const useProgress = (): UseProgressReturn => {
 
   const loadData = async () => {
     try {
-      console.log("Carregando dados...");
-      const [savedChallenges, savedStories] = await Promise.all([
-        AsyncStorage.getItem("challenges"),
-        AsyncStorage.getItem("stories"),
-      ]);
-
-      console.log("Dados salvos - Desafios:", savedChallenges);
-      console.log("Dados salvos - Histórias:", savedStories);
+      const savedChallenges = await AsyncStorage.getItem("challenges");
 
       if (savedChallenges) {
         const parsedChallenges = JSON.parse(savedChallenges);
@@ -51,22 +39,9 @@ export const useProgress = (): UseProgressReturn => {
           JSON.stringify(DEFAULT_CHALLENGES)
         );
       }
-
-      if (savedStories) {
-        const parsedStories = JSON.parse(savedStories);
-        console.log("Histórias parseadas:", parsedStories);
-        setStories(
-          Array.isArray(parsedStories) ? parsedStories : DEFAULT_STORIES
-        );
-      } else {
-        console.log("Usando histórias padrão:", DEFAULT_STORIES);
-        setStories(DEFAULT_STORIES);
-        await AsyncStorage.setItem("stories", JSON.stringify(DEFAULT_STORIES));
-      }
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
       setChallenges(DEFAULT_CHALLENGES);
-      setStories(DEFAULT_STORIES);
     } finally {
       setLoading(false);
     }
@@ -107,10 +82,6 @@ export const useProgress = (): UseProgressReturn => {
           : challenge
       );
 
-      const updatedStories = stories.map((story) =>
-        story.challengeId === challengeId ? { ...story, unlocked: true } : story
-      );
-
       // Desbloquear próximo desafio
       const nextChallengeIndex = updatedChallenges.findIndex(
         (challenge) => !challenge.unlocked && !challenge.completed
@@ -124,12 +95,31 @@ export const useProgress = (): UseProgressReturn => {
       }
 
       setChallenges(updatedChallenges);
-      setStories(updatedStories);
 
-      await Promise.all([
-        AsyncStorage.setItem("challenges", JSON.stringify(updatedChallenges)),
-        AsyncStorage.setItem("stories", JSON.stringify(updatedStories)),
-      ]);
+      // Persistir no AsyncStorage
+      await AsyncStorage.setItem(
+        "challenges",
+        JSON.stringify(updatedChallenges)
+      );
+
+      // Desbloquear a história correspondente ao desafio
+      const storyId = parseInt(challengeId);
+      console.log(
+        `Desbloqueando história ${storyId} após completar desafio ${challengeId}`
+      );
+      await unlockStory(storyId);
+
+      // Desbloquear a próxima história se existir
+      if (storyId < 10) {
+        console.log(`Desbloqueando próxima história ${storyId + 1}`);
+        await unlockStory(storyId + 1);
+      }
+
+      // Garantir que todas as histórias anteriores estejam desbloqueadas
+      for (let i = 1; i < storyId; i++) {
+        console.log(`Garantindo que história ${i} está desbloqueada`);
+        await unlockStory(i);
+      }
     } catch (error) {
       console.error("Erro ao completar desafio:", error);
     }
@@ -138,12 +128,10 @@ export const useProgress = (): UseProgressReturn => {
   const resetProgress = async (): Promise<void> => {
     try {
       setChallenges(DEFAULT_CHALLENGES);
-      setStories(DEFAULT_STORIES);
-
-      await Promise.all([
-        AsyncStorage.setItem("challenges", JSON.stringify(DEFAULT_CHALLENGES)),
-        AsyncStorage.setItem("stories", JSON.stringify(DEFAULT_STORIES)),
-      ]);
+      await AsyncStorage.setItem(
+        "challenges",
+        JSON.stringify(DEFAULT_CHALLENGES)
+      );
     } catch (error) {
       console.error("Erro ao resetar progresso:", error);
     }
@@ -151,7 +139,6 @@ export const useProgress = (): UseProgressReturn => {
 
   return {
     challenges,
-    stories,
     loading,
     completeChallenge,
     resetProgress,
