@@ -22,15 +22,26 @@ import { Story8 } from "./storiesComponents/Story8";
 import { Story9 } from "./storiesComponents/Story9";
 
 export default function StoriesScreen() {
-  const { storiesState, loading, setStoryStep, completeStory } = useStories();
+  const {
+    storiesState,
+    loading,
+    setStoryStep,
+    completeStory,
+    refreshTrigger,
+    refreshStoriesState,
+  } = useStories();
   const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [localStoriesState, setLocalStoriesState] = useState<any[]>([]);
 
-  // Adicionando logs para depuração
   useEffect(() => {
     console.log("StoriesScreen - storiesState:", storiesState);
     console.log("StoriesScreen - loading:", loading);
-  }, [storiesState, loading]);
+    console.log("StoriesScreen - refreshTrigger:", refreshTrigger);
+
+    // Atualizar o estado local quando o estado global mudar
+    setLocalStoriesState(storiesState);
+  }, [storiesState, loading, refreshTrigger]);
 
   if (loading) {
     return (
@@ -44,11 +55,23 @@ export default function StoriesScreen() {
     );
   }
 
-  const unlockedStories = storiesState.filter((story) => story.unlocked);
+  // Ordenar histórias pelo ID
+  const sortedStories = [...localStoriesState].sort((a, b) => a.id - b.id);
+  const unlockedStories = sortedStories.filter((story) => story.unlocked);
+
+  console.log("Todas as histórias ordenadas:", sortedStories);
   console.log("Histórias desbloqueadas:", unlockedStories);
 
   const handleStoryPress = (storyId: number) => {
     console.log(`Clicou na história ${storyId}`);
+
+    // Verificar se a história está desbloqueada antes de abrir
+    const story = localStoriesState.find((s) => s.id === storyId);
+    if (!story || !story.unlocked) {
+      console.log(`História ${storyId} está bloqueada`);
+      return;
+    }
+
     setSelectedStoryId(storyId);
     setModalVisible(true);
   };
@@ -76,7 +99,7 @@ export default function StoriesScreen() {
   const renderStoryComponent = () => {
     if (selectedStoryId === null) return null;
 
-    const storyState = storiesState.find(
+    const storyState = localStoriesState.find(
       (story) => story.id === selectedStoryId
     );
     if (!storyState) return null;
@@ -171,44 +194,91 @@ export default function StoriesScreen() {
     }
   };
 
+  // Função para determinar o estilo do cartão baseado no estado da história
+  const getStoryCardStyle = (story: any) => {
+    if (!story.unlocked) {
+      return styles.lockedCard;
+    }
+    if (story.completed) {
+      return styles.completedCard;
+    }
+    return styles.unlockedCard;
+  };
+
+  // Função para determinar o estilo do número baseado no estado da história
+  const getStoryNumberStyle = (story: any) => {
+    if (!story.unlocked) {
+      return styles.lockedNumber;
+    }
+    if (story.completed) {
+      return styles.completedNumber;
+    }
+    return styles.unlockedNumber;
+  };
+
+  // Função para determinar o texto de status baseado no estado da história
+  const getStoryStatusText = (story: any) => {
+    if (!story.unlocked) {
+      return "🔒 Bloqueada";
+    }
+    if (story.completed) {
+      return "✅ Concluída";
+    }
+    return "📖 Não lida";
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Histórias Desbloqueadas</Text>
-      <Text style={styles.subtitle}>
-        {unlockedStories.length} de {storiesState.length} histórias
-      </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Todas as Histórias</Text>
+        <Text style={styles.subtitle}>
+          {unlockedStories.length} de {localStoriesState.length} desbloqueadas
+        </Text>
+        <TouchableOpacity
+          style={styles.refreshButton}
+          onPress={refreshStoriesState}
+        >
+          <Text style={styles.refreshButtonText}>Atualizar</Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {unlockedStories.length === 0 ? (
-          <Text style={styles.emptyText}>
-            Complete desafios para desbloquear histórias!
-          </Text>
-        ) : (
-          unlockedStories.map((story) => (
-            <TouchableOpacity
-              key={story.id}
-              style={[
-                styles.storyCard,
-                story.completed && styles.completedCard,
-              ]}
-              onPress={() => handleStoryPress(story.id)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.storyHeader}>
-                <View style={styles.storyNumberContainer}>
-                  <Text style={styles.storyNumber}>{story.id}</Text>
-                </View>
-                <Text style={styles.storyTitle}>História {story.id}</Text>
+        {sortedStories.map((story) => (
+          <TouchableOpacity
+            key={story.id}
+            style={[styles.storyCard, getStoryCardStyle(story)]}
+            onPress={() => handleStoryPress(story.id)}
+            disabled={!story.unlocked}
+            activeOpacity={story.unlocked ? 0.7 : 1}
+          >
+            <View style={styles.storyHeader}>
+              <View
+                style={[
+                  styles.storyNumberContainer,
+                  getStoryNumberStyle(story),
+                ]}
+              >
+                <Text style={styles.storyNumber}>{story.id}</Text>
               </View>
-              <Text style={styles.storyStatus}>
-                {story.completed ? "✅ Concluída" : "📖 Não lida"}
+              <Text
+                style={[
+                  styles.storyTitle,
+                  !story.unlocked && styles.lockedText,
+                ]}
+              >
+                História {story.id}
               </Text>
-            </TouchableOpacity>
-          ))
-        )}
+            </View>
+            <Text
+              style={[styles.storyStatus, !story.unlocked && styles.lockedText]}
+            >
+              {getStoryStatusText(story)}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
 
       <Modal
@@ -228,6 +298,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
+  headerContainer: {
+    padding: 16,
+    alignItems: "center",
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -239,7 +313,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: "#666",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  refreshButton: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginTop: 5,
+  },
+  refreshButtonText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
   },
   loadingContainer: {
     flex: 1,
@@ -265,10 +351,21 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  unlockedCard: {
+    backgroundColor: "white",
+    borderLeftWidth: 4,
+    borderLeftColor: "#007AFF",
+  },
   completedCard: {
     backgroundColor: "#f0f9f0",
     borderLeftWidth: 4,
     borderLeftColor: "#4CAF50",
+  },
+  lockedCard: {
+    backgroundColor: "#f5f5f5",
+    opacity: 0.7,
+    borderLeftWidth: 4,
+    borderLeftColor: "#ccc",
   },
   storyHeader: {
     flexDirection: "row",
@@ -279,10 +376,18 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: "#007AFF",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
+  },
+  unlockedNumber: {
+    backgroundColor: "#007AFF",
+  },
+  completedNumber: {
+    backgroundColor: "#4CAF50",
+  },
+  lockedNumber: {
+    backgroundColor: "#ccc",
   },
   storyNumber: {
     color: "white",
@@ -299,10 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
   },
-  emptyText: {
-    textAlign: "center",
-    color: "#666",
-    fontSize: 16,
-    marginTop: 50,
+  lockedText: {
+    color: "#999",
   },
 });

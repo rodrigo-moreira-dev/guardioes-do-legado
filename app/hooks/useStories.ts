@@ -8,6 +8,7 @@ const STORIES_STORAGE_KEY = "@stories_state";
 export const useStories = () => {
   const [storiesState, setStoriesState] = useState<StoryState[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // Adicionado para forçar atualizações
 
   useEffect(() => {
     loadStoriesState();
@@ -83,6 +84,9 @@ export const useStories = () => {
         STORIES_STORAGE_KEY,
         JSON.stringify(updatedState)
       );
+
+      // Forçar uma atualização
+      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Erro ao atualizar estado da história:", error);
     }
@@ -110,35 +114,24 @@ export const useStories = () => {
       STORIES_STORAGE_KEY,
       JSON.stringify(DEFAULT_STORIES_STATE)
     );
+    setRefreshTrigger((prev) => prev + 1);
   };
 
-  // Função para corrigir o estado das histórias
-  const fixStoriesState = async () => {
-    console.log("Corrigindo estado das histórias");
-
-    // Garantir que todas as histórias de 1 a 10 existam
-    let fixedState = [...DEFAULT_STORIES_STATE];
-
-    // Manter os valores personalizados do estado atual
-    storiesState.forEach((story) => {
-      const index = fixedState.findIndex((s) => s.id === story.id);
-      if (index !== -1) {
-        fixedState[index] = { ...fixedState[index], ...story };
-      }
-    });
-
-    console.log("Estado corrigido:", fixedState);
-    setStoriesState(fixedState);
-    await AsyncStorage.setItem(STORIES_STORAGE_KEY, JSON.stringify(fixedState));
+  // Função para recarregar o estado manualmente
+  const refreshStoriesState = async () => {
+    console.log("Recarregando estado das histórias");
+    await loadStoriesState();
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   return {
     storiesState,
     loading,
+    refreshTrigger, // Expondo o trigger
     unlockStory,
     completeStory,
     setStoryStep,
     resetStoriesState,
-    fixStoriesState,
+    refreshStoriesState,
   };
 };

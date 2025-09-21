@@ -15,6 +15,7 @@ interface UseProgressReturn {
 export const useProgress = (): UseProgressReturn => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // Adicionado para forçar atualizações
   const { unlockStory } = useStories();
 
   useEffect(() => {
@@ -76,6 +77,8 @@ export const useProgress = (): UseProgressReturn => {
     if (!isCorrect) return;
 
     try {
+      console.log(`Completando desafio ${challengeId}`);
+
       const updatedChallenges = challenges.map((challenge) =>
         challenge.id === challengeId
           ? { ...challenge, completed: true }
@@ -120,6 +123,11 @@ export const useProgress = (): UseProgressReturn => {
         console.log(`Garantindo que história ${i} está desbloqueada`);
         await unlockStory(i);
       }
+
+      // Forçar uma atualização
+      setRefreshTrigger((prev) => prev + 1);
+
+      console.log("Desafio e histórias atualizados com sucesso");
     } catch (error) {
       console.error("Erro ao completar desafio:", error);
     }
@@ -132,6 +140,7 @@ export const useProgress = (): UseProgressReturn => {
         "challenges",
         JSON.stringify(DEFAULT_CHALLENGES)
       );
+      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Erro ao resetar progresso:", error);
     }
