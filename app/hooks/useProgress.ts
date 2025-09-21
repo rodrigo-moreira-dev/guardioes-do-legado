@@ -17,24 +17,25 @@ interface UseProgressReturn {
   checkAnswer: (challengeId: string, selectedAnswer: number) => boolean;
 }
 
-// hooks/useProgress.ts
-// hooks/useProgress.ts
 export const useProgress = (): UseProgressReturn => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Carregar dados do AsyncStorage
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
     try {
+      console.log("Carregando dados...");
       const [savedChallenges, savedStories] = await Promise.all([
         AsyncStorage.getItem("challenges"),
         AsyncStorage.getItem("stories"),
       ]);
+
+      console.log("Dados salvos - Desafios:", savedChallenges);
+      console.log("Dados salvos - Histórias:", savedStories);
 
       if (savedChallenges) {
         const parsedChallenges = JSON.parse(savedChallenges);
@@ -53,10 +54,12 @@ export const useProgress = (): UseProgressReturn => {
 
       if (savedStories) {
         const parsedStories = JSON.parse(savedStories);
+        console.log("Histórias parseadas:", parsedStories);
         setStories(
           Array.isArray(parsedStories) ? parsedStories : DEFAULT_STORIES
         );
       } else {
+        console.log("Usando histórias padrão:", DEFAULT_STORIES);
         setStories(DEFAULT_STORIES);
         await AsyncStorage.setItem("stories", JSON.stringify(DEFAULT_STORIES));
       }
@@ -69,7 +72,6 @@ export const useProgress = (): UseProgressReturn => {
     }
   };
 
-  // Verificar resposta
   const checkAnswer = (
     challengeId: string,
     selectedAnswer: number
@@ -92,7 +94,6 @@ export const useProgress = (): UseProgressReturn => {
     return selectedAnswer === challenge.correctAnswer;
   };
 
-  // Completar desafio e desbloquear história
   const completeChallenge = async (
     challengeId: string,
     isCorrect: boolean
@@ -125,7 +126,6 @@ export const useProgress = (): UseProgressReturn => {
       setChallenges(updatedChallenges);
       setStories(updatedStories);
 
-      // Persistir no AsyncStorage
       await Promise.all([
         AsyncStorage.setItem("challenges", JSON.stringify(updatedChallenges)),
         AsyncStorage.setItem("stories", JSON.stringify(updatedStories)),
@@ -135,7 +135,6 @@ export const useProgress = (): UseProgressReturn => {
     }
   };
 
-  // Resetar progresso
   const resetProgress = async (): Promise<void> => {
     try {
       setChallenges(DEFAULT_CHALLENGES);
@@ -150,7 +149,6 @@ export const useProgress = (): UseProgressReturn => {
     }
   };
 
-  // ✅ Retorne todos os valores obrigatórios da interface
   return {
     challenges,
     stories,

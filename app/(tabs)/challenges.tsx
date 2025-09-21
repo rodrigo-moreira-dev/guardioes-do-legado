@@ -21,7 +21,6 @@ export default function ChallengesScreen() {
   );
   const [modalVisible, setModalVisible] = useState(false);
 
-  // ✅ Verificação de segurança
   if (loading) {
     return (
       <View style={styles.container}>
@@ -34,7 +33,6 @@ export default function ChallengesScreen() {
     );
   }
 
-  // ✅ Verificar se challenges é um array válido
   if (!challenges || !Array.isArray(challenges)) {
     return (
       <View style={styles.container}>
@@ -60,9 +58,6 @@ export default function ChallengesScreen() {
       return;
     }
 
-    console.log("Desafio selecionado:", challenge);
-    console.log("Opções de resposta:", challenge.answerOptions);
-
     setSelectedChallenge(challenge);
     setModalVisible(true);
   };
@@ -82,7 +77,6 @@ export default function ChallengesScreen() {
     setModalVisible(false);
   };
 
-  // ✅ Calcular progresso com verificação
   const completedCount = challenges.filter((c) => c.completed).length;
   const totalCount = challenges.length;
 
@@ -97,7 +91,6 @@ export default function ChallengesScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* ✅ Verificação adicional antes do map */}
         {challenges.length === 0 ? (
           <Text style={styles.emptyText}>Nenhum desafio disponível</Text>
         ) : (
@@ -140,7 +133,6 @@ export default function ChallengesScreen() {
                   {selectedChallenge.questionText}
                 </Text>
 
-                {/* ✅ Verificar se answerOptions existe */}
                 {selectedChallenge.answerOptions &&
                   selectedChallenge.answerOptions.map((option, index) => (
                     <TouchableOpacity
