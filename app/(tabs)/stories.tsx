@@ -269,7 +269,7 @@ export default function StoriesScreen() {
                   !story.unlocked && styles.lockedText,
                 ]}
               >
-                História {story.id}
+                Capítulo {story.id}
               </Text>
             </View>
             <Text
