@@ -1,4 +1,5 @@
 // app/(tabs)/stories.tsx
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -33,6 +34,12 @@ export default function StoriesScreen() {
   const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [localStoriesState, setLocalStoriesState] = useState<any[]>([]);
+  const navigation = useNavigation();
+
+  const handleUnlockNextStory = () => {
+    // Navegar para a tela de desafios
+    navigation.navigate("challenges");
+  };
 
   useEffect(() => {
     console.log("StoriesScreen - storiesState:", storiesState);
@@ -234,12 +241,23 @@ export default function StoriesScreen() {
         <Text style={styles.subtitle}>
           {unlockedStories.length} de {localStoriesState.length} desbloqueadas
         </Text>
-        <TouchableOpacity
-          style={styles.refreshButton}
-          onPress={refreshStoriesState}
-        >
-          <Text style={styles.refreshButtonText}>Atualizar</Text>
-        </TouchableOpacity>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.refreshButton}
+            onPress={refreshStoriesState}
+          >
+            <Text style={styles.refreshButtonText}>Atualizar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.unlockButton}
+            onPress={handleUnlockNextStory}
+          >
+            <Text style={styles.unlockButtonText}>
+              Desbloquear Próxima História
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
@@ -302,6 +320,40 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
   },
+  buttonContainer: {
+    flexDirection: "row", // Coloca os itens em linha
+    justifyContent: "center", // Centraliza horizontalmente
+    gap: 10, // Espaço entre os botões
+    marginTop: 10, // Espaço acima dos botões
+    width: "100%", // Ocupa toda a largura
+  },
+  refreshButton: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+    flex: 1, // Faz os botões terem tamanho igual
+    alignItems: "center", // Centraliza o texto
+  },
+  unlockButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+    flex: 1, // Faz os botões terem tamanho igual
+    alignItems: "center", // Centraliza o texto
+  },
+  refreshButtonText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  unlockButtonText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center", // Centraliza texto multi-linha
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -315,18 +367,7 @@ const styles = StyleSheet.create({
     color: "#666",
     marginBottom: 10,
   },
-  refreshButton: {
-    backgroundColor: "#007AFF",
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 16,
-    marginTop: 5,
-  },
-  refreshButtonText: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
+
   loadingContainer: {
     flex: 1,
     justifyContent: "center",

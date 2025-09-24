@@ -26,11 +26,11 @@ export const Story1 = ({
       </Text>
     </View>,
     <View key={1}>
-      <Image source={brotoImage} style={styles.image} resizeMode="cover" />
       <Text style={styles.text}>
         “Minhas amigas nuvens, o que essa semente faz aqui? É um sinal, é
         esperança!”
       </Text>
+      <Image source={brotoImage} style={styles.image} resizeMode="cover" />
     </View>,
     <View key={2}>
       <Text style={styles.text}>
