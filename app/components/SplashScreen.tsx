@@ -12,9 +12,9 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
 
   // Imagens da sequência de splash
   const splashImages: ImageSourcePropType[] = [
-    require("../../assets/splash/ag_coala800.png"),
-    require("../../assets/splash/env_terri800.png"),
-    require("../../assets/splash/mdhc800.png"),
+    require("../../assets/splash/guardioes.png"),
+    require("../../assets/splash/tela2.png"),
+    require("../../assets/splash/tela3.png"),
   ];
 
   useEffect(() => {
