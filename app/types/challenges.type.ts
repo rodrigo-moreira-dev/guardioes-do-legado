@@ -103,7 +103,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     id: "5",
     title: "Família negligente - Dona Tereza",
     description:
-      "Dona Tereza passou a viver com os sobrinhos após a morte do marido. Com o tempo, foi deixada sozinha por longos períodos, sem acompanhamento ou afeto. Mesmo lúcida, ouve com frequência: “Não dá pra ficar o tempo todo cuidando de velho”.",
+      "Após a morte do marido, Dona Tereza foi morar com os sobrinhos, esperando encontrar apoio e companhia para essa nova fase da vida. No início, havia alguma atenção, mas com o tempo ela passou a ser deixada sozinha por longos períodos, sem acompanhamento e sem afeto. Mesmo lúcida, escuta constantemente frases cruéis, como: “Não dá pra ficar o tempo todo cuidando de velho.” A situação é ainda mais grave porque Dona Tereza está acamada e precisa de cuidados constantes. Seu estado de saúde exige atendimento domiciliar de médicos e enfermeiros, mas isso não acontece. Ela passa os dias em abandono, sofrendo não apenas pela fragilidade física, mas também pela solidão e pelo descaso",
     questionText:
       "O que a situação vivida por Dona Tereza revela e como ela deve ser encarada do ponto de vista dos direitos da pessoa idosa?",
     answerOptions: [
@@ -120,7 +120,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     id: "6",
     title: "Empréstimos indevidos - Sr. Antônio",
     description:
-      "Sr. Antônio é aposentado e ajuda com as contas de casa. Um dia, descobriu que haviam feito vários empréstimos em seu nome. Quando tentou reclamar, a resposta foi: “Você não usa mesmo esse dinheiro. Estamos só adiantando.”",
+      "O Sr. Antônio é aposentado e sempre ajudou com as contas de casa. Um dia, descobriu que vários empréstimos haviam sido feitos em seu nome. Para sua tristeza, percebeu que quem havia realizado esses empréstimos era um de seus filhos, que só aparece de vez em quando e nunca para ajudá-lo de verdade. Quando tentou reclamar, ouviu uma justificativa fria: “Você não usa mesmo esse dinheiro. Desde então, a vida do Sr. Antônio ficou muito difícil. Quase toda a sua aposentadoria vai para pagar dívidas que ele não contraiu. Com o pouco que sobra, precisa comprar seus remédios e, por isso, quase não consegue se alimentar bem. Muitas vezes sente fraqueza e passa fome, porque a prioridade é não deixar de tomar a medicação.",
     questionText:
       "O que podemos identificar na situação vivida por Sr. Antônio e qual deve ser a conduta correta nesse tipo de caso?",
     answerOptions: [
@@ -186,9 +186,9 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
   },
   {
     id: "10",
-    title: "Violência institucional em hospital - Dona Elza",
+    title: "Violência institucional em hospital/transporte - Dona Elza",
     description:
-      "Dona Elza chegou ao hospital com dores fortes. A médica, sem sequer examiná-la, disse: “Isso é normal para sua idade. Vá pra casa e descanse.” Nenhum exame foi pedido. Ela voltou pra casa sem diagnóstico e com a dor cada vez mais forte.",
+      "Dona Elza chegou ao hospital com dores fortes. A médica, sem sequer examiná-la, disse: “Isso é normal para sua idade. Vá pra casa e descanse.” Nenhum exame foi pedido. Ela voltou pra casa sem diagnóstico e com a dor cada vez mais forte. Para piorar, quando tentou voltar para casa, o ônibus que costumava pegar simplesmente não parou para ela. O motorista a ignorou, como se sua presença não tivesse importância. Sem outra opção, Dona Elza precisou enfrentar o caminho a pé, mesmo com dificuldade e dor. Cada passo foi um esforço, marcado não só pelo sofrimento físico, mas também pela sensação de abandono e desrespeito.",
     questionText:
       "Como essa situação deve ser compreendida à luz dos direitos da pessoa idosa no atendimento à saúde?",
     answerOptions: [
