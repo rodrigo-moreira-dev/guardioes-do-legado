@@ -101,7 +101,8 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
   },
   {
     id: "5",
-    title: "Família negligente - Dona Tereza",
+    title:
+      "Família negligente/falta de atendimento médico domiciliar - Dona Tereza",
     description:
       "Após a morte do marido, Dona Tereza foi morar com os sobrinhos, esperando encontrar apoio e companhia para essa nova fase da vida. No início, havia alguma atenção, mas com o tempo ela passou a ser deixada sozinha por longos períodos, sem acompanhamento e sem afeto. Mesmo lúcida, escuta constantemente frases cruéis, como: “Não dá pra ficar o tempo todo cuidando de velho.” A situação é ainda mais grave porque Dona Tereza está acamada e precisa de cuidados constantes. Seu estado de saúde exige atendimento domiciliar de médicos e enfermeiros, mas isso não acontece. Ela passa os dias em abandono, sofrendo não apenas pela fragilidade física, mas também pela solidão e pelo descaso",
     questionText:
