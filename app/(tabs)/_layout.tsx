@@ -14,7 +14,6 @@ export default function TabLayout() {
       <Tabs.Screen name="stories" />
       <Tabs.Screen name="missions" />
       <Tabs.Screen name="library" />
-      <Tabs.Screen name="achievements" />
       <Tabs.Screen name="sos" />
     </Tabs>
   );
