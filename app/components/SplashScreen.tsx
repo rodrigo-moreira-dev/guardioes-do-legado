@@ -18,7 +18,14 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    // Fade in inicial
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+
+    const timer = setTimeout(() => {
       if (currentImage < splashImages.length - 1) {
         // Fade out da imagem atual
         Animated.timing(fadeAnim, {
@@ -36,19 +43,20 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
           }).start();
         });
       } else {
-        // Finaliza a splash screen
-        clearInterval(timer);
-        onFinish();
+        // Fade out da última imagem antes de finalizar
+        setTimeout(() => {
+          Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start(() => {
+            onFinish();
+          });
+        }, 1000); // Aguarda 2 segundos antes do fade out final
       }
-    }, 2000); // Tempo de exibição de cada imagem (2 segundos)
+    }, 2000); // Tempo que cada imagem fica totalmente visível
 
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 3000,
-      useNativeDriver: true,
-    }).start();
-
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [currentImage, onFinish]);
 
   return (
