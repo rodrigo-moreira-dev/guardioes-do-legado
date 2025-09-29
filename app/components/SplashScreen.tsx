@@ -12,7 +12,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
 
   // Imagens da sequência de splash
   const splashImages: ImageSourcePropType[] = [
-    require("../../assets/splash/guardioes.png"),
+    require("../../assets/splash/tela1.png"),
     require("../../assets/splash/tela2.png"),
     require("../../assets/splash/tela3.png"),
   ];
@@ -23,7 +23,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         // Fade out da imagem atual
         Animated.timing(fadeAnim, {
           toValue: 0,
-          duration: 500,
+          duration: 2000,
           useNativeDriver: true,
         }).start(() => {
           // Troca para a próxima imagem
@@ -31,7 +31,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
           // Fade in da nova imagem
           Animated.timing(fadeAnim, {
             toValue: 1,
-            duration: 500,
+            duration: 2000,
             useNativeDriver: true,
           }).start();
         });
@@ -42,10 +42,9 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
       }
     }, 2000); // Tempo de exibição de cada imagem (2 segundos)
 
-    // Fade in da primeira imagem
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 500,
+      duration: 3000,
       useNativeDriver: true,
     }).start();
 
