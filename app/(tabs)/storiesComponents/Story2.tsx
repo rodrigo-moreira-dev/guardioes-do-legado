@@ -1,6 +1,6 @@
 // storiesComponents/Story1.tsx
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import BaseStory from "./BaseStory";
 
 export const Story2 = ({
@@ -12,29 +12,82 @@ export const Story2 = ({
   onStepChange: (step: number) => void;
   onComplete: () => void;
 }) => {
+  const storiesImages = [
+    {
+      image: require("../../../assets/images/stories/story2/cena_5.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story2/cena_6.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story2/cena_7.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story2/cena_8.png"),
+    },
+  ];
+
   const steps = [
-    <View key={0}>
-      <Text style={styles.text}>
-        2. Em uma terra distante, onde a magia ainda florescia, um jovem
-        aventureiro recebia sua primeira missão.
-      </Text>
+    <View key={0} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[0].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene1}>
+          <Text style={styles.textScene1}>
+            A semente descansava agora sob a rocha e, em breve, nasceria. Mas,
+            para isso, um pouco de trabalho seria necessário.
+          </Text>
+        </View>
+      </View>
     </View>,
-    <View key={1}>
-      <Image
-        source={{ uri: "https://example.com/images/story1_1.jpg" }}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <Text style={styles.text}>
-        O desafio matemático que ele acabara de resolver era apenas o começo de
-        uma jornada épica.
-      </Text>
+    <View key={1} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[1].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <Text style={styles.textScene1}>
+            O mago juntou as mãos e derramou duas lágrimas de seus olhos: elas
+            brilharam com uma luz verde intensa.
+          </Text>
+        </View>
+      </View>
     </View>,
-    <View key={2}>
-      <Text style={styles.text}>
-        Com a primeira missão cumprida, novos horizontes se abriam, mas também
-        novos perigos.
-      </Text>
+    <View key={2} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[2].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <Text style={styles.textScene1}>
+            Ao tocar a rocha dura, uma poderosa magia de fertilidade a
+            transformou em solo fofo e fértil.
+          </Text>
+        </View>
+      </View>
+    </View>,
+    <View key={3} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[3].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <Text style={styles.textScene2}>
+            Da semente, as primeiras raízes criaram pernas e as primeiras folhas
+            se espreguiçaram. Flores de pétalas amarelas desabrocharam em um
+            belo sorriso, e os olhos do mago se encheram d’água.
+          </Text>
+        </View>
+      </View>
     </View>,
   ];
 
@@ -49,17 +102,72 @@ export const Story2 = ({
   );
 };
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 16,
-    color: "#333",
+  fullScreenStep: {
+    flex: 1,
+    marginHorizontal: -16, // Compensa o padding do BaseStory.content
+  },
+  normalStep: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  imageContainer: {
+    position: "relative",
+    width: screenWidth,
+    height: screenHeight * 0.8, // Ajuste conforme necessário
   },
   image: {
     width: "100%",
-    height: 200,
-    marginBottom: 16,
-    borderRadius: 8,
+    height: "100%",
+  },
+  textOverlayScene1: {
+    position: "absolute",
+    bottom: 24,
+    left: 0,
+    right: 0,
+    padding: 40,
+  },
+  textOverlayScene2: {
+    position: "absolute",
+    bottom: -16,
+    left: 0,
+    right: 0,
+    padding: 40,
+  },
+  textScene1: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  textScene2: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  normalText: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    fontSize: 18,
+    lineHeight: 28,
+    textAlign: "center",
+    color: "#333",
   },
 });

@@ -66,7 +66,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "white",
   },
   header: {
     padding: 16,

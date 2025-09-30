@@ -8,15 +8,16 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rrmdev.myapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      },
-      "splash": {
-        "resizeMode": "native",
-        "backgroundColor": "#00000000"
       }
     },
     "android": {
@@ -25,11 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.rrmdev.myapp",
-      "splash": {
-        "resizeMode": "native",
-        "backgroundColor": "#00000000"
-      }
+      "package": "com.rrmdev.myapp"
     },
     "web": {
       "bundler": "metro",
