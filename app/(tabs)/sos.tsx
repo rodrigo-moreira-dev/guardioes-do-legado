@@ -6,97 +6,127 @@ export default function TabFiveScreen() {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>SOS</Text>
       <View style={styles.margins}>
-        <strong style={styles.center}>
+        <Text style={[styles.bold, styles.center]}>
           Onde buscar ajuda em casos de violência contra a pessoa idosa
-        </strong>
-        <p>
+        </Text>
+
+        <Text style={styles.paragraph}>
           Se você presenciar ou suspeitar que uma pessoa idosa esteja sofrendo{" "}
-          <strong>
+          <Text style={styles.bold}>
             maus-tratos, abandono, negligência ou qualquer tipo de violência
-          </strong>
+          </Text>
           , é fundamental denunciar.
-        </p>
-        <p>
+        </Text>
+
+        <Text style={styles.paragraph}>
           Situações como idosos doentes sem cuidados, com sinais de agressão,
           vivendo em condições insalubres ou sem assistência adequada devem ser
           comunicadas imediatamente.
-        </p>
-        <strong style={styles.center}>Canais de denúncia e apoio</strong>
-        <strong style={styles.marginTop}>Disque 100</strong>
-        <p>
+        </Text>
+
+        <Text style={[styles.bold, styles.center, styles.sectionTitle]}>
+          Canais de denúncia e apoio
+        </Text>
+
+        <Text style={[styles.bold, styles.marginTop]}>Disque 100</Text>
+        <Text style={styles.paragraph}>
           Canal nacional para registrar denúncias de violações de Direitos
           Humanos, incluindo violência contra idosos.
-        </p>
-        <strong>Conselho Municipal dos Direitos da Pessoa Idosa</strong>
-        <p>
+        </Text>
+
+        <Text style={styles.bold}>
+          Conselho Municipal dos Direitos da Pessoa Idosa
+        </Text>
+        <Text style={styles.paragraph}>
           Atua na defesa e garantia dos direitos da população idosa.{" "}
-          <i>Rua Ladário Cardoso de Paula, nº 114 (64) 3404-1012</i>
-        </p>
-        <strong>Delegacia de Polícia</strong>
-        <p>
+          <Text style={styles.italic}>
+            Rua Ladário Cardoso de Paula, nº 114 (64) 3404-1012
+          </Text>
+        </Text>
+
+        <Text style={styles.bold}>Delegacia de Polícia</Text>
+        <Text style={styles.paragraph}>
           Procure qualquer delegacia da cidade ou ligue 190 nos seguintes casos:
-        </p>
-        <ul>
-          <li>
-            Quando a pessoa idosa for vítima de crimes (roubo, furto, agressões,
-            cárcere privado, negligência etc.);
-          </li>
-          <li>Se houver desaparecimento do idoso;</li>
-          <li>Em caso de perda de documentos ou cartões de benefícios.</li>
-        </ul>
-        <strong>Ministério Público</strong>
-        <p>
+        </Text>
+
+        <View style={styles.list}>
+          <Text style={styles.listItem}>
+            • Quando a pessoa idosa for vítima de crimes (roubo, furto,
+            agressões, cárcere privado, negligência etc.);
+          </Text>
+          <Text style={styles.listItem}>
+            • Se houver desaparecimento do idoso;
+          </Text>
+          <Text style={styles.listItem}>
+            • Em caso de perda de documentos ou cartões de benefícios.
+          </Text>
+        </View>
+
+        <Text style={styles.bold}>Ministério Público</Text>
+        <Text style={styles.paragraph}>
           Responsável por garantir o cumprimento dos direitos da pessoa idosa.
           Deve ser acionado quando:
-        </p>
-        <ul>
-          <li>Houver risco ou abandono por parte da família;</li>
-          <li>
-            Forem identificados maus-tratos em instituições de acolhimento;
-          </li>
-          <li>
-            Direitos forem desrespeitados (ex.: falta de acessibilidade ou
+        </Text>
+
+        <View style={styles.list}>
+          <Text style={styles.listItem}>
+            • Houver risco ou abandono por parte da família;
+          </Text>
+          <Text style={styles.listItem}>
+            • Forem identificados maus-tratos em instituições de acolhimento;
+          </Text>
+          <Text style={styles.listItem}>
+            • Direitos forem desrespeitados (ex.: falta de acessibilidade ou
             descumprimento da prioridade no atendimento).
-          </li>
-        </ul>
-        <i>
+          </Text>
+        </View>
+
+        <Text style={styles.italic}>
           5ª Promotoria - Avenida João Paulo II, nº 255, Bairro Dom Bosco,
           Itumbiara-GO (64) 9 9331-0519
-        </i>
-        <strong style={styles.marginTop}>
+        </Text>
+
+        <Text style={[styles.bold, styles.marginTop]}>
           CREAS - Centro de Referência Especializado de Assistência Social
-        </strong>
-        <p>
+        </Text>
+        <Text style={styles.paragraph}>
           Oferece suporte a idosos em situação de ameaça ou violação de
           direitos, prestando acompanhamento psicossocial e fortalecendo
           vínculos familiares e comunitários.
-        </p>
-        <p>
+        </Text>
+        <Text style={styles.paragraph}>
           Também articula a rede de serviços públicos para garantir proteção em
           casos de violência física, psicológica, sexual ou de risco pessoal.
-        </p>
-        <i>Rua Novacap, nº 18, Centro, (64) 3433-0492</i>
-        <strong style={styles.marginTop}>
+        </Text>
+        <Text style={styles.italic}>
+          Rua Novacap, nº 18, Centro, (64) 3433-0492
+        </Text>
+
+        <Text style={[styles.bold, styles.marginTop]}>
           CRAS - Centro de Referência de Assistência Social
-        </strong>
-        <p>
+        </Text>
+        <Text style={styles.paragraph}>
           Focado na proteção social básica, o CRAS auxilia idosos em situação de
           vulnerabilidade, promovendo atividades de convivência, oficinas, lazer
           e orientação sobre benefícios como o BPC. Seu objetivo é prevenir o
           isolamento e melhorar a qualidade de vida da pessoa idosa.
-        </p>
-        <ul>
-          <li>
-            <strong>CRAS Buriti</strong> - Av. Cícero Marques, nº 245, Buriti 1
-            - Itumbiara-GO
-          </li>
-          <li>(64) 99279-6466</li>
-          <li>
-            <strong>CRAS Novo Horizonte</strong> - Rua Sumaré, nº 185, St.
-            Planalto - Itumbiara-GO
-          </li>
-          <li>(64) 99251-6038</li>
-        </ul>
+        </Text>
+
+        <View style={styles.list}>
+          <Text style={styles.bold}>CRAS Buriti</Text>
+          <Text style={styles.listItem}>
+            Av. Cícero Marques, nº 245, Buriti 1 - Itumbiara-GO
+          </Text>
+          <Text style={styles.listItem}>(64) 99279-6466</Text>
+
+          <Text style={[styles.bold, styles.listSpacing]}>
+            CRAS Novo Horizonte
+          </Text>
+          <Text style={styles.listItem}>
+            Rua Sumaré, nº 185, St. Planalto - Itumbiara-GO
+          </Text>
+          <Text style={styles.listItem}>(64) 99251-6038</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -108,29 +138,51 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    fontSize: 26,
     backgroundColor: "white",
   },
   center: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     textAlign: "center",
   },
   title: {
     fontSize: 20,
-    justifyContent: "center",
-    alignContent: "center",
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 20,
+  },
+  margins: {
+    margin: 20,
+  },
+  paragraph: {
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 16,
+    textAlign: "justify",
+  },
+  bold: {
+    fontWeight: "bold",
+  },
+  italic: {
+    fontStyle: "italic",
+  },
+  sectionTitle: {
+    fontSize: 18,
+    marginVertical: 16,
+  },
+  list: {
+    marginLeft: 16,
+    marginBottom: 16,
+  },
+  listItem: {
+    fontSize: 16,
+    lineHeight: 22,
+    marginBottom: 8,
+  },
+  listSpacing: {
+    marginTop: 12,
   },
   separator: {
     marginVertical: 30,
     height: 1,
     width: "80%",
-  },
-  margins: {
-    margin: 40,
   },
 });
