@@ -12,7 +12,7 @@ interface TypingTextProps {
 
 const TypingText: React.FC<TypingTextProps> = ({
   text,
-  speed = 50,
+  speed = 40,
   style,
   onTypingEnd,
   restart = false,

@@ -1,7 +1,8 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import BaseStory from "./BaseStory";
 
 export const Story1 = ({
@@ -55,15 +56,13 @@ export const Story1 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-                    <TypingText
-            text="            Em uma noite estrelada, a lua iluminava uma planície de nuvens com
+          <TypingText
+            text="Em uma noite estrelada, a lua iluminava uma planície de nuvens com
             seu belo brilho prateado. Flutuando alto no céu, o mago Alonso
             brincava com as antigas nuvens. Tão fofas quanto algodão, elas
             arremessavam o mago para cima como se fossem um trampolim."
             style={styles.textScene2}
           ></TypingText>
-        </View>
-
         </View>
       </View>
     </View>,
@@ -75,9 +74,10 @@ export const Story1 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene2}>
-            Em meio à brincadeira, o mago pensou avistar algo pequeno.
-          </Text>
+          <TypingText
+            text="Em meio à brincadeira, o mago pensou avistar algo pequeno."
+            style={styles.textScene2}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -89,10 +89,11 @@ export const Story1 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene2}>
-            Voando até lá, percebeu que era uma semente de girassol. Já estava
-            deveras feliz, mas um sorriso ainda maior surgiu em seu rosto.
-          </Text>
+          <TypingText
+            text="Voando até lá, percebeu que era uma semente de girassol. Já estava
+            deveras feliz, mas um sorriso ainda maior surgiu em seu rosto."
+            style={styles.textScene2}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -104,14 +105,20 @@ export const Story1 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene2}>
-            — Minhas amigas nuvens, o que essa semente faz aqui? É um sinal... É
-            esperança!
-          </Text>
-          <Text style={styles.textScene2}>
-            Com a semente segura em suas mãos, Alonso soube que havia ali uma
-            missão mais importante a cumprir: a terra firme o aguardava.
-          </Text>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Minhas amigas nuvens, o que essa semente faz aqui? É um
+                sinal... É esperança!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
+          <TypingText
+            text="Com a semente segura em suas mãos, Alonso soube que havia ali uma
+            missão mais importante a cumprir: a terra firme o aguardava!"
+            style={styles.textScene2}
+          ></TypingText>
         </View>
       </View>
     </View>,
