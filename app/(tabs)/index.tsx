@@ -38,12 +38,12 @@ export default function HomeScreen() {
       image: require("../../assets/images/library.png"),
       route: "library",
     },
-    // {
-    //   id: 5,
-    //   title: "Conquistas",
-    //   image: require("../../assets/images/achievements.png"),
-    //   route: "achievements",
-    // },
+    {
+      id: 5,
+      title: "Conquistas",
+      image: require("../../assets/images/achievements.png"),
+      route: "achievements",
+    },
     {
       id: 6,
       title: "SOS",

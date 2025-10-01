@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Linking,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,6 +14,7 @@ import {
 export default function TabTwoScreen() {
   const [selectedPdf, setSelectedPdf] = useState<number | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [openedPdfs, setOpenedPdfs] = useState<number[]>([]);
 
   // Lista de PDFs disponíveis
   const pdfFiles = [
@@ -59,7 +62,46 @@ export default function TabTwoScreen() {
     },
   ];
 
+  // Carrega os PDFs já abertos do localStorage
+  useEffect(() => {
+    loadOpenedPdfs();
+  }, []);
+
+  const loadOpenedPdfs = async () => {
+    try {
+      const libraryData = await AsyncStorage.getItem("@library");
+      if (libraryData) {
+        const parsedData = JSON.parse(libraryData);
+        setOpenedPdfs(parsedData.openedPdfs || []);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar dados da biblioteca:", error);
+    }
+  };
+
+  // Salva quando um PDF é aberto
+  const saveOpenedPdf = async (pdfId: number) => {
+    try {
+      let libraryData = await AsyncStorage.getItem("@library");
+      let parsedData = libraryData
+        ? JSON.parse(libraryData)
+        : { openedPdfs: [] };
+
+      // Adiciona o PDF à lista se não estiver já incluído
+      if (!parsedData.openedPdfs.includes(pdfId)) {
+        parsedData.openedPdfs = [...parsedData.openedPdfs, pdfId];
+        await AsyncStorage.setItem("@library", JSON.stringify(parsedData));
+        setOpenedPdfs(parsedData.openedPdfs);
+      }
+    } catch (error) {
+      console.error("Erro ao salvar PDF aberto:", error);
+    }
+  };
+
   const openPdf = async (pdf: any) => {
+    // Registra que o PDF foi aberto
+    await saveOpenedPdf(pdf.id);
+
     if (Platform.OS === "web") {
       // Na web: abre em nova aba
       window.open(pdf.webUrl, "_blank");
@@ -83,25 +125,57 @@ export default function TabTwoScreen() {
     }
   };
 
+  // Verifica se um PDF específico foi aberto
+  const isPdfOpened = (pdfId: number) => {
+    return openedPdfs.includes(pdfId);
+  };
+
+  // Calcula progresso
+  const progress = openedPdfs.length;
+  const totalPdfs = pdfFiles.length;
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Documentos PDF</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Biblioteca de Documentos</Text>
       <Text style={styles.subtitle}>
         Clique em um documento para visualizar
       </Text>
+
+      {/* Barra de progresso */}
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>
+          Progresso: {progress}/{totalPdfs} documentos acessados
+        </Text>
+        <View style={styles.progressBar}>
+          <View
+            style={[
+              styles.progressFill,
+              { width: `${(progress / totalPdfs) * 100}%` },
+            ]}
+          />
+        </View>
+      </View>
 
       <View style={styles.pdfList}>
         {pdfFiles.map((pdf) => (
           <TouchableOpacity
             key={pdf.id}
-            style={styles.pdfButton}
+            style={[
+              styles.pdfButton,
+              isPdfOpened(pdf.id) && styles.pdfButtonOpened,
+            ]}
             onPress={() => openPdf(pdf)}
           >
-            <Text style={styles.pdfButtonText}>{pdf.title}</Text>
+            <View style={styles.pdfButtonContent}>
+              <Text style={styles.pdfButtonText}>{pdf.title}</Text>
+              {isPdfOpened(pdf.id) && (
+                <Text style={styles.openedBadge}>✓ Lido</Text>
+              )}
+            </View>
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -118,29 +192,75 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: "#333",
   },
+
   subtitle: {
     fontSize: 16,
     textAlign: "center",
     color: "#666",
     marginBottom: 20,
   },
-  pdfList: {
-    gap: 15,
-  },
-  pdfButton: {
-    backgroundColor: "#007AFF",
-    padding: 18,
+  progressContainer: {
+    backgroundColor: "white",
+    padding: 15,
     borderRadius: 10,
-    alignItems: "center",
+    marginBottom: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
+  progressText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 8,
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#4CAF50",
+    borderRadius: 4,
+  },
+  pdfList: {
+    gap: 12,
+  },
+  pdfButton: {
+    backgroundColor: "#007AFF",
+    padding: 16,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  pdfButtonOpened: {
+    backgroundColor: "#34C759",
+  },
+  pdfButtonContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   pdfButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+    flex: 1,
+  },
+  openedBadge: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "600",
+    backgroundColor: "rgba(255,255,255,0.2)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
   },
 });
