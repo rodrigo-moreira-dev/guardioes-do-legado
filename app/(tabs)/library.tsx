@@ -136,15 +136,15 @@ export default function TabTwoScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Biblioteca de Documentos</Text>
+      <Text style={styles.title}>Coleção de Pergaminhos</Text>
       <Text style={styles.subtitle}>
-        Clique em um documento para visualizar
+        Toque em um pergaminho para visualizá-lo
       </Text>
 
       {/* Barra de progresso */}
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
-          Progresso: {progress}/{totalPdfs} documentos acessados
+          Progresso: {progress}/{totalPdfs} pergaminhos lidos
         </Text>
         <View style={styles.progressBar}>
           <View
@@ -158,21 +158,30 @@ export default function TabTwoScreen() {
 
       <View style={styles.pdfList}>
         {pdfFiles.map((pdf) => (
-          <TouchableOpacity
-            key={pdf.id}
-            style={[
-              styles.pdfButton,
-              isPdfOpened(pdf.id) && styles.pdfButtonOpened,
-            ]}
-            onPress={() => openPdf(pdf)}
-          >
-            <View style={styles.pdfButtonContent}>
-              <Text style={styles.pdfButtonText}>{pdf.title}</Text>
-              {isPdfOpened(pdf.id) && (
-                <Text style={styles.openedBadge}>✓ Lido</Text>
-              )}
-            </View>
-          </TouchableOpacity>
+          <View key={pdf.id} style={styles.pdfButtonContainer}>
+            <TouchableOpacity
+              style={[
+                styles.pdfButton,
+                isPdfOpened(pdf.id) && styles.pdfButtonOpened,
+              ]}
+              onPress={() => openPdf(pdf)}
+            >
+              <View style={styles.pdfButtonContent}>
+                <Text
+                  style={
+                    isPdfOpened(pdf.id)
+                      ? styles.pdfButtonOpenedText
+                      : styles.pdfButtonText
+                  }
+                >
+                  {pdf.title}
+                </Text>
+                {isPdfOpened(pdf.id) && (
+                  <Text style={styles.openedBadge}>✓ Lido</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -183,65 +192,86 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f1f1f1ff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#333",
+    color: "#620cb8ff",
   },
-
   subtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#666",
+    color: "#6b6b6bff",
     marginBottom: 20,
   },
   progressContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#620cb8ff",
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    // Efeito 3D para o container de progresso também
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
   },
   progressText: {
+    textAlign: "center",
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
+    color: "white",
     marginBottom: 8,
   },
   progressBar: {
-    height: 8,
-    backgroundColor: "#e0e0e0",
+    height: 12,
+    backgroundColor: "#6B46C1",
     borderRadius: 4,
     overflow: "hidden",
+    // Efeito 3D para a barra de progresso
+    borderWidth: 0.5,
+    borderColor: "#4a0a8a",
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#68D391",
     borderRadius: 4,
   },
   pdfList: {
     gap: 12,
   },
+  pdfButtonContainer: {
+    // Container para o efeito 3D
+  },
   pdfButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#6B46C1",
     padding: 16,
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    // Removendo as sombras originais
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+    // elevation: 3,
+
+    // Efeito 3D - bordas para dar profundidade
+    borderWidth: 1,
+    borderColor: "#4a0a8a", // Cor mais escura para a borda
+    borderBottomWidth: 4, // Borda inferior mais grossa para efeito de profundidade
+    borderRightWidth: 3, // Borda direita mais grossa para efeito de luz vinda do canto superior esquerdo
+
+    // Bordas internas claras para efeito de relevo
+    borderTopColor: "#8B5FDC", // Cor mais clara para a borda superior
+    borderLeftColor: "#8B5FDC", // Cor mais clara para a borda esquerda
   },
   pdfButtonOpened: {
-    backgroundColor: "#34C759",
+    backgroundColor: "#68D391",
+    // Efeito 3D para o botão aberto
+    borderColor: "#48BB78", // Verde mais escuro
+    borderTopColor: "#9AE6B4", // Verde mais claro para borda superior
+    borderLeftColor: "#9AE6B4", // Verde mais claro para borda esquerda
   },
   pdfButtonContent: {
     flexDirection: "row",
@@ -254,8 +284,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     flex: 1,
   },
+  pdfButtonOpenedText: {
+    color: "#6d00bbff",
+    fontSize: 16,
+    fontWeight: "bold",
+    flex: 1,
+  },
   openedBadge: {
-    color: "white",
+    color: "#6d00bbff",
     fontSize: 12,
     fontWeight: "600",
     backgroundColor: "rgba(255,255,255,0.2)",

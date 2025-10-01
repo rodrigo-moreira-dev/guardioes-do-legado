@@ -2,7 +2,6 @@
 import { useNavigation } from "expo-router";
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,7 +17,7 @@ export default function HomeScreen() {
       id: 1,
       title: "Desafios",
       image: require("../../assets/images/challenges.png"),
-      route: "challenges", // Apenas o nome da rota
+      route: "challenges",
     },
     {
       id: 2,
@@ -58,7 +57,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bem vindo, Guardião</Text>
+      <Text style={styles.title}>Bem-vindo!</Text>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.grid}>
@@ -87,7 +86,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f1f1f1ff",
   },
   title: {
     fontSize: 24,
@@ -114,22 +113,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 15,
     padding: 15,
-    // Sombra compatível
-    ...Platform.select({
-      web: {
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      },
-      default: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-      },
-    }),
+
+    // Efeito 3D - substituindo as sombras
+    borderWidth: 1,
+    borderColor: "#d1d1d1", // Cor mais escura para as bordas direita e inferior
+    borderBottomWidth: 6, // Borda inferior mais grossa para profundidade
+    borderRightWidth: 4, // Borda direita mais grossa
+    borderTopColor: "#f8f8f8", // Cor mais clara para a borda superior
+    borderLeftColor: "#f8f8f8", // Cor mais clara para a borda esquerda
+
+    // Removendo as sombras originais
+    // ...Platform.select({
+    //   web: {
+    //     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    //   },
+    //   default: {
+    //     shadowColor: "#000",
+    //     shadowOffset: { width: 0, height: 2 },
+    //     shadowOpacity: 0.1,
+    //     shadowRadius: 4,
+    //     elevation: 3,
+    //   },
+    // }),
   },
   image: {
-    width: 60, // Tamanho da imagem
+    width: 60,
     height: 60,
     marginBottom: 10,
   },

@@ -47,7 +47,7 @@ export default function CustomHeader() {
           style={styles.backButton}
           onPress={() => navigateTo("/")}
         >
-          <FontAwesome5 name="arrow-left" size={20} color="#007AFF" />
+          <FontAwesome5 name="arrow-left" size={20} color="#6B46C1" />
           <Text style={styles.backText}>Voltar</Text>
         </TouchableOpacity>
       ) : (
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   backText: {
-    color: "#007AFF",
+    color: "#6B46C1",
     marginLeft: 8,
     fontSize: 16,
   },

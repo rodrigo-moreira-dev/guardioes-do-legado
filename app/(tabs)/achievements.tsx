@@ -152,7 +152,7 @@ export default function TabFourScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 32,
   },
   title: {
     fontSize: 24,
@@ -161,9 +161,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   refreshButton: {
-    backgroundColor: "#bf00ffff",
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: "#4a0a8a", // Cor mais escura para as bordas direita e inferior
+    borderBottomWidth: 6, // Borda inferior mais grossa para profundidade
+    borderRightWidth: 4, // Borda direita mais grossa
+    borderTopColor: "#bf00ffff", // Cor mais clara para a borda superior
+    borderLeftColor: "#bf00ffff",
+    backgroundColor: "#620cb8ff",
     borderRadius: 16,
     flex: 1, // Faz os botões terem tamanho igual
     alignItems: "center", // Centraliza o texto
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 40,
     height: 1,
     width: "100%",
   },

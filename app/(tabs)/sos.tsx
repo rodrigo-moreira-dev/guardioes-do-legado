@@ -6,7 +6,7 @@ export default function TabFiveScreen() {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>SOS</Text>
       <View style={styles.margins}>
-        <Text style={[styles.bold, styles.center]}>
+        <Text style={[styles.bold, styles.center, styles.topMargin]}>
           Onde buscar ajuda em casos de violência contra a pessoa idosa
         </Text>
 
@@ -144,13 +144,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 32,
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 20,
+    color: "#620cb8ff",
   },
   margins: {
-    margin: 20,
+    margin: 40,
+  },
+  topMargin: {
+    marginBottom: 16,
   },
   paragraph: {
     fontSize: 16,
@@ -159,6 +163,9 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   bold: {
+    color: "#620cb8ff",
+    fontSize: 18,
+
     fontWeight: "bold",
   },
   italic: {
