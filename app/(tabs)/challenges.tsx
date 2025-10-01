@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -114,16 +113,45 @@ export default function ChallengesScreen() {
                 styles.challengeCard,
                 challenge.completed && styles.completedCard,
                 !challenge.unlocked && styles.lockedCard,
+                challenge.unlocked &&
+                  !challenge.completed &&
+                  styles.unlockedCard,
               ]}
               onPress={() => handleChallengePress(challenge)}
               disabled={!challenge.unlocked}
               activeOpacity={0.7}
             >
-              <Text style={styles.challengeTitle}>{challenge.title}</Text>
-              <Text style={styles.challengeDescription}>
+              <Text
+                style={[
+                  styles.challengeTitle,
+                  challenge.completed && styles.completedText,
+                  !challenge.unlocked && styles.lockedText,
+                  challenge.unlocked &&
+                    !challenge.completed &&
+                    styles.unlockedText,
+                ]}
+              >
+                {challenge.title}
+              </Text>
+              <Text
+                style={[
+                  styles.challengeDescription,
+                  challenge.completed && styles.completedText,
+                  !challenge.unlocked && styles.lockedText,
+                ]}
+              >
                 {challenge.description}
               </Text>
-              <Text style={styles.challengeStatus}>
+              <Text
+                style={[
+                  styles.challengeStatus,
+                  challenge.completed && styles.completedStatus,
+                  !challenge.unlocked && styles.lockedStatus,
+                  challenge.unlocked &&
+                    !challenge.completed &&
+                    styles.unlockedStatus,
+                ]}
+              >
                 {challenge.completed
                   ? "✅ Concluído"
                   : challenge.unlocked
@@ -174,19 +202,19 @@ export default function ChallengesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f1f1f1ff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#333",
+    color: "#620cb8ff",
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#666",
+    color: "#6b6b6bff",
     marginBottom: 20,
   },
   loadingContainer: {
@@ -214,25 +242,35 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   challengeCard: {
-    backgroundColor: "white",
+    backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    ...Platform.select({
-      web: { boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" },
-      default: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-      },
-    }),
+    // Efeito 3D base para cartões bloqueados
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+  },
+  unlockedCard: {
+    backgroundColor: "#6B46C1", // Roxo para desafios desbloqueados
+    // Efeito 3D para desafios desbloqueados
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 4,
+    borderRightWidth: 3,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#f0f9f0",
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
+    backgroundColor: "#68D391", // Verde para desafios concluídos
+    // Efeito 3D para desafios concluídos
+    borderWidth: 1,
+    borderColor: "#48BB78",
+    borderBottomWidth: 4,
+    borderRightWidth: 3,
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   lockedCard: {
     backgroundColor: "#f5f5f5",
@@ -244,14 +282,32 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: "#333",
   },
+  unlockedText: {
+    color: "white", // Texto branco para contraste com fundo roxo
+  },
+  completedText: {
+    color: "#2d3748", // Texto escuro para contraste com fundo verde
+  },
+  lockedText: {
+    color: "#666",
+  },
   challengeDescription: {
     fontSize: 14,
-    color: "#666",
+    color: "white",
     marginBottom: 8,
   },
   challengeStatus: {
     fontSize: 14,
     fontWeight: "500",
+    color: "#666",
+  },
+  unlockedStatus: {
+    color: "rgba(255,255,255,0.9)", // Texto semi-transparente branco
+  },
+  completedStatus: {
+    color: "#2d3748", // Texto escuro
+  },
+  lockedStatus: {
     color: "#666",
   },
   modalContainer: {
@@ -266,33 +322,57 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: "90%",
     maxHeight: "80%",
+    // Efeito 3D para o modal
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 4,
+    borderRightWidth: 3,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
+    color: "#620cb8ff",
   },
   questionText: {
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 20,
     textAlign: "center",
+    color: "#333",
   },
   optionButton: {
     backgroundColor: "#f0f0f0",
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
+    // Efeito 3D para botões de opção
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
   },
   optionText: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
+    color: "#333",
   },
   closeButton: {
     marginTop: 20,
     padding: 12,
-    backgroundColor: "#007AFF",
+    backgroundColor: "#6B46C1",
     borderRadius: 8,
+    // Efeito 3D para botão fechar
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   closeButtonText: {
     color: "white",

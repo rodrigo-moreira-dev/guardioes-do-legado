@@ -7,10 +7,12 @@ export const Story2 = ({
   currentStep,
   onStepChange,
   onComplete,
+  onClose,
 }: {
   currentStep: number;
   onStepChange: (step: number) => void;
   onComplete: () => void;
+  onClose: () => void;
 }) => {
   const storiesImages = [
     {
@@ -93,6 +95,7 @@ export const Story2 = ({
 
   return (
     <BaseStory
+      onClose={onClose}
       steps={steps}
       currentStep={currentStep}
       onStepChange={onStepChange}

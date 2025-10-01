@@ -9,10 +9,12 @@ export const Story1 = ({
   currentStep,
   onStepChange,
   onComplete,
+  onClose,
 }: {
   currentStep: number;
   onStepChange: (step: number) => void;
   onComplete: () => void;
+  onClose: () => void;
 }) => {
   const storiesImages = [
     {
@@ -130,6 +132,7 @@ export const Story1 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
+      onClose={onClose}
       storyTitle="A Jornada Inicia"
     />
   );

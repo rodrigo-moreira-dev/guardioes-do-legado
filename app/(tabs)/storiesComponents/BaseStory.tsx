@@ -1,4 +1,5 @@
 // storiesComponents/BaseStory.tsx
+import { FontAwesome5 } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -7,6 +8,7 @@ interface BaseStoryProps {
   currentStep: number;
   onStepChange: (step: number) => void;
   onComplete: () => void;
+  onClose: () => void; // Nova prop para fechar o modal
   storyTitle: string;
 }
 
@@ -15,6 +17,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
   currentStep,
   onStepChange,
   onComplete,
+  onClose, // Recebe a função para fechar o modal
   storyTitle,
 }) => {
   const goToPreviousStep = () => {
@@ -31,31 +34,56 @@ const BaseStory: React.FC<BaseStoryProps> = ({
 
   return (
     <View style={styles.container}>
+      {/* Header com botão Voltar e título alinhados */}
       <View style={styles.header}>
-        <Text style={styles.title}>{storyTitle}</Text>
-        <Text style={styles.stepIndicator}>
-          Passo {currentStep + 1} de {steps.length}
-        </Text>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onClose} // Agora fecha o modal
+        >
+          <FontAwesome5 name="arrow-left" size={20} color="#6B46C1" />
+          <Text style={styles.backText}>Voltar</Text>
+        </TouchableOpacity>
+
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{storyTitle}</Text>
+          <Text style={styles.stepIndicator}>
+            Passo {currentStep + 1} de {steps.length}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.content}>{steps[currentStep]}</View>
 
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.button, currentStep === 0 && styles.disabledButton]}
+          style={[
+            styles.button,
+            styles.backButtonFooter,
+            currentStep === 0 && styles.disabledButton,
+          ]}
           onPress={goToPreviousStep}
           disabled={currentStep === 0}
         >
-          <Text style={styles.buttonText}>Voltar</Text>
+          <FontAwesome5
+            name="arrow-left"
+            size={20}
+            color={currentStep === 0 ? "#ccc" : "#620cb8ffe"}
+          />
         </TouchableOpacity>
 
         {currentStep < steps.length - 1 ? (
-          <TouchableOpacity style={styles.button} onPress={goToNextStep}>
-            <Text style={styles.buttonText}>Avançar</Text>
+          <TouchableOpacity
+            style={[styles.button, styles.nextButton]}
+            onPress={goToNextStep}
+          >
+            <FontAwesome5 name="arrow-right" size={20} color="white" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.completeButton} onPress={onComplete}>
-            <Text style={styles.buttonText}>Concluir</Text>
+          <TouchableOpacity
+            style={[styles.button, styles.completeButton]}
+            onPress={onComplete}
+          >
+            <Text style={styles.completeButtonText}>Concluir</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -66,22 +94,51 @@ const BaseStory: React.FC<BaseStoryProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#f1f1f1ff",
   },
   header: {
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
   },
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    // Efeito 3D para botão voltar
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
+    borderRadius: 8,
+    backgroundColor: "white",
+  },
+  backText: {
+    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#6B46C1",
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 4,
+    color: "#620cb8ff",
+    textAlign: "right",
   },
   stepIndicator: {
     fontSize: 14,
-    color: "#666",
+    color: "#6b6b6bff",
+    textAlign: "right",
   },
   content: {
     flex: 1,
@@ -96,23 +153,50 @@ const styles = StyleSheet.create({
     borderTopColor: "#ddd",
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     borderRadius: 8,
+    // Efeito 3D base
+    borderWidth: 1,
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+  },
+  backButtonFooter: {
+    backgroundColor: "#f8f8f8",
+    borderColor: "#d1d1d1",
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
+  },
+  nextButton: {
+    backgroundColor: "#6B46C1", // Roxo para avançar
+    borderColor: "#4a0a8a",
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   completeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "#4CAF50",
-    borderRadius: 8,
+    backgroundColor: "#68D391", // Verde para concluir
+    borderColor: "#48BB78",
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   disabledButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#f5f5f5",
+    borderColor: "#d1d1d1",
+    borderTopColor: "#f5f5f5",
+    borderLeftColor: "#f5f5f5",
   },
   buttonText: {
-    color: "#fff",
+    color: "white",
     fontWeight: "bold",
+    fontSize: 16,
+  },
+  completeButtonText: {
+    color: "#2d3748", // Texto escuro para contraste com verde
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  disabledButtonText: {
+    color: "#999",
   },
 });
 

@@ -55,7 +55,7 @@ export default function StoriesScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Histórias</Text>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          <ActivityIndicator size="large" color="#6B46C1" />
           <Text>Carregando histórias...</Text>
         </View>
       </View>
@@ -122,6 +122,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 2:
@@ -130,6 +131,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 3:
@@ -138,6 +140,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 4:
@@ -146,6 +149,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 5:
@@ -154,6 +158,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 6:
@@ -162,6 +167,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 7:
@@ -170,6 +176,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 8:
@@ -178,6 +185,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 9:
@@ -186,6 +194,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       case 10:
@@ -194,6 +203,7 @@ export default function StoriesScreen() {
             currentStep={storyState.currentStep}
             onStepChange={handleStepChange}
             onComplete={handleComplete}
+            onClose={closeModal}
           />
         );
       default:
@@ -253,9 +263,7 @@ export default function StoriesScreen() {
             style={styles.unlockButton}
             onPress={handleUnlockNextStory}
           >
-            <Text style={styles.unlockButtonText}>
-              Desbloquear Próxima História
-            </Text>
+            <Text style={styles.unlockButtonText}>Desbloquear Próxima</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -284,14 +292,21 @@ export default function StoriesScreen() {
               <Text
                 style={[
                   styles.storyTitle,
+                  story.completed && styles.completedText,
                   !story.unlocked && styles.lockedText,
+                  story.unlocked && !story.completed && styles.unlockedText,
                 ]}
               >
                 Capítulo {story.id}
               </Text>
             </View>
             <Text
-              style={[styles.storyStatus, !story.unlocked && styles.lockedText]}
+              style={[
+                styles.storyStatus,
+                story.completed && styles.completedStatus,
+                !story.unlocked && styles.lockedStatus,
+                story.unlocked && !story.completed && styles.unlockedStatus,
+              ]}
             >
               {getStoryStatusText(story)}
             </Text>
@@ -314,34 +329,48 @@ export default function StoriesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f1f1f1ff",
   },
   headerContainer: {
     padding: 16,
     alignItems: "center",
   },
   buttonContainer: {
-    flexDirection: "row", // Coloca os itens em linha
-    justifyContent: "center", // Centraliza horizontalmente
-    gap: 10, // Espaço entre os botões
-    marginTop: 10, // Espaço acima dos botões
-    width: "100%", // Ocupa toda a largura
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
+    marginTop: 10,
+    width: "100%",
   },
   refreshButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#6B46C1",
     paddingVertical: 16,
     paddingHorizontal: 16,
-    borderRadius: 16,
-    flex: 1, // Faz os botões terem tamanho igual
-    alignItems: "center", // Centraliza o texto
+    borderRadius: 12,
+    flex: 1,
+    alignItems: "center",
+    // Efeito 3D para botão atualizar
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   unlockButton: {
-    backgroundColor: "#4CAF50",
-    paddingVertical: 8,
+    backgroundColor: "#68D391",
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    borderRadius: 16,
-    flex: 1, // Faz os botões terem tamanho igual
-    alignItems: "center", // Centraliza o texto
+    borderRadius: 12,
+    flex: 1,
+    alignItems: "center",
+    // Efeito 3D para botão desbloquear
+    borderWidth: 1,
+    borderColor: "#48BB78",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   refreshButtonText: {
     color: "white",
@@ -349,25 +378,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   unlockButtonText: {
-    color: "white",
+    color: "#2d3748",
     fontSize: 14,
     fontWeight: "bold",
-    textAlign: "center", // Centraliza texto multi-linha
+    textAlign: "center",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#333",
+    color: "#620cb8ff",
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#666",
+    color: "#6b6b6bff",
     marginBottom: 10,
   },
-
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -382,31 +410,39 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   storyCard: {
-    backgroundColor: "white",
+    backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    // Efeito 3D base para cartões bloqueados
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
   },
   unlockedCard: {
-    backgroundColor: "white",
-    borderLeftWidth: 4,
-    borderLeftColor: "#007AFF",
+    backgroundColor: "#6B46C1", // Roxo para histórias desbloqueadas
+    // Efeito 3D para histórias desbloqueadas
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#f0f9f0",
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
+    backgroundColor: "#68D391", // Verde para histórias concluídas
+    // Efeito 3D para histórias concluídas
+    borderWidth: 1,
+    borderColor: "#48BB78",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   lockedCard: {
     backgroundColor: "#f5f5f5",
     opacity: 0.7,
-    borderLeftWidth: 4,
-    borderLeftColor: "#ccc",
   },
   storyHeader: {
     flexDirection: "row",
@@ -420,15 +456,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
+    // Efeito 3D para números
+    borderWidth: 1,
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
   },
   unlockedNumber: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#8B5FDC",
+    borderColor: "#6B46C1",
   },
   completedNumber: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#9AE6B4",
+    borderColor: "#68D391",
   },
   lockedNumber: {
     backgroundColor: "#ccc",
+    borderColor: "#999",
   },
   storyNumber: {
     color: "white",
@@ -438,14 +481,28 @@ const styles = StyleSheet.create({
   storyTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#333",
     flex: 1,
+  },
+  unlockedText: {
+    color: "white", // Texto branco para contraste com fundo roxo
+  },
+  completedText: {
+    color: "#2d3748", // Texto escuro para contraste com fundo verde
+  },
+  lockedText: {
+    color: "#999",
   },
   storyStatus: {
     fontSize: 14,
-    color: "#666",
+    fontWeight: "500",
   },
-  lockedText: {
+  unlockedStatus: {
+    color: "rgba(255,255,255,0.9)", // Texto semi-transparente branco
+  },
+  completedStatus: {
+    color: "#2d3748", // Texto escuro
+  },
+  lockedStatus: {
     color: "#999",
   },
 });

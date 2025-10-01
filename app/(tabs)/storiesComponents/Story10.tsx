@@ -7,10 +7,12 @@ export const Story10 = ({
   currentStep,
   onStepChange,
   onComplete,
+  onClose,
 }: {
   currentStep: number;
   onStepChange: (step: number) => void;
   onComplete: () => void;
+  onClose: () => void;
 }) => {
   const steps = [
     <View key={0}>
@@ -40,6 +42,7 @@ export const Story10 = ({
 
   return (
     <BaseStory
+      onClose={onClose}
       steps={steps}
       currentStep={currentStep}
       onStepChange={onStepChange}

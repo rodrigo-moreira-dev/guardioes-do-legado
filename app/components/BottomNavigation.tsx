@@ -37,7 +37,7 @@ export default function BottomNavigation() {
             <FontAwesome5
               name={item.icon}
               size={20}
-              color={isActive ? "#007AFF" : "#8E8E93"}
+              color={isActive ? "#6B46C1" : "#8E8E93"}
             />
             <Text style={[styles.navLabel, isActive && styles.activeNavLabel]}>
               {item.label}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     color: "#8E8E93",
   },
   activeNavLabel: {
-    color: "#007AFF",
+    color: "#6B46C1",
     fontWeight: "600",
   },
 });

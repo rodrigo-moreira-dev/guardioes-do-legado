@@ -90,16 +90,41 @@ export default function MissionsScreen() {
                 styles.missionCard,
                 mission.completed && styles.completedCard,
                 !mission.unlocked && styles.lockedCard,
+                mission.unlocked && !mission.completed && styles.unlockedCard,
               ]}
               onPress={() => handleMissionPress(mission)}
               disabled={!mission.unlocked}
               activeOpacity={0.7}
             >
-              <Text style={styles.missionTitle}>{mission.title}</Text>
-              <Text style={styles.missionDescription}>
+              <Text
+                style={[
+                  styles.missionTitle,
+                  mission.completed && styles.completedText,
+                  !mission.unlocked && styles.lockedText,
+                  mission.unlocked && !mission.completed && styles.unlockedText,
+                ]}
+              >
+                {mission.title}
+              </Text>
+              <Text
+                style={[
+                  styles.missionDescription,
+                  mission.completed && styles.completedText,
+                  !mission.unlocked && styles.lockedText,
+                ]}
+              >
                 {mission.description}
               </Text>
-              <Text style={styles.missionStatus}>
+              <Text
+                style={[
+                  styles.missionStatus,
+                  mission.completed && styles.completedStatus,
+                  !mission.unlocked && styles.lockedStatus,
+                  mission.unlocked &&
+                    !mission.completed &&
+                    styles.unlockedStatus,
+                ]}
+              >
                 {mission.completed
                   ? "✅ Concluída"
                   : mission.unlocked
@@ -148,19 +173,19 @@ export default function MissionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f1f1f1ff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#333",
+    color: "#620cb8ff",
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#666",
+    color: "#6b6b6bff",
     marginBottom: 20,
   },
   loadingContainer: {
@@ -188,20 +213,35 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   missionCard: {
-    backgroundColor: "white",
+    backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    // Efeito 3D base para cartões bloqueados
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+  },
+  unlockedCard: {
+    backgroundColor: "#6B46C1", // Roxo para missões desbloqueadas
+    // Efeito 3D para missões desbloqueadas
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 6, // Mais espesso conforme solicitado
+    borderRightWidth: 3,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#f0f9f0",
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
+    backgroundColor: "#68D391", // Verde para missões concluídas
+    // Efeito 3D para missões concluídas
+    borderWidth: 1,
+    borderColor: "#48BB78",
+    borderBottomWidth: 6, // Mais espesso conforme solicitado
+    borderRightWidth: 3,
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   lockedCard: {
     backgroundColor: "#f5f5f5",
@@ -213,14 +253,32 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: "#333",
   },
+  unlockedText: {
+    color: "white", // Texto branco para contraste com fundo roxo
+  },
+  completedText: {
+    color: "#2d3748", // Texto escuro para contraste com fundo verde
+  },
+  lockedText: {
+    color: "#666",
+  },
   missionDescription: {
     fontSize: 14,
-    color: "#666",
+    color: "#ffffffff",
     marginBottom: 8,
   },
   missionStatus: {
     fontSize: 14,
     fontWeight: "500",
+    color: "#666",
+  },
+  unlockedStatus: {
+    color: "rgba(255,255,255,0.9)", // Texto semi-transparente branco
+  },
+  completedStatus: {
+    color: "#2d3748", // Texto escuro
+  },
+  lockedStatus: {
     color: "#666",
   },
   modalContainer: {
@@ -235,12 +293,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: "90%",
     maxHeight: "80%",
+    // Efeito 3D para o modal
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
+    color: "#620cb8ff",
   },
   missionText: {
     fontSize: 16,
@@ -249,21 +315,35 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   completeButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#68D391", // Verde para o botão completar
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 10,
+    // Efeito 3D para botão completar
+    borderWidth: 1,
+    borderColor: "#48BB78",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   completeButtonText: {
-    color: "white",
+    color: "#4a0a8a", // Texto escuro para contraste com verde
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
   closeButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#6B46C1", // Roxo para o botão fechar
     paddingVertical: 12,
     borderRadius: 8,
+    // Efeito 3D para botão fechar
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
   closeButtonText: {
     color: "white",
