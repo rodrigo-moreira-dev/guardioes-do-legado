@@ -125,18 +125,22 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   textOverlayScene1: {
+    margin: 20,
     position: "absolute",
-    bottom: 24,
+    bottom: -20,
     left: 0,
     right: 0,
     padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textOverlayScene2: {
+    margin: 20,
     position: "absolute",
     bottom: -16,
     left: 0,
     right: 0,
     padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textScene1: {
     textShadowColor: "black",

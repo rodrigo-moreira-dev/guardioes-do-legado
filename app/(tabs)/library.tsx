@@ -43,6 +43,20 @@ export default function TabTwoScreen() {
       webUrl:
         "https://drive.google.com/uc?export=download&id=1_9QorI3TSm_J1jXSmKNyymgBHx8FUpLi",
     },
+    {
+      id: 5,
+      title: "Gibi da Turma da Mônica",
+      fileName: require("@/assets/pdfs/gibi_monica.pdf"),
+      webUrl:
+        "https://drive.google.com/uc?export=download&id=1Gl1RDt7-1ArLSYmbTtP14T94bb-0Fogq",
+    },
+    {
+      id: 6,
+      title: "Cartilha - Envelhecer nos Territórios",
+      fileName: require("@/assets/pdfs/cartilha_envelhecer_territorios.pdf"),
+      webUrl:
+        "https://drive.google.com/uc?export=download&id=1T14Dldez57WZxhyvK4r-PSGx8EShluyt",
+    },
   ];
 
   const openPdf = async (pdf: any) => {
