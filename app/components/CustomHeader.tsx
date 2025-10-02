@@ -77,6 +77,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    // Efeito 3D para botão voltar
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
+    borderRadius: 8,
+    backgroundColor: "white",
   },
   backText: {
     color: "#6B46C1",
@@ -85,8 +96,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
+    fontWeight: "bold",
+    color: "#6B46C1",
     textAlign: "center",
     flex: 1,
   },

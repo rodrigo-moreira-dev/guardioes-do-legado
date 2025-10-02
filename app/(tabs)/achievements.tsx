@@ -107,16 +107,39 @@ export default function TabFourScreen() {
     <View
       style={[
         styles.achievementItem,
-        achievement.completed ? styles.completed : styles.incomplete,
+        achievement.completed ? styles.completedCard : styles.incompleteCard,
       ]}
     >
       <Text style={styles.icon}>{achievement.icon}</Text>
       <View style={styles.textContainer}>
-        <Text style={styles.achievementTitle}>{achievement.title}</Text>
-        <Text style={styles.achievementDescription}>
+        <Text
+          style={[
+            styles.achievementTitle,
+            achievement.completed
+              ? styles.completedText
+              : styles.incompleteText,
+          ]}
+        >
+          {achievement.title}
+        </Text>
+        <Text
+          style={[
+            styles.achievementDescription,
+            achievement.completed
+              ? styles.completedDescription
+              : styles.incompleteDescription,
+          ]}
+        >
           {achievement.description}
         </Text>
-        <Text style={styles.status}>
+        <Text
+          style={[
+            styles.status,
+            achievement.completed
+              ? styles.completedStatus
+              : styles.incompleteStatus,
+          ]}
+        >
           {achievement.completed ? "✅ Concluída" : "⏳ Em progresso"}
         </Text>
       </View>
@@ -125,15 +148,38 @@ export default function TabFourScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={loadAchievements} style={styles.refreshButton}>
-        <Text style={styles.refreshButtonText}>Atualizar</Text>
-      </TouchableOpacity>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <Text style={styles.subtitle}>
+        Complete atividades para desbloquear conquistas
+      </Text>
+      {/* Barra de progresso */}
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>
+          Progresso:{" "}
+          {achievements.filter((achievement) => achievement.completed).length}/
+          {achievements.length} conquistas obtidas
+        </Text>
+        <View style={styles.progressBar}>
+          <View
+            style={[
+              styles.progressFill,
+              {
+                width: `${
+                  (achievements.filter((achievement) => achievement.completed)
+                    .length /
+                    achievements.length) *
+                  100
+                }%`,
+              },
+            ]}
+          />
+        </View>
+      </View>
 
+      <TouchableOpacity onPress={loadAchievements} style={styles.refreshButton}>
+        <Text style={styles.refreshButtonText}>Atualizar Conquistas</Text>
+      </TouchableOpacity>
+
+      <View style={styles.separator} />
       {achievements.length === 0 ? (
         <Text style={styles.emptyText}>Carregando conquistas...</Text>
       ) : (
@@ -152,37 +198,48 @@ export default function TabFourScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 32,
+    padding: 20,
+    backgroundColor: "#f1f1f1ff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 10,
+    marginVertical: 10,
+    color: "#620cb8ff",
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#6b6b6bff",
+    marginBottom: 20,
   },
   refreshButton: {
-    borderWidth: 1,
-    borderColor: "#4a0a8a", // Cor mais escura para as bordas direita e inferior
-    borderBottomWidth: 6, // Borda inferior mais grossa para profundidade
-    borderRightWidth: 4, // Borda direita mais grossa
-    borderTopColor: "#bf00ffff", // Cor mais clara para a borda superior
-    borderLeftColor: "#bf00ffff",
-    backgroundColor: "#620cb8ff",
-    borderRadius: 16,
-    flex: 1, // Faz os botões terem tamanho igual
-    alignItems: "center", // Centraliza o texto
+    backgroundColor: "#6B46C1",
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
+    // Efeito 3D para botão atualizar
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
-
   refreshButtonText: {
     color: "white",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 40,
+    marginVertical: 20,
     height: 1,
     width: "100%",
+    backgroundColor: "#6B46C1",
   },
   list: {
     width: "100%",
@@ -192,28 +249,59 @@ const styles = StyleSheet.create({
   },
   achievementItem: {
     flexDirection: "row",
-    padding: 15,
+    padding: 16,
     marginVertical: 8,
     borderRadius: 12,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    // Efeito 3D base
+    borderWidth: 1,
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
   },
-  completed: {
-    backgroundColor: "#E8F5E8",
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
+  progressContainer: {
+    backgroundColor: "#620cb8ff",
+    padding: 15,
+    borderRadius: 10,
+    // Efeito 3D para o container de progresso também
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
   },
-  incomplete: {
-    backgroundColor: "#F5F5F5",
-    borderLeftWidth: 4,
-    borderLeftColor: "#FFC107",
+  progressText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+    color: "white",
+    marginBottom: 8,
+  },
+  progressBar: {
+    height: 12,
+    backgroundColor: "#6B46C1",
+    borderRadius: 4,
+    overflow: "hidden",
+    // Efeito 3D para a barra de progresso
+    borderWidth: 0.5,
+    borderColor: "#4a0a8a",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#68D391",
+    borderRadius: 4,
+  },
+  incompleteCard: {
+    backgroundColor: "#6B46C1", // Roxo para conquistas não concluídas
+    // Efeito 3D para conquistas não concluídas
+    borderColor: "#4a0a8a",
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
+  },
+  completedCard: {
+    backgroundColor: "#68D391", // Verde para conquistas concluídas
+    // Efeito 3D para conquistas concluídas
+    borderColor: "#48BB78",
+    borderTopColor: "#9AE6B4",
+    borderLeftColor: "#9AE6B4",
   },
   icon: {
     fontSize: 32,
@@ -228,19 +316,38 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 4,
   },
+  incompleteText: {
+    color: "white", // Texto branco para contraste com fundo roxo
+  },
+  completedText: {
+    color: "#2d3748", // Texto escuro para contraste com fundo verde
+  },
   achievementDescription: {
     fontSize: 14,
-    opacity: 0.8,
     marginBottom: 6,
+  },
+  incompleteDescription: {
+    color: "rgba(255,255,255,0.9)", // Texto semi-transparente branco
+  },
+  completedDescription: {
+    color: "#2d3748", // Texto escuro
+    opacity: 0.8,
   },
   status: {
     fontSize: 12,
     fontWeight: "600",
+  },
+  incompleteStatus: {
+    color: "rgba(255,255,255,0.8)", // Texto semi-transparente branco
+  },
+  completedStatus: {
+    color: "#2d3748", // Texto escuro
   },
   emptyText: {
     textAlign: "center",
     fontSize: 16,
     opacity: 0.7,
     marginTop: 50,
+    color: "#666",
   },
 });

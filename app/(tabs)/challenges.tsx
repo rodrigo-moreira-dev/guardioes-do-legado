@@ -94,11 +94,24 @@ export default function ChallengesScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Desafios</Text>
       <Text style={styles.subtitle}>
-        {completedCount} de {totalCount} concluídos
+        Realize os desafios para desbloquear histórias
       </Text>
-
+      {/* Barra de progresso */}
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>
+          Progresso: {completedCount}/{totalCount} desafios concluídos
+        </Text>
+        <View style={styles.progressBar}>
+          <View
+            style={[
+              styles.progressFill,
+              { width: `${(completedCount / totalCount) * 100}%` },
+            ]}
+          />
+        </View>
+      </View>
+      <View style={styles.separator} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -203,6 +216,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f1f1f1ff",
+    marginHorizontal: 20,
+  },
+  progressContainer: {
+    backgroundColor: "#620cb8ff",
+    padding: 15,
+    borderRadius: 10,
+    // Efeito 3D para o container de progresso também
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
+  },
+  progressText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+    color: "white",
+    marginBottom: 8,
+  },
+  progressBar: {
+    height: 12,
+    backgroundColor: "#6B46C1",
+    borderRadius: 4,
+    overflow: "hidden",
+    // Efeito 3D para a barra de progresso
+    borderWidth: 0.5,
+    borderColor: "#4a0a8a",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#68D391",
+    borderRadius: 4,
   },
   title: {
     fontSize: 24,
@@ -216,6 +261,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#6b6b6bff",
     marginBottom: 20,
+    marginTop: 20,
   },
   loadingContainer: {
     flex: 1,
@@ -238,8 +284,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
     paddingBottom: 80,
+  },
+  separator: {
+    marginVertical: 20,
+    height: 1,
+    width: "100%",
+    backgroundColor: "#6B46C1",
   },
   challengeCard: {
     backgroundColor: "#f5f5f5",

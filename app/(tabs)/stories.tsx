@@ -247,11 +247,28 @@ export default function StoriesScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Todas as Histórias</Text>
         <Text style={styles.subtitle}>
-          {unlockedStories.length} de {localStoriesState.length} desbloqueadas
+          Realize desafios para desbloquear histórias
         </Text>
-
+        {/* Barra de progresso */}
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressText}>
+            Progresso: {unlockedStories.length}/{localStoriesState.length}{" "}
+            histórias lidas
+          </Text>
+          <View style={styles.progressBar}>
+            <View
+              style={[
+                styles.progressFill,
+                {
+                  width: `${
+                    (unlockedStories.length / localStoriesState.length) * 100
+                  }%`,
+                },
+              ]}
+            />
+          </View>
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.refreshButton}
@@ -266,6 +283,7 @@ export default function StoriesScreen() {
             <Text style={styles.unlockButtonText}>Desbloquear Próxima</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.separator} />
       </View>
 
       <ScrollView
@@ -331,8 +349,48 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f1f1f1ff",
   },
+  separator: {
+    marginVertical: 20,
+    height: 1,
+    width: "100%",
+    backgroundColor: "#6B46C1",
+  },
+  progressContainer: {
+    backgroundColor: "#620cb8ff",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    // Efeito 3D para o container de progresso também
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 3,
+    borderRightWidth: 2,
+  },
+  progressText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+    color: "white",
+    marginBottom: 8,
+  },
+  progressBar: {
+    height: 12,
+    backgroundColor: "#6B46C1",
+    borderRadius: 4,
+    overflow: "hidden",
+    // Efeito 3D para a barra de progresso
+    borderWidth: 0.5,
+    borderColor: "#4a0a8a",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#68D391",
+    borderRadius: 4,
+  },
   headerContainer: {
-    padding: 16,
+    paddingTop: 16,
+    paddingRight: 16,
+    paddingLeft: 16,
     alignItems: "center",
   },
   buttonContainer: {
@@ -406,7 +464,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
     paddingBottom: 80,
   },
   storyCard: {

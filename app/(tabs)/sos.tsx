@@ -4,7 +4,11 @@ import { ScrollView, StyleSheet } from "react-native";
 export default function TabFiveScreen() {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>SOS</Text>
+      <Text style={styles.title}>
+        Seja a diferença que você quer ver no mundo
+      </Text>
+      <View style={styles.separator} />
+
       <View style={styles.margins}>
         <Text style={[styles.bold, styles.center, styles.topMargin]}>
           Onde buscar ajuda em casos de violência contra a pessoa idosa
@@ -139,9 +143,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    padding: 20,
   },
   center: {
     textAlign: "center",
+  },
+  separator: {
+    marginVertical: 20,
+    height: 1,
+    width: "100%",
+    backgroundColor: "#6B46C1",
   },
   title: {
     fontSize: 32,
@@ -186,10 +197,5 @@ const styles = StyleSheet.create({
   },
   listSpacing: {
     marginTop: 12,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

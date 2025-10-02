@@ -155,7 +155,7 @@ export default function TabTwoScreen() {
           />
         </View>
       </View>
-
+      <View style={styles.separator} />
       <View style={styles.pdfList}>
         {pdfFiles.map((pdf) => (
           <View key={pdf.id} style={styles.pdfButtonContainer}>
@@ -194,6 +194,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f1f1f1ff",
   },
+  separator: {
+    marginVertical: 20,
+    height: 1,
+    width: "100%",
+    backgroundColor: "#6B46C1",
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -206,12 +212,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#6b6b6bff",
     marginBottom: 20,
+    marginTop: 20,
   },
   progressContainer: {
     backgroundColor: "#620cb8ff",
     padding: 15,
     borderRadius: 10,
-    marginBottom: 20,
     // Efeito 3D para o container de progresso também
     borderWidth: 1,
     borderColor: "#4a0a8a",
