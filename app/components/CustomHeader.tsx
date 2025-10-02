@@ -47,14 +47,18 @@ export default function CustomHeader() {
           style={styles.backButton}
           onPress={() => navigateTo("/")}
         >
-          <FontAwesome5 name="arrow-left" size={20} color="#6B46C1" />
-          <Text style={styles.backText}>Voltar</Text>
+          <FontAwesome5 name="arrow-left" size={16} color="#6B46C1" />
+          <Text style={styles.backText} numberOfLines={1}>
+            Voltar
+          </Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.placeholder} />
       )}
 
-      <Text style={styles.title}>{getHeaderTitle()}</Text>
+      <Text style={styles.title} numberOfLines={1}>
+        {getHeaderTitle()}
+      </Text>
 
       <View style={styles.placeholder} />
     </View>
@@ -67,18 +71,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#E5E5E5",
-    height: 60,
+    minHeight: 56, // Altura mínima maior
   },
   backButton: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    minWidth: 70, // Largura mínima
+    maxWidth: 100, // Largura máxima
     // Efeito 3D para botão voltar
     borderWidth: 1,
     borderColor: "#d1d1d1",
@@ -91,17 +96,20 @@ const styles = StyleSheet.create({
   },
   backText: {
     color: "#6B46C1",
-    marginLeft: 8,
-    fontSize: 16,
+    marginLeft: 6,
+    fontSize: 14, // Fonte menor
+    fontWeight: "600",
+    flexShrink: 1, // Permite que o texto encolha se necessário
   },
   title: {
-    fontSize: 18,
+    fontSize: 20, // Fonte um pouco menor
     fontWeight: "bold",
     color: "#6B46C1",
     textAlign: "center",
     flex: 1,
+    marginHorizontal: 8, // Margem para não colar nas bordas
   },
   placeholder: {
-    width: 80,
+    width: 70, // Largura igual ao botão para balancear
   },
 });

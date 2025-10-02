@@ -1,7 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -126,7 +125,7 @@ export default function TabFourScreen() {
           title: "Guardião da Comunidade",
           description:
             "Conquistado ao compartilhar o app nas redes sociais, ajudando a espalhar a mensagem de combate ao etarismo.",
-          completed: await checkAppShared(), // Agora é async
+          completed: await checkAppShared(),
           icon: "📣",
           image: achievementImages["6"],
         },
@@ -219,7 +218,7 @@ export default function TabFourScreen() {
     setSelectedAchievement(null);
   };
 
-  const shareOnInstagram = async () => {
+  const shareAchievement = async () => {
     if (!selectedAchievement) return;
 
     try {
@@ -233,21 +232,10 @@ export default function TabFourScreen() {
         return;
       }
 
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-
-      if (status !== "granted") {
-        Alert.alert(
-          "Permissão necessária",
-          "Precisamos de permissão para salvar e compartilhar imagens."
-        );
-        return;
-      }
-
-      const message = `🎉 Conquista desbloqueada! ${selectedAchievement.icon} ${selectedAchievement.title}\n${selectedAchievement.description}\n\nCompartilhado via Meu App`;
-
+      // Compartilha diretamente a imagem do achievement
       await Sharing.shareAsync(selectedAchievement.image, {
         mimeType: "image/png",
-        dialogTitle: "Compartilhar conquista no Instagram",
+        dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
         UTI: "public.image",
       });
 
@@ -277,12 +265,20 @@ export default function TabFourScreen() {
           achievement.completed ? styles.completedCard : styles.incompleteCard,
         ]}
       >
-        {/* Imagem da conquista em vez do ícone */}
-        <Image
-          source={achievement.image}
-          style={styles.achievementImage}
-          resizeMode="contain"
-        />
+        {/* Emblema com destaque - tamanho dobrado */}
+        <View style={styles.emblemaContainer}>
+          <Image
+            source={achievement.image}
+            style={styles.achievementImage}
+            resizeMode="contain"
+          />
+          {achievement.completed && (
+            <View style={styles.completedBadge}>
+              <Text style={styles.completedBadgeText}>✓</Text>
+            </View>
+          )}
+        </View>
+
         <View style={styles.textContainer}>
           <Text
             style={[
@@ -312,7 +308,7 @@ export default function TabFourScreen() {
                 : styles.incompleteStatus,
             ]}
           >
-            {achievement.completed ? "✅ Concluída" : "⏳ Em progresso"}
+            {achievement.completed ? "🎉 Concluída" : "⏳ Em progresso"}
           </Text>
         </View>
       </View>
@@ -379,12 +375,20 @@ export default function TabFourScreen() {
           <View style={styles.modalContent}>
             {selectedAchievement && (
               <>
-                {/* Imagem maior no modal */}
-                <Image
-                  source={selectedAchievement.image}
-                  style={styles.modalImage}
-                  resizeMode="contain"
-                />
+                {/* Emblema em destaque no modal */}
+                <View style={styles.modalEmblemaContainer}>
+                  <Image
+                    source={selectedAchievement.image}
+                    style={styles.modalImage}
+                    resizeMode="contain"
+                  />
+                  {selectedAchievement.completed && (
+                    <View style={styles.modalCompletedBadge}>
+                      <Text style={styles.modalCompletedBadgeText}>✓</Text>
+                    </View>
+                  )}
+                </View>
+
                 <Text style={styles.modalTitle}>
                   {selectedAchievement.title}
                 </Text>
@@ -398,16 +402,16 @@ export default function TabFourScreen() {
                       🎉 Parabéns! Você desbloqueou esta conquista!
                     </Text>
                     <TouchableOpacity
-                      style={styles.instagramButton}
-                      onPress={shareOnInstagram}
+                      style={styles.shareButton}
+                      onPress={shareAchievement}
                     >
-                      <FontAwesome5 name="instagram" size={20} color="white" />
-                      <Text style={styles.instagramButtonText}>
+                      <FontAwesome5 name="share-alt" size={20} color="white" />
+                      <Text style={styles.shareButtonText}>
                         Compartilhar Conquista
                       </Text>
                     </TouchableOpacity>
                     <Text style={styles.shareHint}>
-                      Selecione o Instagram no menu de compartilhamento
+                      Compartilhe sua conquista nas redes sociais
                     </Text>
                   </>
                 ) : (
@@ -432,7 +436,6 @@ export default function TabFourScreen() {
   );
 }
 
-// Os estilos permanecem os mesmos...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -486,19 +489,46 @@ const styles = StyleSheet.create({
   },
   achievementItem: {
     flexDirection: "row",
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 12,
+    padding: 20,
+    marginVertical: 10,
+    borderRadius: 16,
     alignItems: "center",
     borderWidth: 1,
-    borderBottomWidth: 4,
-    borderRightWidth: 2,
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  emblemaContainer: {
+    position: "relative",
+    marginRight: 20,
+    borderRadius: 20,
   },
   achievementImage: {
-    width: 50,
-    height: 50,
-    marginRight: 15,
-    borderRadius: 8,
+    width: 220, // Tamanho dobrado (era 50)
+    height: 220, // Tamanho dobrado (era 50)
+    borderRadius: 12,
+  },
+  completedBadge: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "#48BB78",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "white",
+  },
+  completedBadgeText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 12,
   },
   progressContainer: {
     backgroundColor: "#620cb8ff",
@@ -548,7 +578,7 @@ const styles = StyleSheet.create({
   achievementTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 6,
   },
   incompleteText: {
     color: "white",
@@ -558,7 +588,7 @@ const styles = StyleSheet.create({
   },
   achievementDescription: {
     fontSize: 14,
-    marginBottom: 6,
+    marginBottom: 8,
     lineHeight: 18,
   },
   incompleteDescription: {
@@ -606,11 +636,32 @@ const styles = StyleSheet.create({
     borderTopColor: "#f8f8f8",
     borderLeftColor: "#f8f8f8",
   },
+  modalEmblemaContainer: {
+    position: "relative",
+    marginBottom: 20,
+  },
   modalImage: {
-    width: 120,
-    height: 120,
-    marginBottom: 16,
-    borderRadius: 12,
+    width: 150, // Tamanho aumentado no modal
+    height: 150, // Tamanho aumentado no modal
+    borderRadius: 16,
+  },
+  modalCompletedBadge: {
+    position: "absolute",
+    top: -8,
+    right: -8,
+    backgroundColor: "#48BB78",
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: "white",
+  },
+  modalCompletedBadgeText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   modalTitle: {
     fontSize: 22,
@@ -640,8 +691,8 @@ const styles = StyleSheet.create({
     color: "#666",
     fontWeight: "600",
   },
-  instagramButton: {
-    backgroundColor: "#E1306C",
+  shareButton: {
+    backgroundColor: "#6B46C1",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -651,13 +702,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     width: "100%",
     borderWidth: 1,
-    borderColor: "#C13584",
+    borderColor: "#4a0a8a",
     borderBottomWidth: 4,
     borderRightWidth: 2,
-    borderTopColor: "#FD1D1D",
-    borderLeftColor: "#FD1D1D",
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
   },
-  instagramButtonText: {
+  shareButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
@@ -671,18 +722,18 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   closeModalButton: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#E1306C",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
     width: "100%",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#4a0a8a",
+    borderColor: "#C13584",
     borderBottomWidth: 4,
     borderRightWidth: 2,
-    borderTopColor: "#8B5FDC",
-    borderLeftColor: "#8B5FDC",
+    borderTopColor: "#FD1D1D",
+    borderLeftColor: "#FD1D1D",
   },
   closeModalButtonText: {
     color: "white",

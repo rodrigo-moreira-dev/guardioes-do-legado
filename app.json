@@ -38,10 +38,15 @@
       [
         "react-native-share",
         {
-          "ios": ["instagram"],
-          "android": ["com.instagram.android"]
+          "ios": [
+            "instagram"
+          ],
+          "android": [
+            "com.instagram.android"
+          ]
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true
