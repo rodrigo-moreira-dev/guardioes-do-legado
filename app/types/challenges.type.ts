@@ -40,16 +40,6 @@ export interface Story {
 export const DEFAULT_CHALLENGES: Array<Challenge> = [
   {
     id: "1",
-    title: "Desafio Exemplo",
-    description: "Resolva problemas matemáticos básicos",
-    questionText: "Quanto é 8 + 5?",
-    answerOptions: ["12", "13", "14", "15"],
-    correctAnswer: 1,
-    completed: false,
-    unlocked: true,
-  },
-  {
-    id: "2",
     title: "Venda indevida de bens do idoso - Sr. João",
     description:
       "Sr. João confiou ao neto a administração dos seus documentos e cartões, após uma cirurgia. Com o tempo, percebeu que parte dos seus bens havia sido vendida sem seu consentimento. A justificativa do neto? “Era melhor resolver logo isso antes que ele esquecesse”.",
@@ -63,10 +53,10 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     ],
     correctAnswer: 3,
     completed: false,
-    unlocked: false,
+    unlocked: true,
   },
   {
-    id: "3",
+    id: "2",
     title: "Agressão verbal e isolamento - Dona Lúcia",
     description:
       "Dona Lúcia mora com a filha e o genro, mas quase não sai do quarto. A família diz que é por segurança, mas vizinhos escutam gritos e ofensas vindas da casa. Quando perguntada, Dona Lúcia apenas sorri e responde: “Eles só estão estressados”.",
@@ -83,7 +73,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "4",
+    id: "3",
     title: "Abrigo negligente - Abrigo São José",
     description:
       "No Abrigo São José, o atendimento aos idosos é marcado por atrasos, má alimentação e ausência de cuidados médicos. Os funcionários justificam: “São muitos e todos já estão no fim da vida mesmo. Não dá pra fazer milagre.”",
@@ -100,7 +90,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "5",
+    id: "4",
     title:
       "Família negligente/falta de atendimento médico domiciliar - Dona Tereza",
     description:
@@ -118,7 +108,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "6",
+    id: "5",
     title: "Empréstimos indevidos - Sr. Antônio",
     description:
       "O Sr. Antônio é aposentado e sempre ajudou com as contas de casa. Um dia, descobriu que vários empréstimos haviam sido feitos em seu nome. Para sua tristeza, percebeu que quem havia realizado esses empréstimos era um de seus filhos, que só aparece de vez em quando e nunca para ajudá-lo de verdade. Quando tentou reclamar, ouviu uma justificativa fria: “Você não usa mesmo esse dinheiro. Desde então, a vida do Sr. Antônio ficou muito difícil. Quase toda a sua aposentadoria vai para pagar dívidas que ele não contraiu. Com o pouco que sobra, precisa comprar seus remédios e, por isso, quase não consegue se alimentar bem. Muitas vezes sente fraqueza e passa fome, porque a prioridade é não deixar de tomar a medicação.",
@@ -135,7 +125,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "7",
+    id: "6",
     title: "Idosa sobrecarregada e explorada - Dona Maria",
     description:
       "Dona Maria cuida dos netos, cozinha, limpa a casa e ainda faz pequenos bicos para completar a renda. Apesar da idade avançada e de dores constantes, escuta da filha: “Você só fica em casa, não tem com o que se preocupar”.",
@@ -152,7 +142,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "8",
+    id: "7",
     title: "Discriminação no mercado de trabalho - Srta. Irene",
     description:
       "Srta. Irene é uma profissional com mais de 30 anos de experiência. Mesmo com excelente currículo, já ouviu em entrevistas: “Estamos buscando alguém mais moderno, com energia de jovem”. A vaga foi dada a uma pessoa com metade da idade e menos qualificação.",
@@ -169,7 +159,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "9",
+    id: "8",
     title: "Negação de autonomia - Sr. Sebastião",
     description:
       "Sr. Sebastião sempre foi independente, mas após uma queda leve, passou a ter todas as suas decisões questionadas. Quer sair sozinho? “Não pode mais”. Quer participar das finanças da casa? “Melhor deixar com os filhos”. Ele sente que perdeu o direito de escolher.",
@@ -186,7 +176,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "10",
+    id: "9",
     title: "Violência institucional em hospital/transporte - Dona Elza",
     description:
       "Dona Elza chegou ao hospital com dores fortes. A médica, sem sequer examiná-la, disse: “Isso é normal para sua idade. Vá pra casa e descanse.” Nenhum exame foi pedido. Ela voltou pra casa sem diagnóstico e com a dor cada vez mais forte. Para piorar, quando tentou voltar para casa, o ônibus que costumava pegar simplesmente não parou para ela. O motorista a ignorou, como se sua presença não tivesse importância. Sem outra opção, Dona Elza precisou enfrentar o caminho a pé, mesmo com dificuldade e dor. Cada passo foi um esforço, marcado não só pelo sofrimento físico, mas também pela sensação de abandono e desrespeito.",
@@ -203,7 +193,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     unlocked: false,
   },
   {
-    id: "11",
+    id: "10",
     title:
       "Relacionamentos e afetos entre pessoas idosas - Sr. Benedito e Dona Nair",
     description:

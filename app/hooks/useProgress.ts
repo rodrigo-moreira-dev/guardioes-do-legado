@@ -77,8 +77,6 @@ export const useProgress = (): UseProgressReturn => {
     if (!isCorrect) return;
 
     try {
-      console.log(`Completando desafio ${challengeId}`);
-
       const updatedChallenges = challenges.map((challenge) =>
         challenge.id === challengeId
           ? { ...challenge, completed: true }
@@ -107,21 +105,13 @@ export const useProgress = (): UseProgressReturn => {
 
       // Desbloquear a história correspondente ao desafio
       const storyId = parseInt(challengeId);
-      console.log(
-        `Desbloqueando história ${storyId} após completar desafio ${challengeId}`
-      );
+
       await unlockStory(storyId);
 
       // Desbloquear a próxima história se existir
       if (storyId < 10) {
         console.log(`Desbloqueando próxima história ${storyId + 1}`);
         await unlockStory(storyId + 1);
-      }
-
-      // Garantir que todas as histórias anteriores estejam desbloqueadas
-      for (let i = 1; i < storyId; i++) {
-        console.log(`Garantindo que história ${i} está desbloqueada`);
-        await unlockStory(i);
       }
 
       // Forçar uma atualização

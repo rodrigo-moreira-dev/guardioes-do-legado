@@ -17,11 +17,14 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
     require("../../assets/splash/tela3.png"),
   ];
 
+  // Tempos de exibição para cada tela (em milissegundos)
+  const screenTimes = [2000, 4000, 3000]; // 2s, 4s, 3s
+
   useEffect(() => {
-    // Fade in inicial
+    // Fade in inicial da primeira imagem
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 2000,
+      duration: 500, // Fade in rápido de 0.5s
       useNativeDriver: true,
     }).start();
 
@@ -30,7 +33,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         // Fade out da imagem atual
         Animated.timing(fadeAnim, {
           toValue: 0,
-          duration: 2000,
+          duration: 500, // Fade out rápido de 0.5s
           useNativeDriver: true,
         }).start(() => {
           // Troca para a próxima imagem
@@ -38,23 +41,21 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
           // Fade in da nova imagem
           Animated.timing(fadeAnim, {
             toValue: 1,
-            duration: 2000,
+            duration: 500, // Fade in rápido de 0.5s
             useNativeDriver: true,
           }).start();
         });
       } else {
-        // Fade out da última imagem antes de finalizar
-        setTimeout(() => {
-          Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 2000,
-            useNativeDriver: true,
-          }).start(() => {
-            onFinish();
-          });
-        }, 1000); // Aguarda 2 segundos antes do fade out final
+        // Última imagem - fade out antes de finalizar
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500, // Fade out final de 0.5s
+          useNativeDriver: true,
+        }).start(() => {
+          onFinish();
+        });
       }
-    }, 2000); // Tempo que cada imagem fica totalmente visível
+    }, screenTimes[currentImage]); // Usa o tempo específico para cada tela
 
     return () => clearTimeout(timer);
   }, [currentImage, onFinish]);

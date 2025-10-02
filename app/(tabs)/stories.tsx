@@ -253,8 +253,9 @@ export default function StoriesScreen() {
         {/* Barra de progresso */}
         <View style={styles.progressContainer}>
           <Text style={styles.progressText}>
-            Progresso: {unlockedStories.length}/{localStoriesState.length}{" "}
-            histórias lidas
+            Progresso:{" "}
+            {localStoriesState.filter((story) => story.completed).length}/
+            {localStoriesState.length} histórias lidas
           </Text>
           <View style={styles.progressBar}>
             <View
@@ -262,7 +263,10 @@ export default function StoriesScreen() {
                 styles.progressFill,
                 {
                   width: `${
-                    (unlockedStories.length / localStoriesState.length) * 100
+                    (localStoriesState.filter((story) => story.completed)
+                      .length /
+                      localStoriesState.length) *
+                    100
                   }%`,
                 },
               ]}

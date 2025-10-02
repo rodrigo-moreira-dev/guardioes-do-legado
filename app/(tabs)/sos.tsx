@@ -1,5 +1,4 @@
-import { Text, View } from "@/components/Themed";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function TabFiveScreen() {
   return (

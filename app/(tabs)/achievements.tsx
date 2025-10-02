@@ -1,8 +1,15 @@
+import { Text, View } from "@/components/Themed";
+import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
-
-import { Text, View } from "@/components/Themed";
+import {
+  Alert,
+  FlatList,
+  Linking,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 // Tipos para as conquistas
 interface Achievement {
@@ -15,6 +22,9 @@ interface Achievement {
 
 export default function TabFourScreen() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedAchievement, setSelectedAchievement] =
+    useState<Achievement | null>(null);
 
   useEffect(() => {
     loadAchievements();
@@ -102,55 +112,101 @@ export default function TabFourScreen() {
     return library.openedPdfs.length >= 6;
   };
 
+  const handleAchievementPress = (achievement: Achievement) => {
+    setSelectedAchievement(achievement);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedAchievement(null);
+  };
+
+  const shareOnInstagram = async () => {
+    if (!selectedAchievement) return;
+
+    const message = `🎉 Conquista desbloqueada! ${selectedAchievement.icon} ${selectedAchievement.title} - ${selectedAchievement.description}\n\nCompartilhado via Meu App`;
+
+    try {
+      // Tenta abrir o Instagram com a mensagem pré-preenchida
+      const instagramUrl = `instagram://share?text=${encodeURIComponent(
+        message
+      )}`;
+
+      // Verifica se o Instagram está instalado
+      const canOpen = await Linking.canOpenURL(instagramUrl);
+
+      if (canOpen) {
+        await Linking.openURL(instagramUrl);
+      } else {
+        // Se o Instagram não estiver instalado, abre como URL normal
+        const webUrl = `https://www.instagram.com/?text=${encodeURIComponent(
+          message
+        )}`;
+        await Linking.openURL(webUrl);
+      }
+    } catch (error) {
+      console.error("Erro ao compartilhar no Instagram:", error);
+      Alert.alert("Erro", "Não foi possível compartilhar no Instagram.");
+    }
+  };
+
   // Componente para cada item da lista de conquistas
   const AchievementItem = ({ achievement }: { achievement: Achievement }) => (
-    <View
-      style={[
-        styles.achievementItem,
-        achievement.completed ? styles.completedCard : styles.incompleteCard,
-      ]}
+    <TouchableOpacity
+      onPress={() => handleAchievementPress(achievement)}
+      activeOpacity={0.7}
     >
-      <Text style={styles.icon}>{achievement.icon}</Text>
-      <View style={styles.textContainer}>
-        <Text
-          style={[
-            styles.achievementTitle,
-            achievement.completed
-              ? styles.completedText
-              : styles.incompleteText,
-          ]}
-        >
-          {achievement.title}
-        </Text>
-        <Text
-          style={[
-            styles.achievementDescription,
-            achievement.completed
-              ? styles.completedDescription
-              : styles.incompleteDescription,
-          ]}
-        >
-          {achievement.description}
-        </Text>
-        <Text
-          style={[
-            styles.status,
-            achievement.completed
-              ? styles.completedStatus
-              : styles.incompleteStatus,
-          ]}
-        >
-          {achievement.completed ? "✅ Concluída" : "⏳ Em progresso"}
-        </Text>
+      <View
+        style={[
+          styles.achievementItem,
+          achievement.completed ? styles.completedCard : styles.incompleteCard,
+        ]}
+      >
+        <Text style={styles.icon}>{achievement.icon}</Text>
+        <View style={styles.textContainer}>
+          <Text
+            style={[
+              styles.achievementTitle,
+              achievement.completed
+                ? styles.completedText
+                : styles.incompleteText,
+            ]}
+          >
+            {achievement.title}
+          </Text>
+          <Text
+            style={[
+              styles.achievementDescription,
+              achievement.completed
+                ? styles.completedDescription
+                : styles.incompleteDescription,
+            ]}
+          >
+            {achievement.description}
+          </Text>
+          <Text
+            style={[
+              styles.status,
+              achievement.completed
+                ? styles.completedStatus
+                : styles.incompleteStatus,
+            ]}
+          >
+            {achievement.completed ? "✅ Concluída" : "⏳ Em progresso"}
+          </Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Conquistas</Text>
       <Text style={styles.subtitle}>
         Complete atividades para desbloquear conquistas
       </Text>
+
       {/* Barra de progresso */}
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
@@ -180,6 +236,7 @@ export default function TabFourScreen() {
       </TouchableOpacity>
 
       <View style={styles.separator} />
+
       {achievements.length === 0 ? (
         <Text style={styles.emptyText}>Carregando conquistas...</Text>
       ) : (
@@ -191,6 +248,59 @@ export default function TabFourScreen() {
           contentContainerStyle={styles.listContent}
         />
       )}
+
+      {/* Modal de compartilhamento */}
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedAchievement && (
+              <>
+                <Text style={styles.modalIcon}>{selectedAchievement.icon}</Text>
+                <Text style={styles.modalTitle}>
+                  {selectedAchievement.title}
+                </Text>
+                <Text style={styles.modalDescription}>
+                  {selectedAchievement.description}
+                </Text>
+
+                {selectedAchievement.completed ? (
+                  <>
+                    <Text style={styles.modalSuccessText}>
+                      🎉 Parabéns! Você desbloqueou esta conquista!
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.instagramButton}
+                      onPress={shareOnInstagram}
+                    >
+                      <FontAwesome5 name="instagram" size={20} color="white" />
+                      <Text style={styles.instagramButtonText}>
+                        Compartilhar no Instagram
+                      </Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <Text style={styles.modalLockedText}>
+                    🔒 Complete esta conquista para compartilhar suas
+                    conquistas!
+                  </Text>
+                )}
+
+                <TouchableOpacity
+                  style={styles.closeModalButton}
+                  onPress={closeModal}
+                >
+                  <Text style={styles.closeModalButtonText}>Fechar</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -349,5 +459,103 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     marginTop: 50,
     color: "#666",
+  },
+  // Estilos do Modal
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 24,
+    borderRadius: 16,
+    width: "100%",
+    maxWidth: 400,
+    alignItems: "center",
+    // Efeito 3D para o modal
+    borderWidth: 1,
+    borderColor: "#d1d1d1",
+    borderBottomWidth: 6,
+    borderRightWidth: 3,
+    borderTopColor: "#f8f8f8",
+    borderLeftColor: "#f8f8f8",
+  },
+  modalIcon: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 8,
+    color: "#620cb8ff",
+  },
+  modalDescription: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#666",
+  },
+  modalSuccessText: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#48BB78",
+    fontWeight: "600",
+  },
+  modalLockedText: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#666",
+    fontWeight: "600",
+  },
+  instagramButton: {
+    backgroundColor: "#E1306C",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginBottom: 16,
+    width: "100%",
+    // Efeito 3D para botão do Instagram
+    borderWidth: 1,
+    borderColor: "#C13584",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#FD1D1D",
+    borderLeftColor: "#FD1D1D",
+  },
+  instagramButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  closeModalButton: {
+    backgroundColor: "#6B46C1",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    width: "100%",
+    alignItems: "center",
+    // Efeito 3D para botão fechar
+    borderWidth: 1,
+    borderColor: "#4a0a8a",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderTopColor: "#8B5FDC",
+    borderLeftColor: "#8B5FDC",
+  },
+  closeModalButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
