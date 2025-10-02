@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   textOverlayScene2: {
     position: "absolute",
@@ -173,16 +174,17 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   textScene1: {
-    color: "#333",
+    color: "white",
     fontSize: 16,
     fontWeight: "bold",
     lineHeight: 24,
     textAlign: "center",
   },
   textScene2: {
-    color: "#333",
+    color: "white",
     fontSize: 14,
     fontWeight: "bold",
     lineHeight: 24,
