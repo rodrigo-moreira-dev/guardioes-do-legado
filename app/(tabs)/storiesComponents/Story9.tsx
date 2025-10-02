@@ -1,6 +1,7 @@
 // storiesComponents/Story1.tsx
+import TypingText from "@/app/components/TypingText";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import BaseStory from "./BaseStory";
 
 export const Story9 = ({
@@ -14,29 +15,180 @@ export const Story9 = ({
   onComplete: () => void;
   onClose: () => void;
 }) => {
+  const storiesImages = [
+    {
+      image: require("../../../assets/images/stories/story9/cena_52.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_53.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_54.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_55.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_56.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_57.png"),
+    },
+    {
+      image: require("../../../assets/images/stories/story9/cena_58.png"),
+    },
+  ];
+
   const steps = [
-    <View key={0}>
-      <Text style={styles.text}>
-        Em uma terra distante, onde a magia ainda florescia, um jovem
-        aventureiro recebia sua primeira missão.
-      </Text>
+    <View key={0} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[0].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene1}>
+          <TypingText
+            text="Após afastarem os gafanhotos, o mago caiu de joelhos no chão."
+            style={styles.textScene1}
+          ></TypingText>
+        </View>
+      </View>
     </View>,
-    <View key={1}>
-      <Image
-        source={{ uri: "https://example.com/images/story1_1.jpg" }}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <Text style={styles.text}>
-        O desafio matemático que ele acabara de resolver era apenas o começo de
-        uma jornada épica.
-      </Text>
+    <View key={1} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[1].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="Ele suava e ofegava."
+            style={styles.textScene1}
+          ></TypingText>
+        </View>
+      </View>
     </View>,
-    <View key={2}>
-      <Text style={styles.text}>
-        Com a primeira missão cumprida, novos horizontes se abriam, mas também
-        novos perigos.
-      </Text>
+    <View key={2} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[2].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="Deitou-se sobre o solo molhado e admirou as nuvens, as estrelas e a lua."
+            style={styles.textScene1}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={3} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[2].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="— Minha cara, o seu velho está muito cansado… — disse com serenidade."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={4} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[2].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="— Entendi! Vamos parar por hoje, dormiremos aqui! — respondeu ela, preocupada."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={5} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[2].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="— Eu… eu sinto saudades das minhas amigas no céu, e estou tão orgulhoso de você! — ele abriu um enorme sorriso e, com os olhos marejados,"
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={6} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[3].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="começou a se transformar em uma nuvem."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={7} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[4].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="— Alonso?! Não vá! Eu preciso de você, não me abandone agora! — implorou ela."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={8} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[5].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="— Eu jamais irei te abandonar! Enquanto você se lembrar de mim, estarei sempre contigo na sua memória! — disse ele, despedindo-se com seu sorriso característico."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={9} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[6].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <TypingText
+            text="E então flutuou aos céus."
+            style={styles.textScene2}
+          ></TypingText>
+        </View>
+      </View>
     </View>,
   ];
 
@@ -52,17 +204,74 @@ export const Story9 = ({
   );
 };
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 16,
-    color: "#333",
+  fullScreenStep: {
+    flex: 1,
+    marginHorizontal: -16, // Compensa o padding do BaseStory.content
+  },
+  normalStep: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  imageContainer: {
+    position: "relative",
+    width: screenWidth,
+    height: screenHeight * 0.8, // Ajuste conforme necessário
   },
   image: {
     width: "100%",
-    height: 200,
-    marginBottom: 16,
-    borderRadius: 8,
+    height: "100%",
+  },
+  textOverlayScene1: {
+    position: "absolute",
+    bottom: -20,
+    left: 0,
+    right: 0,
+    padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  textOverlayScene2: {
+    position: "absolute",
+    bottom: -16,
+    left: 0,
+    right: 0,
+    padding: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  textScene1: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  textScene2: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  normalText: {
+    textShadowColor: "black",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    fontSize: 18,
+    lineHeight: 28,
+    textAlign: "center",
+    color: "#333",
   },
 });

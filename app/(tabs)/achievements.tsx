@@ -1,11 +1,13 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as MediaLibrary from "expo-media-library";
+import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
-  Linking,
+  Image,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -18,6 +20,7 @@ interface Achievement {
   description: string;
   completed: boolean;
   icon: string;
+  image: any;
 }
 
 export default function TabFourScreen() {
@@ -26,9 +29,31 @@ export default function TabFourScreen() {
   const [selectedAchievement, setSelectedAchievement] =
     useState<Achievement | null>(null);
 
+  // Imagens das conquistas
+  const achievementImages = {
+    "1": require("@/assets/achievements/guardiao_missoes.png"),
+    "2": require("@/assets/achievements/guardiao_historias.png"),
+    "3": require("@/assets/achievements/guardiao_desafios.png"),
+    "4": require("@/assets/achievements/guardiao_biblioteca.png"),
+    "5": require("@/assets/achievements/guardiao_sos.png"),
+    "6": require("@/assets/achievements/guardiao_comunidade.png"),
+    "7": require("@/assets/achievements/guardiao_legado.png"),
+  };
+
   useEffect(() => {
     loadAchievements();
   }, []);
+
+  // Verifica se todas as conquistas obrigatórias foram completadas
+  const checkAllMandatoryAchievements = (
+    achievements: Achievement[]
+  ): boolean => {
+    const mandatoryIds = ["1", "2", "3", "4", "5"]; // IDs das conquistas obrigatórias
+    const mandatoryAchievements = achievements.filter((achievement) =>
+      mandatoryIds.includes(achievement.id)
+    );
+    return mandatoryAchievements.every((achievement) => achievement.completed);
+  };
 
   const loadAchievements = async () => {
     try {
@@ -49,35 +74,75 @@ export default function TabFourScreen() {
         ? JSON.parse(libraryData)
         : { openedPdfs: [] };
 
-      // Verifica cada conquista
-      const allAchievements: Achievement[] = [
+      // Cria as conquistas base sem o Guardião do Legado
+      const baseAchievements: Achievement[] = [
         {
           id: "1",
-          title: "Leitor Ávido",
-          description: "Leu todas as histórias disponíveis",
-          completed: checkAllStoriesCompleted(stories),
-          icon: "📚",
+          title: "Guardião das Missões",
+          description:
+            "Conquistado ao concluir todas as missões físicas e digitais disponíveis no aplicativo.",
+          completed: checkAllMissionsCompleted(missions),
+          icon: "🎯",
+          image: achievementImages["1"],
         },
         {
           id: "2",
-          title: "Desafiante Mestre",
-          description: "Completou todos os desafios",
-          completed: checkAllChallengesCompleted(challenges),
-          icon: "🏆",
+          title: "Guardião das Histórias",
+          description:
+            "Conquistado ao ler todas as histórias da jornada do Mago Alonso e seus aliados.",
+          completed: checkAllStoriesCompleted(stories),
+          icon: "📖",
+          image: achievementImages["2"],
         },
         {
           id: "3",
-          title: "Missão Cumprida",
-          description: "Realizou todas as missões",
-          completed: checkAllMissionsCompleted(missions),
-          icon: "✅",
+          title: "Guardião dos Desafios",
+          description:
+            "Conquistado ao completar todos os quizzes e desafios interativos dentro do app.",
+          completed: checkAllChallengesCompleted(challenges),
+          icon: "🧠",
+          image: achievementImages["3"],
         },
         {
           id: "4",
-          title: "Sábio Estudioso",
-          description: "Acessou todos os documentos da biblioteca",
+          title: "Guardião da Biblioteca",
+          description:
+            "Conquistado ao ler todos os conteúdos educativos disponíveis na seção da Biblioteca.",
           completed: checkAllLibraryDocumentsOpened(library),
-          icon: "🎓",
+          icon: "📚",
+          image: achievementImages["4"],
+        },
+        {
+          id: "5",
+          title: "Guardião do SOS",
+          description:
+            "Conquistado ao acessar e explorar a área de ajuda do aplicativo, com dicas e apoio para combater o etarismo na prática.",
+          completed: await checkSOSAccessed(),
+          icon: "🛟",
+          image: achievementImages["5"],
+        },
+        {
+          id: "6",
+          title: "Guardião da Comunidade",
+          description:
+            "Conquistado ao compartilhar o app nas redes sociais, ajudando a espalhar a mensagem de combate ao etarismo.",
+          completed: await checkAppShared(), // Agora é async
+          icon: "📣",
+          image: achievementImages["6"],
+        },
+      ];
+
+      // Agora adiciona o Guardião do Legado baseado nas conquistas base
+      const allAchievements: Achievement[] = [
+        ...baseAchievements,
+        {
+          id: "7",
+          title: "Guardião do Legado",
+          description:
+            "Conquistado ao cumprir todas as conquistas obrigatórias: Missões, Histórias, Desafios, Biblioteca e SOS. Representa o nível máximo de maturidade e engajamento com a causa.",
+          completed: checkAllMandatoryAchievements(baseAchievements),
+          icon: "🏅",
+          image: achievementImages["7"],
         },
       ];
 
@@ -112,6 +177,38 @@ export default function TabFourScreen() {
     return library.openedPdfs.length >= 6;
   };
 
+  // Verifica se o SOS foi acessado
+  const checkSOSAccessed = async (): Promise<boolean> => {
+    try {
+      const sosAccessed = await AsyncStorage.getItem("@sos_accessed");
+      return sosAccessed === "true";
+    } catch (error) {
+      console.error("Erro ao verificar acesso ao SOS:", error);
+      return false;
+    }
+  };
+
+  // Verifica se o app foi compartilhado
+  const checkAppShared = async (): Promise<boolean> => {
+    try {
+      const appShared = await AsyncStorage.getItem("@app_shared");
+      return appShared === "true";
+    } catch (error) {
+      console.error("Erro ao verificar se app foi compartilhado:", error);
+      return false;
+    }
+  };
+
+  // Função para registrar que o usuário compartilhou uma conquista
+  const registerAppShared = async () => {
+    try {
+      await AsyncStorage.setItem("@app_shared", "true");
+      console.log("Compartilhamento do app registrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao registrar compartilhamento do app:", error);
+    }
+  };
+
   const handleAchievementPress = (achievement: Achievement) => {
     setSelectedAchievement(achievement);
     setModalVisible(true);
@@ -125,29 +222,46 @@ export default function TabFourScreen() {
   const shareOnInstagram = async () => {
     if (!selectedAchievement) return;
 
-    const message = `🎉 Conquista desbloqueada! ${selectedAchievement.icon} ${selectedAchievement.title} - ${selectedAchievement.description}\n\nCompartilhado via Meu App`;
-
     try {
-      // Tenta abrir o Instagram com a mensagem pré-preenchida
-      const instagramUrl = `instagram://share?text=${encodeURIComponent(
-        message
-      )}`;
+      const isSharingAvailable = await Sharing.isAvailableAsync();
 
-      // Verifica se o Instagram está instalado
-      const canOpen = await Linking.canOpenURL(instagramUrl);
-
-      if (canOpen) {
-        await Linking.openURL(instagramUrl);
-      } else {
-        // Se o Instagram não estiver instalado, abre como URL normal
-        const webUrl = `https://www.instagram.com/?text=${encodeURIComponent(
-          message
-        )}`;
-        await Linking.openURL(webUrl);
+      if (!isSharingAvailable) {
+        Alert.alert(
+          "Erro",
+          "Compartilhamento não disponível neste dispositivo"
+        );
+        return;
       }
+
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+
+      if (status !== "granted") {
+        Alert.alert(
+          "Permissão necessária",
+          "Precisamos de permissão para salvar e compartilhar imagens."
+        );
+        return;
+      }
+
+      const message = `🎉 Conquista desbloqueada! ${selectedAchievement.icon} ${selectedAchievement.title}\n${selectedAchievement.description}\n\nCompartilhado via Meu App`;
+
+      await Sharing.shareAsync(selectedAchievement.image, {
+        mimeType: "image/png",
+        dialogTitle: "Compartilhar conquista no Instagram",
+        UTI: "public.image",
+      });
+
+      // Registra que o usuário compartilhou uma conquista
+      await registerAppShared();
+
+      // Atualiza as conquistas para refletir a mudança
+      await loadAchievements();
     } catch (error) {
-      console.error("Erro ao compartilhar no Instagram:", error);
-      Alert.alert("Erro", "Não foi possível compartilhar no Instagram.");
+      console.error("Erro ao compartilhar:", error);
+      Alert.alert(
+        "Erro ao compartilhar",
+        "Não foi possível compartilhar a conquista. Tente novamente."
+      );
     }
   };
 
@@ -163,7 +277,12 @@ export default function TabFourScreen() {
           achievement.completed ? styles.completedCard : styles.incompleteCard,
         ]}
       >
-        <Text style={styles.icon}>{achievement.icon}</Text>
+        {/* Imagem da conquista em vez do ícone */}
+        <Image
+          source={achievement.image}
+          style={styles.achievementImage}
+          resizeMode="contain"
+        />
         <View style={styles.textContainer}>
           <Text
             style={[
@@ -260,7 +379,12 @@ export default function TabFourScreen() {
           <View style={styles.modalContent}>
             {selectedAchievement && (
               <>
-                <Text style={styles.modalIcon}>{selectedAchievement.icon}</Text>
+                {/* Imagem maior no modal */}
+                <Image
+                  source={selectedAchievement.image}
+                  style={styles.modalImage}
+                  resizeMode="contain"
+                />
                 <Text style={styles.modalTitle}>
                   {selectedAchievement.title}
                 </Text>
@@ -279,9 +403,12 @@ export default function TabFourScreen() {
                     >
                       <FontAwesome5 name="instagram" size={20} color="white" />
                       <Text style={styles.instagramButtonText}>
-                        Compartilhar no Instagram
+                        Compartilhar Conquista
                       </Text>
                     </TouchableOpacity>
+                    <Text style={styles.shareHint}>
+                      Selecione o Instagram no menu de compartilhamento
+                    </Text>
                   </>
                 ) : (
                   <Text style={styles.modalLockedText}>
@@ -305,6 +432,7 @@ export default function TabFourScreen() {
   );
 }
 
+// Os estilos permanecem os mesmos...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -332,7 +460,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    // Efeito 3D para botão atualizar
     borderWidth: 1,
     borderColor: "#4a0a8a",
     borderBottomWidth: 6,
@@ -363,16 +490,20 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 12,
     alignItems: "center",
-    // Efeito 3D base
     borderWidth: 1,
     borderBottomWidth: 4,
     borderRightWidth: 2,
+  },
+  achievementImage: {
+    width: 50,
+    height: 50,
+    marginRight: 15,
+    borderRadius: 8,
   },
   progressContainer: {
     backgroundColor: "#620cb8ff",
     padding: 15,
     borderRadius: 10,
-    // Efeito 3D para o container de progresso também
     borderWidth: 1,
     borderColor: "#4a0a8a",
     borderBottomWidth: 3,
@@ -390,7 +521,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#6B46C1",
     borderRadius: 4,
     overflow: "hidden",
-    // Efeito 3D para a barra de progresso
     borderWidth: 0.5,
     borderColor: "#4a0a8a",
   },
@@ -400,22 +530,16 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   incompleteCard: {
-    backgroundColor: "#6B46C1", // Roxo para conquistas não concluídas
-    // Efeito 3D para conquistas não concluídas
+    backgroundColor: "#6B46C1",
     borderColor: "#4a0a8a",
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#68D391", // Verde para conquistas concluídas
-    // Efeito 3D para conquistas concluídas
+    backgroundColor: "#68D391",
     borderColor: "#48BB78",
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
-  },
-  icon: {
-    fontSize: 32,
-    marginRight: 15,
   },
   textContainer: {
     flex: 1,
@@ -427,20 +551,21 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   incompleteText: {
-    color: "white", // Texto branco para contraste com fundo roxo
+    color: "white",
   },
   completedText: {
-    color: "#2d3748", // Texto escuro para contraste com fundo verde
+    color: "#2d3748",
   },
   achievementDescription: {
     fontSize: 14,
     marginBottom: 6,
+    lineHeight: 18,
   },
   incompleteDescription: {
-    color: "rgba(255,255,255,0.9)", // Texto semi-transparente branco
+    color: "rgba(255,255,255,0.9)",
   },
   completedDescription: {
-    color: "#2d3748", // Texto escuro
+    color: "#2d3748",
     opacity: 0.8,
   },
   status: {
@@ -448,10 +573,10 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   incompleteStatus: {
-    color: "rgba(255,255,255,0.8)", // Texto semi-transparente branco
+    color: "rgba(255,255,255,0.8)",
   },
   completedStatus: {
-    color: "#2d3748", // Texto escuro
+    color: "#2d3748",
   },
   emptyText: {
     textAlign: "center",
@@ -460,7 +585,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
     color: "#666",
   },
-  // Estilos do Modal
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -475,7 +599,6 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 400,
     alignItems: "center",
-    // Efeito 3D para o modal
     borderWidth: 1,
     borderColor: "#d1d1d1",
     borderBottomWidth: 6,
@@ -483,9 +606,11 @@ const styles = StyleSheet.create({
     borderTopColor: "#f8f8f8",
     borderLeftColor: "#f8f8f8",
   },
-  modalIcon: {
-    fontSize: 48,
+  modalImage: {
+    width: 120,
+    height: 120,
     marginBottom: 16,
+    borderRadius: 12,
   },
   modalTitle: {
     fontSize: 22,
@@ -499,6 +624,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     color: "#666",
+    lineHeight: 22,
   },
   modalSuccessText: {
     fontSize: 16,
@@ -522,9 +648,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 8,
     width: "100%",
-    // Efeito 3D para botão do Instagram
     borderWidth: 1,
     borderColor: "#C13584",
     borderBottomWidth: 4,
@@ -538,6 +663,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 10,
   },
+  shareHint: {
+    fontSize: 12,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 16,
+    fontStyle: "italic",
+  },
   closeModalButton: {
     backgroundColor: "#6B46C1",
     paddingVertical: 12,
@@ -545,7 +677,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "100%",
     alignItems: "center",
-    // Efeito 3D para botão fechar
     borderWidth: 1,
     borderColor: "#4a0a8a",
     borderBottomWidth: 4,

@@ -44,13 +44,28 @@ export const Story1 = ({
         />
         <View style={styles.textOverlayScene1}>
           <TypingText
-            text="Uma semente não cresce sozinha. Uma árvore com raízes fortes não será esquecida."
+            text="Uma semente não cresce sozinha."
             style={styles.textScene1}
           ></TypingText>
         </View>
       </View>
     </View>,
     <View key={1} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[0].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene1}>
+          <TypingText
+            text="Uma árvore com raízes fortes não será esquecida."
+            style={styles.textScene1}
+          ></TypingText>
+        </View>
+      </View>
+    </View>,
+    <View key={2} style={styles.fullScreenStep}>
       <View style={styles.imageContainer}>
         <Image
           source={storiesImages[1].image}
@@ -68,7 +83,7 @@ export const Story1 = ({
         </View>
       </View>
     </View>,
-    <View key={2} style={styles.fullScreenStep}>
+    <View key={3} style={styles.fullScreenStep}>
       <View style={styles.imageContainer}>
         <Image
           source={storiesImages[2].image}
@@ -83,7 +98,7 @@ export const Story1 = ({
         </View>
       </View>
     </View>,
-    <View key={3} style={styles.fullScreenStep}>
+    <View key={4} style={styles.fullScreenStep}>
       <View style={styles.imageContainer}>
         <Image
           source={storiesImages[3].image}
@@ -99,7 +114,7 @@ export const Story1 = ({
         </View>
       </View>
     </View>,
-    <View key={4} style={styles.fullScreenStep}>
+    <View key={5} style={styles.fullScreenStep}>
       <View style={styles.imageContainer}>
         <Image
           source={storiesImages[4].image}
@@ -116,6 +131,17 @@ export const Story1 = ({
               ></TypingText>
             }
           ></FloatingText>
+        </View>
+      </View>
+    </View>,
+    <View key={6} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={storiesImages[4].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
           <TypingText
             text="Com a semente segura em suas mãos, Alonso soube que havia ali uma
             missão mais importante a cumprir: a terra firme o aguardava!"
@@ -178,14 +204,14 @@ const styles = StyleSheet.create({
   },
   textScene1: {
     color: "white",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     lineHeight: 24,
     textAlign: "center",
   },
   textScene2: {
     color: "white",
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: "bold",
     lineHeight: 24,
     textAlign: "center",

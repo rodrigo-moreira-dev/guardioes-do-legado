@@ -1,6 +1,23 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function TabFiveScreen() {
+  useEffect(() => {
+    // Quando o componente é montado (usuário acessa a tela), registra o acesso
+    registerSOSAccess();
+  }, []);
+
+  const registerSOSAccess = async () => {
+    try {
+      // Salva no AsyncStorage que o usuário acessou a tela SOS
+      await AsyncStorage.setItem("@sos_accessed", "true");
+      console.log("Acesso ao SOS registrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao registrar acesso ao SOS:", error);
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -175,7 +192,6 @@ const styles = StyleSheet.create({
   bold: {
     color: "#620cb8ff",
     fontSize: 18,
-
     fontWeight: "bold",
   },
   italic: {

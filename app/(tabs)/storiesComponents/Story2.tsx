@@ -1,6 +1,7 @@
 // storiesComponents/Story1.tsx
+import TypingText from "@/app/components/TypingText";
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import BaseStory from "./BaseStory";
 
 export const Story2 = ({
@@ -38,10 +39,11 @@ export const Story2 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene1}>
-          <Text style={styles.textScene1}>
-            A semente descansava agora sob a rocha e, em breve, nasceria. Mas,
-            para isso, um pouco de trabalho seria necessário.
-          </Text>
+          <TypingText
+            text="A semente descansava agora sob a rocha e, em breve, nasceria. Mas,
+            para isso, um pouco de trabalho seria necessário."
+            style={styles.textScene1}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -53,10 +55,11 @@ export const Story2 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene1}>
-            O mago juntou as mãos e derramou duas lágrimas de seus olhos: elas
-            brilharam com uma luz verde intensa.
-          </Text>
+          <TypingText
+            text="O mago juntou as mãos e derramou duas lágrimas de seus olhos: elas
+            brilharam com uma luz verde intensa."
+            style={styles.textScene1}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -68,10 +71,11 @@ export const Story2 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene1}>
-            Ao tocar a rocha dura, uma poderosa magia de fertilidade a
-            transformou em solo fofo e fértil.
-          </Text>
+          <TypingText
+            text="Ao tocar a rocha dura, uma poderosa magia de fertilidade a
+            transformou em solo fofo e fértil."
+            style={styles.textScene1}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -83,11 +87,12 @@ export const Story2 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <Text style={styles.textScene2}>
-            Da semente, as primeiras raízes criaram pernas e as primeiras folhas
+          <TypingText
+            text="Da semente, as primeiras raízes criaram pernas e as primeiras folhas
             se espreguiçaram. Flores de pétalas amarelas desabrocharam em um
-            belo sorriso, e os olhos do mago se encheram d’água.
-          </Text>
+            belo sorriso, e os olhos do mago se encheram d’água."
+            style={styles.textScene2}
+          ></TypingText>
         </View>
       </View>
     </View>,
@@ -100,7 +105,7 @@ export const Story2 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="O nascimento"
     />
   );
 };
@@ -128,7 +133,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   textOverlayScene1: {
-    margin: 20,
     position: "absolute",
     bottom: -20,
     left: 0,
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textOverlayScene2: {
-    margin: 20,
     position: "absolute",
     bottom: -16,
     left: 0,
