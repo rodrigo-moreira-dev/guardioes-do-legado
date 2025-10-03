@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -135,10 +136,14 @@ export const Story5 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Não o inveje, minha querida… — disse o mago. — Vamos embora, girassol. De nada adianta o brilho por fora e tanta escuridão por dentro. Ela acha que a luz é algo que se rouba, mal sabe que o verdadeiro brilho é algo que se doa!"
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Não o inveje, minha querida… — disse o mago. — Vamos embora, girassol. De nada adianta o brilho por fora e tanta escuridão por dentro. Ela acha que a luz é algo que se rouba, mal sabe que o verdadeiro brilho é algo que se doa!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

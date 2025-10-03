@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -93,10 +94,14 @@ export const Story9 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Minha cara, o seu velho está muito cansado… — disse com serenidade."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Minha cara, o seu velho está muito cansado… — disse com serenidade."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -123,10 +128,14 @@ export const Story9 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Eu… eu sinto saudades das minhas amigas no céu, e estou tão orgulhoso de você! — ele abriu um enorme sorriso e, com os olhos marejados,"
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Eu… eu sinto saudades das minhas amigas no céu, e estou tão orgulhoso de você! — ele abriu um enorme sorriso e, com os olhos marejados,"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -168,10 +177,14 @@ export const Story9 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Eu jamais irei te abandonar! Enquanto você se lembrar de mim, estarei sempre contigo na sua memória! — disse ele, despedindo-se com seu sorriso característico."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Eu jamais irei te abandonar! Enquanto você se lembrar de mim, estarei sempre contigo na sua memória! — disse ele, despedindo-se com seu sorriso característico."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

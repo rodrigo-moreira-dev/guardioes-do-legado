@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -54,10 +55,14 @@ export const Story6 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Hahahaha, sim! Cada fio de cabelo branco conta uma história. Um fio pode conter uma sabedoria, uma gargalhada, uma aventura, uma lágrima! — explicou ele."
-            style={styles.textScene1}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Hahahaha, sim! Cada fio de cabelo branco conta uma história. Um fio pode conter uma sabedoria, uma gargalhada, uma aventura, uma lágrima! — explicou ele."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -84,10 +89,14 @@ export const Story6 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Mas é claro, veja!"
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Mas é claro, veja!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

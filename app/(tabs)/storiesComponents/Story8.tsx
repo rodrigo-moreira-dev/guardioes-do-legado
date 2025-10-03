@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -108,10 +109,14 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Não pode ser… — murmurou Alonso, enquanto uma gota de suor escorria de sua testa. A nuvem que se aproximava, na verdade, era formada por gafanhotos!"
-            style={styles.textScene1}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Não pode ser… — murmurou Alonso, enquanto uma gota de suor escorria de sua testa. A nuvem que se aproximava, na verdade, era formada por gafanhotos!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -228,10 +233,14 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Ainda não, não foi o suficiente… — observou o mago."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Ainda não, não foi o suficiente… — observou o mago."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -258,10 +267,14 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene1}>
-          <TypingText
-            text="— Eu… estou sem forças, o que faremos? — perguntou o mago."
-            style={styles.textScene1}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Eu… estou sem forças, o que faremos? — perguntou o mago."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

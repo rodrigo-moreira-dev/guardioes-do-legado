@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -69,10 +70,14 @@ export const Story7 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Diga, grande Ipê, por que está tão só? — perguntou o mago."
-            style={styles.textScene1}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Diga, grande Ipê, por que está tão só? — perguntou o mago."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -204,10 +209,14 @@ export const Story7 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Ora, claro! Ele era inesquecível! — disse o mago."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Ora, claro! Ele era inesquecível! — disse o mago."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -84,10 +85,14 @@ export const Story3 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Não há o que temer, estamos seguros! E um dia você será grande e forte — encorajou o mago."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Não há o que temer, estamos seguros! E um dia você será grande e forte — encorajou o mago."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -114,10 +119,14 @@ export const Story3 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Há uma lenda antiga que dizia que um girassol um dia se tornaria o próprio Sol! — disse ele."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Há uma lenda antiga que dizia que um girassol um dia se tornaria o próprio Sol! — disse ele."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -144,10 +153,14 @@ export const Story3 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Eu… eu esqueci! Hahahaha! — gargalhou o velho, e a flor riu junto."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Eu… eu esqueci! Hahahaha! — gargalhou o velho, e a flor riu junto."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,

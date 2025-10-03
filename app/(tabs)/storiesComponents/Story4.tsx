@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -129,10 +130,14 @@ export const Story4 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Ora, nunca te falei? Minha memória… há muitos milênios, coisas incríveis foram criadas, inclusive a magia. Mas cada um se importava apenas consigo próprio, e brigavam pela luz… brigaram tanto, tanto até que a luz se acabou."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Ora, nunca te falei? Minha memória… há muitos milênios, coisas incríveis foram criadas, inclusive a magia. Mas cada um se importava apenas consigo próprio, e brigavam pela luz… brigaram tanto, tanto até que a luz se acabou."
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
@@ -159,10 +164,14 @@ export const Story4 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Para alguns, nem toda a luz do mundo parecia suficiente. Essa é uma lição valiosa!"
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingText
+            children={
+              <TypingText
+                text="— Para alguns, nem toda a luz do mundo parecia suficiente. Essa é uma lição valiosa!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
         </View>
       </View>
     </View>,
