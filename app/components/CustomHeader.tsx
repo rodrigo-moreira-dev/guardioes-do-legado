@@ -47,7 +47,7 @@ export default function CustomHeader() {
           style={styles.backButton}
           onPress={() => navigateTo("/")}
         >
-          <FontAwesome5 name="arrow-left" size={16} color="#6B46C1" />
+          <FontAwesome5 name="arrow-left" size={16} color="#6500F5" />
           <Text style={styles.backText} numberOfLines={1}>
             Voltar
           </Text>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   backText: {
-    color: "#6B46C1",
+    color: "#6500F5",
     marginLeft: 6,
     fontSize: 14, // Fonte menor
     fontWeight: "600",
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20, // Fonte um pouco menor
     fontWeight: "bold",
-    color: "#6B46C1",
+    color: "#6500F5",
     textAlign: "center",
     flex: 1,
     marginHorizontal: 8, // Margem para não colar nas bordas

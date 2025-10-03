@@ -40,7 +40,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
           style={styles.backButton}
           onPress={onClose} // Agora fecha o modal
         >
-          <FontAwesome5 name="arrow-left" size={20} color="#6B46C1" />
+          <FontAwesome5 name="arrow-left" size={20} color="#6500F5" />
           <Text style={styles.backText}>Voltar</Text>
         </TouchableOpacity>
 
@@ -67,7 +67,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
           <FontAwesome5
             name="arrow-left"
             size={20}
-            color={currentStep === 0 ? "#ccc" : "#620cb8ffe"}
+            color={currentStep === 0 ? "#ccc" : "#6500F5ffe"}
           />
         </TouchableOpacity>
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 16,
     fontWeight: "600",
-    color: "#6B46C1",
+    color: "#6500F5",
   },
   titleContainer: {
     flex: 1,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#620cb8ff",
+    color: "#6500F5ff",
     textAlign: "right",
   },
   stepIndicator: {
@@ -169,13 +169,13 @@ const styles = StyleSheet.create({
     borderLeftColor: "#f8f8f8",
   },
   nextButton: {
-    backgroundColor: "#6B46C1", // Roxo para avançar
+    backgroundColor: "#6500F5", // Roxo para avançar
     borderColor: "#4a0a8a",
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
   completeButton: {
-    backgroundColor: "#68D391", // Verde para concluir
+    backgroundColor: "#A6F500", // Verde para concluir
     borderColor: "#48BB78",
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   completeButtonText: {
-    color: "#2d3748", // Texto escuro para contraste com verde
+    color: "#3B371E", // Texto escuro para contraste com verde
     fontWeight: "bold",
     fontSize: 16,
   },

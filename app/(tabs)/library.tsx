@@ -196,16 +196,16 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 20,
-    height: 1,
+    height: 4,
     width: "100%",
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
+    borderRadius: 8,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   progressContainer: {
-    backgroundColor: "#620cb8ff",
+    backgroundColor: "#6500F5ff",
     padding: 15,
     borderRadius: 10,
     // Efeito 3D para o container de progresso também
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 12,
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#543C75",
     borderRadius: 4,
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     borderRadius: 4,
   },
   pdfList: {
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     // Container para o efeito 3D
   },
   pdfButton: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
     padding: 16,
     borderRadius: 10,
     // Removendo as sombras originais
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#8B5FDC", // Cor mais clara para a borda esquerda
   },
   pdfButtonOpened: {
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     // Efeito 3D para o botão aberto
     borderColor: "#48BB78", // Verde mais escuro
     borderTopColor: "#9AE6B4", // Verde mais claro para borda superior
@@ -291,13 +291,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pdfButtonOpenedText: {
-    color: "#6d00bbff",
+    color: "#3B371E",
     fontSize: 16,
     fontWeight: "bold",
     flex: 1,
   },
   openedBadge: {
-    color: "#6d00bbff",
+    color: "#3B371E",
     fontSize: 12,
     fontWeight: "600",
     backgroundColor: "rgba(255,255,255,0.2)",

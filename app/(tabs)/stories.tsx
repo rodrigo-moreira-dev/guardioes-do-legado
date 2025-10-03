@@ -55,7 +55,7 @@ export default function StoriesScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Histórias</Text>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#6B46C1" />
+          <ActivityIndicator size="large" color="#6500F5" />
           <Text>Carregando histórias...</Text>
         </View>
       </View>
@@ -355,12 +355,13 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 20,
-    height: 1,
+    height: 4,
     width: "100%",
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
+    borderRadius: 8,
   },
   progressContainer: {
-    backgroundColor: "#620cb8ff",
+    backgroundColor: "#6500F5ff",
     width: "100%",
     padding: 15,
     borderRadius: 10,
@@ -379,7 +380,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 12,
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#543C75",
     borderRadius: 4,
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
@@ -388,7 +389,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     borderRadius: 4,
   },
   headerContainer: {
@@ -405,7 +406,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   refreshButton: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderRadius: 12,
@@ -420,7 +421,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#8B5FDC",
   },
   unlockButton: {
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderRadius: 12,
@@ -450,7 +451,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
   },
   unlockedCard: {
-    backgroundColor: "#6B46C1", // Roxo para histórias desbloqueadas
+    backgroundColor: "#6500F5", // Roxo para histórias desbloqueadas
     // Efeito 3D para histórias desbloqueadas
     borderWidth: 1,
     borderColor: "#4a0a8a",
@@ -494,7 +495,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#68D391", // Verde para histórias concluídas
+    backgroundColor: "#A6F500", // Verde para histórias concluídas
     // Efeito 3D para histórias concluídas
     borderWidth: 1,
     borderColor: "#48BB78",
@@ -526,11 +527,11 @@ const styles = StyleSheet.create({
   },
   unlockedNumber: {
     backgroundColor: "#8B5FDC",
-    borderColor: "#6B46C1",
+    borderColor: "#6500F5",
   },
   completedNumber: {
     backgroundColor: "#9AE6B4",
-    borderColor: "#68D391",
+    borderColor: "#A6F500",
   },
   lockedNumber: {
     backgroundColor: "#ccc",

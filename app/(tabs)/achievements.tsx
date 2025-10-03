@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
@@ -456,7 +456,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   refreshButton: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -477,9 +477,10 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 20,
-    height: 1,
+    height: 4,
     width: "100%",
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
+    borderRadius: 8,
   },
   list: {
     width: "100%",
@@ -531,7 +532,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   progressContainer: {
-    backgroundColor: "#620cb8ff",
+    backgroundColor: "#6500F5ff",
     padding: 15,
     borderRadius: 10,
     borderWidth: 1,
@@ -548,7 +549,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 12,
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#543C75",
     borderRadius: 4,
     overflow: "hidden",
     borderWidth: 0.5,
@@ -556,17 +557,17 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     borderRadius: 4,
   },
   incompleteCard: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
     borderColor: "#4a0a8a",
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     borderColor: "#48BB78",
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
@@ -668,7 +669,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 8,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   modalDescription: {
     fontSize: 16,
@@ -692,7 +693,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   shareButton: {
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

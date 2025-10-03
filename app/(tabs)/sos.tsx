@@ -166,16 +166,17 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 20,
-    height: 1,
+    height: 4,
     width: "100%",
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
+    borderRadius: 8,
   },
   title: {
     fontSize: 32,
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 20,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   margins: {
     margin: 40,
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   bold: {
-    color: "#620cb8ff",
+    color: "#6500F5ff",
     fontSize: 18,
     fontWeight: "bold",
   },

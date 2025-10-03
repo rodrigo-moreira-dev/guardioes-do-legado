@@ -195,13 +195,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   separator: {
     marginVertical: 20,
-    height: 1,
+    height: 4,
     width: "100%",
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#6500F5",
+    borderRadius: 8,
   },
   subtitle: {
     fontSize: 16,
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
   },
   unlockedCard: {
-    backgroundColor: "#6B46C1", // Roxo para missões desbloqueadas
+    backgroundColor: "#6500F5", // Roxo para missões desbloqueadas
     // Efeito 3D para missões desbloqueadas
     borderWidth: 1,
     borderColor: "#4a0a8a",
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#8B5FDC",
   },
   completedCard: {
-    backgroundColor: "#68D391", // Verde para missões concluídas
+    backgroundColor: "#A6F500", // Verde para missões concluídas
     // Efeito 3D para missões concluídas
     borderWidth: 1,
     borderColor: "#48BB78",
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   progressContainer: {
-    backgroundColor: "#620cb8ff",
+    backgroundColor: "#6500F5ff",
     padding: 15,
     borderRadius: 10,
     // Efeito 3D para o container de progresso também
@@ -293,7 +294,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 12,
-    backgroundColor: "#6B46C1",
+    backgroundColor: "#543C75",
     borderRadius: 4,
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#68D391",
+    backgroundColor: "#A6F500",
     borderRadius: 4,
   },
   unlockedText: {
@@ -358,7 +359,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
-    color: "#620cb8ff",
+    color: "#6500F5ff",
   },
   missionText: {
     fontSize: 16,
@@ -367,7 +368,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   completeButton: {
-    backgroundColor: "#68D391", // Verde para o botão completar
+    backgroundColor: "#A6F500", // Verde para o botão completar
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 10,
@@ -380,13 +381,13 @@ const styles = StyleSheet.create({
     borderLeftColor: "#9AE6B4",
   },
   completeButtonText: {
-    color: "#4a0a8a", // Texto escuro para contraste com verde
+    color: "#3B371E", // Texto escuro para contraste com verde
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
   closeButton: {
-    backgroundColor: "#6B46C1", // Roxo para o botão fechar
+    backgroundColor: "#6500F5", // Roxo para o botão fechar
     paddingVertical: 12,
     borderRadius: 8,
     // Efeito 3D para botão fechar
