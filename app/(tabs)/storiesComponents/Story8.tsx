@@ -392,7 +392,7 @@ export const Story8 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="Uma nuvem hostil"
     />
   );
 };

@@ -244,7 +244,7 @@ export const Story7 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="Um ipê desflorido"
     />
   );
 };

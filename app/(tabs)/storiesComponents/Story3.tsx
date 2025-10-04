@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   textOverlayScene2: {
     position: "absolute",
-    bottom: -16,
+    bottom: 0,
     left: 0,
     right: 0,
     padding: 40,

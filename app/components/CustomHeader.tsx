@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "white",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    padding: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#E5E5E5",
     minHeight: 56, // Altura mínima maior
@@ -80,8 +79,7 @@ const styles = StyleSheet.create({
   backButton: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    padding: 8,
     minWidth: 70, // Largura mínima
     maxWidth: 100, // Largura máxima
     // Efeito 3D para botão voltar

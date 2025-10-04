@@ -154,7 +154,7 @@ export const Story6 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="Uma memória"
     />
   );
 };

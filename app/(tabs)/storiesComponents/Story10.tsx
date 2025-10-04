@@ -196,8 +196,8 @@ export const Story10 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="— Eu vou guardar na memória aqueles que já se foram… e vou cuidar daqueles que de mim precisam!"
-            style={styles.textScene2}
+            text="— Eu vou guardar na memória aqueles que já se foram… eu vou cuidar daqueles que de mim precisam!"
+            style={styles.textScene4}
           ></TypingText>
         </View>
       </View>
@@ -212,7 +212,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="E em uma explosão de luz,"
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -226,8 +226,8 @@ export const Story10 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="a pequena girassol brilhou tão intensamente que se fez dia."
-            style={styles.textScene2}
+            text="O girassol brilhou tão intensamente que se fez dia!!"
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -242,7 +242,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Ela cresceu, cresceu e subiu aos céus, iluminando a todos."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -257,7 +257,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene1}>
           <TypingText
             text="As nuvens brilhavam alegremente e coloriam o horizonte com uma luz dourada."
-            style={styles.textScene1}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -272,7 +272,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Uma nuvem de gafanhotos foi para bem longe."
-            style={styles.textScene1}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -287,7 +287,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Um ipê sem flores parecia enfim florescer."
-            style={styles.textScene1}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -302,7 +302,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Uma rosa enfim percebia que, na escuridão à sua volta, nada havia."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -317,7 +317,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Um campo de girassóis surgia."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -332,7 +332,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="E uma nuvem branca e fofa estava tão feliz que até chorava um arco-íris."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -347,7 +347,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Uma semente não cresce sozinha."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -362,7 +362,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="Uma árvore com raízes fortes não será esquecida."
-            style={styles.textScene2}
+            style={styles.textScene3}
           ></TypingText>
         </View>
       </View>
@@ -376,7 +376,8 @@ export const Story10 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="O brilho que se doa"
+      lastStory={true}
     />
   );
 };
@@ -437,6 +438,28 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     color: "white",
     fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  textScene3: {
+    textShadowColor: "white",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  textScene4: {
+    textShadowColor: "white",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    shadowColor: "black",
+    color: "white",
+    fontSize: 24,
     fontWeight: "bold",
     lineHeight: 24,
     textAlign: "center",

@@ -166,32 +166,39 @@ export default function ChallengesScreen() {
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            {selectedChallenge && (
-              <>
-                <Text style={styles.modalTitle}>{selectedChallenge.title}</Text>
-                <Text style={styles.questionText}>
-                  {selectedChallenge.questionText}
-                </Text>
+            <ScrollView
+              contentContainerStyle={styles.modalScrollContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {selectedChallenge && (
+                <>
+                  <Text style={styles.modalTitle}>
+                    {selectedChallenge.title}
+                  </Text>
+                  <Text style={styles.questionText}>
+                    {selectedChallenge.questionText}
+                  </Text>
 
-                {selectedChallenge.answerOptions &&
-                  selectedChallenge.answerOptions.map((option, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={styles.optionButton}
-                      onPress={() => handleAnswer(index)}
-                    >
-                      <Text style={styles.optionText}>{option}</Text>
-                    </TouchableOpacity>
-                  ))}
+                  {selectedChallenge.answerOptions &&
+                    selectedChallenge.answerOptions.map((option, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        style={styles.optionButton}
+                        onPress={() => handleAnswer(index)}
+                      >
+                        <Text style={styles.optionText}>{option}</Text>
+                      </TouchableOpacity>
+                    ))}
 
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>Fechar</Text>
-                </TouchableOpacity>
-              </>
-            )}
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.closeButtonText}>Fechar</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -356,17 +363,21 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    padding: 20,
     borderRadius: 12,
     width: "90%",
     maxHeight: "80%",
-    // Efeito 3D para o modal
+    // Remova padding aqui — ele vai para o ScrollView
+    // Efeito 3D
     borderWidth: 1,
     borderColor: "#d1d1d1",
     borderBottomWidth: 4,
     borderRightWidth: 3,
     borderTopColor: "#f8f8f8",
     borderLeftColor: "#f8f8f8",
+  },
+  modalScrollContent: {
+    padding: 20, // ← Move o padding para dentro do scroll
+    paddingBottom: 30, // ← Espaço extra no final para evitar corte do botão "Fechar"
   },
   modalTitle: {
     fontSize: 20,

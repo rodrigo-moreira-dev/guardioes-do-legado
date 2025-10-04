@@ -184,7 +184,7 @@ export const Story4 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="Crescimento"
+      storyTitle="O crescimento"
     />
   );
 };

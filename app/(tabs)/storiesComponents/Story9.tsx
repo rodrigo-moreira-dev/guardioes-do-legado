@@ -212,7 +212,7 @@ export const Story9 = ({
       currentStep={currentStep}
       onStepChange={onStepChange}
       onComplete={onComplete}
-      storyTitle="A Jornada Inicia"
+      storyTitle="Uma nuvem amiga"
     />
   );
 };

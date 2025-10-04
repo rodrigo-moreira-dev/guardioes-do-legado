@@ -1,6 +1,7 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Asset } from "expo-asset";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -222,7 +223,6 @@ export default function TabFourScreen() {
 
     try {
       const isSharingAvailable = await Sharing.isAvailableAsync();
-
       if (!isSharingAvailable) {
         Alert.alert(
           "Erro",
@@ -231,17 +231,17 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Compartilha diretamente a imagem do achievement
-      await Sharing.shareAsync(selectedAchievement.image, {
+      // Converte o asset (require) em URI
+      const asset = Asset.fromModule(selectedAchievement.image);
+      await asset.downloadAsync(); // Garante que o arquivo esteja disponível localmente
+
+      await Sharing.shareAsync(asset.localUri!, {
         mimeType: "image/png",
         dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.image",
+        UTI: "public.png", // ou "public.image"
       });
 
-      // Registra que o usuário compartilhou uma conquista
       await registerAppShared();
-
-      // Atualiza as conquistas para refletir a mudança
       await loadAchievements();
     } catch (error) {
       console.error("Erro ao compartilhar:", error);
@@ -399,6 +399,7 @@ export default function TabFourScreen() {
                     <Text style={styles.modalSuccessText}>
                       🎉 Parabéns! Você desbloqueou esta conquista!
                     </Text>
+
                     <TouchableOpacity
                       style={styles.shareButton}
                       onPress={shareAchievement}
@@ -408,9 +409,6 @@ export default function TabFourScreen() {
                         Compartilhar Conquista
                       </Text>
                     </TouchableOpacity>
-                    <Text style={styles.shareHint}>
-                      Compartilhe sua conquista nas redes sociais
-                    </Text>
                   </>
                 ) : (
                   <Text style={styles.modalLockedText}>
@@ -690,7 +688,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     marginBottom: 20,
-    color: "#48BB78",
+    color: "#314700",
     fontWeight: "600",
   },
   modalLockedText: {
@@ -705,8 +703,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 14,
-    paddingHorizontal: 20,
+    padding: 8,
     borderRadius: 12,
     marginBottom: 8,
     width: "100%",
@@ -719,7 +716,7 @@ const styles = StyleSheet.create({
   },
   shareButtonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     marginLeft: 10,
   },
@@ -732,8 +729,7 @@ const styles = StyleSheet.create({
   },
   closeModalButton: {
     backgroundColor: "#E1306C",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    padding: 8,
     borderRadius: 8,
     width: "100%",
     alignItems: "center",
@@ -746,7 +742,7 @@ const styles = StyleSheet.create({
   },
   closeModalButtonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
 });

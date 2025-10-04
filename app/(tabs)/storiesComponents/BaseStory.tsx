@@ -10,6 +10,7 @@ interface BaseStoryProps {
   onComplete: () => void;
   onClose: () => void; // Nova prop para fechar o modal
   storyTitle: string;
+  lastStory?: boolean;
 }
 
 const BaseStory: React.FC<BaseStoryProps> = ({
@@ -19,6 +20,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
   onComplete,
   onClose, // Recebe a função para fechar o modal
   storyTitle,
+  lastStory = false,
 }) => {
   const goToPreviousStep = () => {
     if (currentStep > 0) {
@@ -52,7 +54,9 @@ const BaseStory: React.FC<BaseStoryProps> = ({
         </View>
       </View>
 
-      <View style={styles.content}>{steps[currentStep]}</View>
+      <View style={lastStory ? styles.lastContent : styles.content}>
+        {steps[currentStep]}
+      </View>
 
       <View style={styles.footer}>
         <TouchableOpacity
@@ -73,17 +77,27 @@ const BaseStory: React.FC<BaseStoryProps> = ({
 
         {currentStep < steps.length - 1 ? (
           <TouchableOpacity
-            style={[styles.button, styles.nextButton]}
+            style={
+              lastStory
+                ? [styles.button, styles.lastStoryNextButton]
+                : [styles.button, styles.nextButton]
+            }
             onPress={goToNextStep}
           >
             <FontAwesome5 name="arrow-right" size={20} color="white" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={[styles.button, styles.completeButton]}
+            style={
+              lastStory
+                ? [styles.button, styles.lastStoryCompleteButton]
+                : [styles.button, styles.completeButton]
+            }
             onPress={onComplete}
           >
-            <Text style={styles.completeButtonText}>Concluir</Text>
+            <Text style={styles.completeButtonText}>
+              {lastStory ? "Guardar legado." : "Concluir"}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
@@ -99,7 +113,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
+    padding: 8,
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
@@ -144,14 +158,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#402E5C",
+  },
+  lastContent: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9d81fff",
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 16,
+    padding: 8,
     backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
   },
   button: {
     paddingVertical: 12,
@@ -174,11 +193,19 @@ const styles = StyleSheet.create({
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
+  lastStoryNextButton: {
+    backgroundColor: "#A6F500", // Roxo para avançar
+    borderColor: "#97D800",
+  },
   completeButton: {
     backgroundColor: "#A6F500", // Verde para concluir
     borderColor: "#48BB78",
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
+  },
+  lastStoryCompleteButton: {
+    backgroundColor: "#DBBA00", // Verde para concluir
+    borderColor: "#BEA200",
   },
   disabledButton: {
     backgroundColor: "#f5f5f5",
@@ -196,6 +223,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+
   disabledButtonText: {
     color: "#999",
   },
