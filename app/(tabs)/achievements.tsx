@@ -202,7 +202,6 @@ export default function TabFourScreen() {
   const registerAppShared = async () => {
     try {
       await AsyncStorage.setItem("@app_shared", "true");
-      console.log("Compartilhamento do app registrado com sucesso!");
     } catch (error) {
       console.error("Erro ao registrar compartilhamento do app:", error);
     }
@@ -317,9 +316,8 @@ export default function TabFourScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Conquistas</Text>
       <Text style={styles.subtitle}>
-        Complete atividades para desbloquear conquistas
+        Complete atividades para desbloqueá-las
       </Text>
 
       {/* Barra de progresso */}
@@ -446,14 +444,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
+    marginBottom: 8,
     color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
     color: "#6b6b6bff",
-    marginBottom: 20,
+    marginBottom: 8,
   },
   refreshButton: {
     backgroundColor: "#6500F5",
@@ -462,7 +460,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 8,
     borderWidth: 1,
     borderColor: "#4a0a8a",
     borderBottomWidth: 6,
@@ -476,10 +474,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 20,
+    marginTop: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#a6f500",
     borderRadius: 8,
   },
   list: {
@@ -490,10 +488,10 @@ const styles = StyleSheet.create({
   },
   achievementItem: {
     flexDirection: "row",
-    padding: 20,
-    marginVertical: 10,
+    padding: 16, // Reduzido para economizar espaço
+    marginVertical: 8,
     borderRadius: 16,
-    alignItems: "center",
+    alignItems: "center", // Importante! Alinha no topo, não no centro
     borderWidth: 1,
     borderBottomWidth: 6,
     borderRightWidth: 3,
@@ -504,14 +502,22 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   emblemaContainer: {
-    position: "relative",
-    marginRight: 20,
-    borderRadius: 20,
+    backgroundColor: "transparent",
+    alignContent: "center",
+    alignItems: "center",
+    marginRight: 16,
+    // Garante que o container não cresça além do necessário
+    flexShrink: 0,
+    // Opcional: limite máximo para telas grandes
+    maxWidth: 120,
   },
   achievementImage: {
-    width: 220, // Tamanho dobrado (era 50)
-    height: 220, // Tamanho dobrado (era 50)
+    alignSelf: "center",
+    width: "100%",
+    aspectRatio: 1, // Mantém proporção quadrada
     borderRadius: 12,
+    // Evita que a imagem ultrapasse o container
+    maxHeight: 120,
   },
   completedBadge: {
     position: "absolute",
@@ -574,7 +580,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    flexShrink: 1, // Permite encolher se necessário
     backgroundColor: "transparent",
+    minWidth: 0, // Essencial para permitir quebra de linha em flex
   },
   achievementTitle: {
     fontSize: 18,

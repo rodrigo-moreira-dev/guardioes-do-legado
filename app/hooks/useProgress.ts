@@ -15,8 +15,7 @@ interface UseProgressReturn {
 export const useProgress = (): UseProgressReturn => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refreshTrigger, setRefreshTrigger] = useState(0); // Adicionado para forçar atualizações
-  const { unlockStory } = useStories();
+  const { unlockStory, debugState } = useStories(); // Adicione debugState para verificação
 
   useEffect(() => {
     loadData();
@@ -77,13 +76,14 @@ export const useProgress = (): UseProgressReturn => {
     if (!isCorrect) return;
 
     try {
+      // ✅ PRIMEIRO: Atualizar apenas o desafio atual
       const updatedChallenges = challenges.map((challenge) =>
         challenge.id === challengeId
           ? { ...challenge, completed: true }
           : challenge
       );
 
-      // Desbloquear próximo desafio
+      // ✅ SEGUNDO: Desbloquear próximo desafio (se existir)
       const nextChallengeIndex = updatedChallenges.findIndex(
         (challenge) => !challenge.unlocked && !challenge.completed
       );
@@ -97,29 +97,22 @@ export const useProgress = (): UseProgressReturn => {
 
       setChallenges(updatedChallenges);
 
-      // Persistir no AsyncStorage
+      // ✅ TERCEIRO: Persistir desafios
       await AsyncStorage.setItem(
         "challenges",
         JSON.stringify(updatedChallenges)
       );
 
-      // Desbloquear a história correspondente ao desafio
+      // ✅ QUARTO: Desbloquear a história correspondente
       const storyId = parseInt(challengeId);
 
+      // ✅ VERIFICAÇÃO DE SEGURANÇA: Debug antes de desbloquear
+      debugState?.();
+
+      // ✅ Desbloquear APENAS a história correspondente
       await unlockStory(storyId);
-
-      // Desbloquear a próxima história se existir
-      if (storyId < 10) {
-        console.log(`Desbloqueando próxima história ${storyId + 1}`);
-        await unlockStory(storyId + 1);
-      }
-
-      // Forçar uma atualização
-      setRefreshTrigger((prev) => prev + 1);
-
-      console.log("Desafio e histórias atualizados com sucesso");
     } catch (error) {
-      console.error("Erro ao completar desafio:", error);
+      console.error("❌ Erro ao completar desafio:", error);
     }
   };
 
@@ -130,7 +123,6 @@ export const useProgress = (): UseProgressReturn => {
         "challenges",
         JSON.stringify(DEFAULT_CHALLENGES)
       );
-      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Erro ao resetar progresso:", error);
     }

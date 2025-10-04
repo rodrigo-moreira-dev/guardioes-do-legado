@@ -198,10 +198,10 @@ const styles = StyleSheet.create({
     color: "#6500F5ff",
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#acf500",
     borderRadius: 8,
   },
   subtitle: {
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     padding: 16,
     borderRadius: 12,
-    marginBottom: 12,
+    marginBottom: 8,
     // Efeito 3D base para cartões bloqueados
     borderWidth: 1,
     borderColor: "#d1d1d1",

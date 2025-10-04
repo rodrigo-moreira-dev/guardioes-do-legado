@@ -114,83 +114,79 @@ export interface Mission {
 export const DEFAULT_MISSIONS: Mission[] = [
   {
     id: "1",
-    title:
-      "Visitar uma ILP - Instituição de Longa Permanência para Pessoas Idosas",
+    title: "A Visita",
     description:
-      "Conversar, ouvir histórias e entregar bilhetes com mensagens positivas.",
+      "Visitar uma ILP - Instituição de Longa Permanência para Pessoas Idosas.",
     completed: false,
     unlocked: true,
   },
   {
     id: "2",
-    title: "Entrevistar uma pessoa idosa da própria família ou vizinhança",
+    title: "A Entrevista",
     description:
-      "Gravar um pequeno vídeo ou escrever sobre sua história, sonhos ou aprendizados.",
+      "Entrevistar uma pessoa idosa da própria família ou vizinhança.",
     completed: false,
     unlocked: true,
   },
   {
     id: "3",
-    title: "Criar um mural ou cartaz com frases antietaristas",
-    description:
-      "Identificar frases comuns que reforçam o preconceito e reescrevê-las de forma respeitosa.",
+    title: "O Mural",
+    description: "Criar um mural ou cartaz com frases antietaristas.",
     completed: false,
     unlocked: true,
   },
   {
     id: "4",
-    title: "Ajudar uma pessoa idosa com tarefas tecnológicas",
-    description:
-      "Ensinar a usar o celular, mandar um áudio, criar senha ou navegar com segurança.",
+    title: "A Ajuda",
+    description: "Ajudar uma pessoa idosa com tarefas tecnológicas.",
     completed: false,
     unlocked: true,
   },
   {
     id: "5",
-    title:
+    title: "A Reunião",
+    description:
       "Juntar pessoas de diferentes idades para falar sobre respeito, tempo e aprendizado.",
-    description: "Alimente 10 animais diferentes",
     completed: false,
     unlocked: true,
   },
   {
     id: "6",
-    title: "Criar um presente simbólico para uma pessoa idosa da comunidade",
+    title: "O Presente",
     description:
-      "Fazer algo simples, como uma carta, desenho, poema ou até uma playlist.",
+      "Criar um presente simbólico para uma pessoa idosa da comunidade: algo simples, como uma carta, desenho, poema ou até uma playlist.",
     completed: false,
     unlocked: true,
   },
   {
     id: "7",
-    title: "Observar e registrar atitudes etaristas no cotidiano",
+    title: "A Vigilância",
     description:
-      "Anotar falas ou ações preconceituosas que presenciar ou escutar (sem citar nomes).",
+      "Anotar falas ou ações preconceituosas e etaristas que presenciar ou escutar (sem citar nomes).",
     completed: false,
     unlocked: true,
   },
   {
     id: "8",
-    title: "Realizar uma caminhada com uma pessoa idosa",
+    title: "A Companhia",
     description:
-      "Acompanhar alguém para uma ida ao mercado, praça ou farmácia, conversando durante o caminho.",
+      "Acompanhar pessoa idosa para uma ida ao mercado, praça ou farmácia, conversando durante o caminho.",
     completed: false,
     unlocked: true,
   },
   {
     id: "9",
-    title:
-      "Criar um “Guia de Respeito” com dicas para conviver com pessoas idosas",
+    title: "O Respeito",
     description:
-      "Reunir boas práticas em formato simples para família, colegas ou internet.",
+      "Criar um “Guia de Respeito” com dicas para conviver com pessoas idosas. Reunir boas práticas em formato simples para família, colegas ou internet.",
     completed: false,
     unlocked: true,
   },
   {
     id: "10",
-    title: "Plantar uma semente com o nome de alguém que admira",
+    title: "A Semente",
     description:
-      "Associar o cuidado com a natureza ao cuidado com a história e a memória.",
+      "Plantar uma semente com o nome de alguém que admira. Associar o cuidado com a natureza ao cuidado com a história e a memória.",
     completed: false,
     unlocked: true,
   },

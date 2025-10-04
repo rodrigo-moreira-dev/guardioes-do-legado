@@ -12,7 +12,6 @@ export default function TabFiveScreen() {
     try {
       // Salva no AsyncStorage que o usuário acessou a tela SOS
       await AsyncStorage.setItem("@sos_accessed", "true");
-      console.log("Acesso ao SOS registrado com sucesso!");
     } catch (error) {
       console.error("Erro ao registrar acesso ao SOS:", error);
     }
@@ -154,7 +153,7 @@ export default function TabFiveScreen() {
 
 const styles = StyleSheet.create({
   marginTop: {
-    marginTop: 30,
+    marginTop: 16,
   },
   container: {
     flex: 1,
@@ -165,10 +164,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#acf500",
     borderRadius: 8,
   },
   title: {
@@ -176,10 +175,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 20,
+    marginBottom: 8,
     color: "#6500F5ff",
   },
   margins: {
-    margin: 40,
+    margin: 8,
   },
   topMargin: {
     marginBottom: 16,

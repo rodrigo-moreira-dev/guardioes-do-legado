@@ -206,7 +206,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
       "Embora pareça estranho no início, os netos têm razão em se preocupar com a imagem dos avós.",
       "É compreensível que a sociedade estranhe esse tipo de comportamento, mas o casal deve saber lidar com isso.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     completed: false,
     unlocked: false,
   }, // Adicione mais 8 desafios...

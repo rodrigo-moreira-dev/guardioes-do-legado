@@ -240,15 +240,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 8,
     color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
     textAlign: "center",
     color: "#6b6b6bff",
-    marginBottom: 20,
-    marginTop: 20,
+    marginVertical: 8,
   },
   loadingContainer: {
     flex: 1,
@@ -274,10 +273,10 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#acf500",
     borderRadius: 8,
   },
   challengeCard: {

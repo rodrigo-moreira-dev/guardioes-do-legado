@@ -119,7 +119,6 @@ export default function TabTwoScreen() {
           );
         }
       } catch (error) {
-        console.log("Erro ao abrir PDF:", error);
         Alert.alert("Erro", "Ocorreu um erro ao abrir o PDF.");
       }
     }
@@ -195,10 +194,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1ff",
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#acf500",
     borderRadius: 8,
   },
   title: {
@@ -211,8 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: "#6b6b6bff",
-    marginBottom: 20,
-    marginTop: 20,
+    marginVertical: 8,
   },
   progressContainer: {
     backgroundColor: "#6500F5ff",

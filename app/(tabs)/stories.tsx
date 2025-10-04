@@ -42,10 +42,6 @@ export default function StoriesScreen() {
   };
 
   useEffect(() => {
-    console.log("StoriesScreen - storiesState:", storiesState);
-    console.log("StoriesScreen - loading:", loading);
-    console.log("StoriesScreen - refreshTrigger:", refreshTrigger);
-
     // Atualizar o estado local quando o estado global mudar
     setLocalStoriesState(storiesState);
   }, [storiesState, loading, refreshTrigger]);
@@ -66,16 +62,10 @@ export default function StoriesScreen() {
   const sortedStories = [...localStoriesState].sort((a, b) => a.id - b.id);
   const unlockedStories = sortedStories.filter((story) => story.unlocked);
 
-  console.log("Todas as histórias ordenadas:", sortedStories);
-  console.log("Histórias desbloqueadas:", unlockedStories);
-
   const handleStoryPress = (storyId: number) => {
-    console.log(`Clicou na história ${storyId}`);
-
     // Verificar se a história está desbloqueada antes de abrir
     const story = localStoriesState.find((s) => s.id === storyId);
     if (!story || !story.unlocked) {
-      console.log(`História ${storyId} está bloqueada`);
       return;
     }
 
@@ -90,14 +80,12 @@ export default function StoriesScreen() {
 
   const handleStepChange = async (step: number) => {
     if (selectedStoryId !== null) {
-      console.log(`Mudando para passo ${step} da história ${selectedStoryId}`);
       await setStoryStep(selectedStoryId, step);
     }
   };
 
   const handleComplete = async () => {
     if (selectedStoryId !== null) {
-      console.log(`Concluindo história ${selectedStoryId}`);
       await completeStory(selectedStoryId);
       closeModal();
     }
@@ -110,10 +98,6 @@ export default function StoriesScreen() {
       (story) => story.id === selectedStoryId
     );
     if (!storyState) return null;
-
-    console.log(
-      `Renderizando componente da história ${selectedStoryId} com passo atual ${storyState.currentStep}`
-    );
 
     switch (selectedStoryId) {
       case 1:
@@ -354,10 +338,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1ff",
   },
   separator: {
-    marginVertical: 20,
+    marginVertical: 8,
     height: 4,
     width: "100%",
-    backgroundColor: "#6500F5",
+    backgroundColor: "#acf500",
     borderRadius: 8,
   },
   progressContainer: {
@@ -401,6 +385,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    alignContent: "center",
     gap: 10,
     marginTop: 10,
     width: "100%",
@@ -412,6 +397,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     // Efeito 3D para botão atualizar
     borderWidth: 1,
     borderColor: "#4a0a8a",
