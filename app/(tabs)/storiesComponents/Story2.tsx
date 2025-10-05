@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   textOverlayScene1: {
     position: "absolute",
     bottom: 0,
+    paddingHorizontal: 16,
     paddingBottom: FOOTER_HEIGHT,
     left: 0,
     right: 0,
@@ -144,10 +145,11 @@ const styles = StyleSheet.create({
   textOverlayScene2: {
     position: "absolute",
     bottom: 0,
+    paddingTop: 20,
+    paddingHorizontal: 16,
     paddingBottom: FOOTER_HEIGHT,
     left: 0,
     right: 0,
-    paddingTop: 20,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textScene1: {

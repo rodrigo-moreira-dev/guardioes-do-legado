@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   },
   textOverlayScene1: {
     position: "absolute",
+    paddingHorizontal: 16,
     paddingBottom: FOOTER_HEIGHT,
     bottom: 0,
     left: 0,
@@ -196,6 +197,7 @@ const styles = StyleSheet.create({
   },
   textOverlayScene2: {
     position: "absolute",
+    paddingHorizontal: 16,
     paddingBottom: FOOTER_HEIGHT,
     bottom: 0,
     left: 0,
