@@ -17,7 +17,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.rrmdev.myapp",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "O aplicativo precisa de acesso."
       }
     },
     "android": {
@@ -38,12 +39,8 @@
       [
         "react-native-share",
         {
-          "ios": [
-            "instagram"
-          ],
-          "android": [
-            "com.instagram.android"
-          ]
+          "ios": ["instagram"],
+          "android": ["com.instagram.android"]
         }
       ],
       "expo-build-properties",

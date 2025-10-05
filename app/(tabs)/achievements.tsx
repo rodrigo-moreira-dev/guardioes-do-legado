@@ -48,7 +48,7 @@ export default function TabFourScreen() {
   const checkAllMandatoryAchievements = (
     achievements: Achievement[]
   ): boolean => {
-    const mandatoryIds = ["1", "2", "3", "4", "5"]; // IDs das conquistas obrigatórias
+    const mandatoryIds = ["1", "2", "3", "4", "5", "6"]; // IDs das conquistas obrigatórias
     const mandatoryAchievements = achievements.filter((achievement) =>
       mandatoryIds.includes(achievement.id)
     );
@@ -588,7 +588,6 @@ const styles = StyleSheet.create({
     borderLeftColor: "#9AE6B4",
   },
   textContainer: {
-    flex: 1,
     flexShrink: 1,
     backgroundColor: "transparent",
     minWidth: 0,

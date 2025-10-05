@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { FOOTER_HEIGHT } from "./storiesComponents/BaseStory";
 
 export default function TabTwoScreen() {
   const [selectedPdf, setSelectedPdf] = useState<number | null>(null);
@@ -245,6 +246,7 @@ const styles = StyleSheet.create({
   },
   pdfList: {
     gap: 12,
+    paddingBottom: FOOTER_HEIGHT,
   },
   pdfButtonContainer: {
     // Container para o efeito 3D

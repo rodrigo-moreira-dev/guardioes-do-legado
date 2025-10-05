@@ -13,6 +13,8 @@ interface BaseStoryProps {
   lastStory?: boolean;
 }
 
+export const FOOTER_HEIGHT = 60;
+
 const BaseStory: React.FC<BaseStoryProps> = ({
   steps,
   currentStep,
@@ -54,7 +56,12 @@ const BaseStory: React.FC<BaseStoryProps> = ({
         </View>
       </View>
 
-      <View style={lastStory ? styles.lastContent : styles.content}>
+      <View
+        style={[
+          lastStory ? styles.lastContent : styles.content,
+          { marginBottom: FOOTER_HEIGHT },
+        ]}
+      >
         {steps[currentStep]}
       </View>
 
@@ -156,17 +163,16 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#402E5C",
   },
   lastContent: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f9d81fff",
   },
   footer: {
+    height: FOOTER_HEIGHT,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 8,

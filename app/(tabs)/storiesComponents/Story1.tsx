@@ -3,7 +3,7 @@ import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import BaseStory from "./BaseStory";
+import BaseStory, { FOOTER_HEIGHT } from "./BaseStory";
 
 export const Story1 = ({
   currentStep,
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   },
   textOverlayScene1: {
     position: "absolute",
+    paddingBottom: FOOTER_HEIGHT,
     bottom: 0,
     left: 0,
     right: 0,
@@ -195,11 +196,12 @@ const styles = StyleSheet.create({
   },
   textOverlayScene2: {
     position: "absolute",
+    paddingBottom: FOOTER_HEIGHT,
     bottom: 0,
     left: 0,
     right: 0,
     padding: 8,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    backgroundColor: "rgba(6, 6, 6, 0.7)",
   },
   textScene1: {
     color: "white",
