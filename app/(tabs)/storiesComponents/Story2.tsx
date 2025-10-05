@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -159,7 +158,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -170,7 +168,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

@@ -1,4 +1,5 @@
 // storiesComponents/Story1.tsx
+import FloatingBugText from "@/app/components/FloatingBugText";
 import FloatingText from "@/app/components/FloatingText";
 import TypingText from "@/app/components/TypingText";
 import React from "react";
@@ -96,7 +97,7 @@ export const Story8 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Olha, uma de suas amigas, mago! — exclamou a flor."
-            style={styles.textScene1}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -112,7 +113,7 @@ export const Story8 = ({
           <FloatingText
             children={
               <TypingText
-                text="— Não pode ser… — murmurou Alonso, enquanto uma gota de suor escorria de sua testa. A nuvem que se aproximava, na verdade, era formada por gafanhotos!"
+                text="— Não pode ser… — murmurou Alonso, enquanto gotas de suor escorriam de sua testa. A nuvem que se aproximava, na verdade, era formada por gafanhotos!"
                 style={styles.textScene2}
               ></TypingText>
             }
@@ -143,10 +144,12 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Temos fome… — implorou o primeiro."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingBugText>
+            <TypingText
+              text="— Temos fome… — implorou o primeiro."
+              style={styles.textSceneGafanhoto}
+            ></TypingText>
+          </FloatingBugText>
         </View>
       </View>
     </View>,
@@ -158,10 +161,12 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Nos dê essa flor! — exigiu o segundo."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingBugText>
+            <TypingText
+              text="— Nos dê essa flor! — exigiu o segundo."
+              style={styles.textSceneGafanhoto}
+            ></TypingText>
+          </FloatingBugText>
         </View>
       </View>
     </View>,
@@ -173,10 +178,12 @@ export const Story8 = ({
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
-          <TypingText
-            text="— Ele já é velho, fraco e cansado. O que poderia fazer contra nós? — zombou o terceiro."
-            style={styles.textScene2}
-          ></TypingText>
+          <FloatingBugText>
+            <TypingText
+              text="— Ele já é velho, fraco e cansado. O que poderia fazer contra nós? — zombou o terceiro."
+              style={styles.textSceneGafanhoto}
+            ></TypingText>
+          </FloatingBugText>
         </View>
       </View>
     </View>,
@@ -220,7 +227,7 @@ export const Story8 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Que incrível! Estamos a salvo! — disse a flor, aliviada."
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -317,8 +324,8 @@ export const Story8 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="— Deixem-no em paz!!"
-            style={styles.textScene2}
+            text="— DEIXEM-NO EM PAZ!!"
+            style={styles.textSceneGreat}
           ></TypingText>
         </View>
       </View>
@@ -332,7 +339,7 @@ export const Story8 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="E com sua poderosa voz, suas pétalas brilharam."
+            text="Sua voz havia sido um presente do mago e agora o girassol a usava para protegê-lo! As suas pétalas brilharam."
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -377,7 +384,7 @@ export const Story8 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="Alonso sorriu satisfeito. Nunca estivera tão orgulhoso em toda a sua vida. Sentiu-se realizado."
+            text="Alonso fechou os olhos e sorriu satisfeito. Nunca estivera tão orgulhoso em toda a sua vida. Sentiu-se realizado."
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -419,6 +426,26 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
   textOverlayScene1: {
     position: "absolute",
     bottom: -20,
@@ -435,8 +462,34 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
+  textSceneGafanhoto: {
+    color: "#7cffaa", // verde ácido - ótima escolha!
+    fontStyle: "italic",
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+
+    // Efeitos sombrios mais agressivos
+    textShadowColor: "#004400", // verde muito escuro
+    textShadowOffset: {
+      width: 0,
+      height: 1, // leve profundidade
+    },
+    textShadowRadius: 8, // mais espalhado
+
+    // Para Android - sombra mais intensa
+    elevation: 3,
+
+    // Efeito de "vibração" visual
+    letterSpacing: 0.5, // espaçamento irregular
+
+    // Background sutil para contraste
+    backgroundColor: "rgba(0, 20, 0, 0.3)", // fundo verde muito escuro
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -446,8 +499,20 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
   },
+  textSceneGreat: {
+    color: "#FFD700",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    shadowColor: "black",
+    textShadowColor: "#ffffffff",
+    fontSize: 32,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+    letterSpacing: 0.8,
+  },
+
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -458,7 +523,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

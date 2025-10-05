@@ -63,7 +63,7 @@ export const Story5 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Que rosa belíssima! Por que está tão feliz? — perguntou o girassol."
-            style={styles.textScene1}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -78,7 +78,7 @@ export const Story5 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Mas é óbvio que sou bela! Que comentário petulante… — disse a rosa. — Eu bebo toda a luz que posso das estrelas e da lua, e todo este jardim contempla minha beleza."
-            style={styles.textScene1}
+            style={styles.textSceneRose}
           ></TypingText>
         </View>
       </View>
@@ -93,7 +93,7 @@ export const Story5 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="—  As outras plantas ficam na sombra, pois não são tão importantes e belas quanto eu!  — disse a rosa. — Por isso estou sempre feliz!"
-            style={styles.textScene2}
+            style={styles.textSceneRose}
           ></TypingText>
         </View>
       </View>
@@ -123,7 +123,7 @@ export const Story5 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Girassol, vejo que você está brilhando. Mesmo que seja um brilho fraco e feio, quero-o para mim! Me entregue sua luz! — ordenou a rosa."
-            style={styles.textScene2}
+            style={styles.textSceneRose}
           ></TypingText>
         </View>
       </View>
@@ -139,7 +139,7 @@ export const Story5 = ({
           <FloatingText
             children={
               <TypingText
-                text="— Não o inveje, minha querida… — disse o mago. — Vamos embora, girassol. De nada adianta o brilho por fora e tanta escuridão por dentro. Ela acha que a luz é algo que se rouba, mal sabe que o verdadeiro brilho é algo que se doa!"
+                text="— Não o inveje, minha querida… — disse o mago. — Vamos embora, girassol."
                 style={styles.textScene2}
               ></TypingText>
             }
@@ -150,13 +150,32 @@ export const Story5 = ({
     <View key={7} style={styles.fullScreenStep}>
       <View style={styles.imageContainer}>
         <Image
+          source={storiesImages[4].image}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <View style={styles.textOverlayScene2}>
+          <FloatingText
+            children={
+              <TypingText
+                text="— De nada adianta o brilho por fora e tanta escuridão por dentro. Ela acha que a luz é algo que se rouba, mal sabe que o verdadeiro brilho é algo que se doa!"
+                style={styles.textScene2}
+              ></TypingText>
+            }
+          ></FloatingText>
+        </View>
+      </View>
+    </View>,
+    <View key={8} style={styles.fullScreenStep}>
+      <View style={styles.imageContainer}>
+        <Image
           source={storiesImages[5].image}
           style={styles.image}
           resizeMode="contain"
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="E eles deixaram a rosa sozinha em seu jardim, perfeitamente escuro e vazio."
+            text="Eles então foram embora e deixaram a rosa sozinha em seu jardim, perfeitamente escuro e vazio."
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -214,8 +233,39 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
-  textScene1: {
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  textSceneRose: {
+    fontStyle: "italic",
+    fontFamily: "Georgia",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
     textShadowColor: "black",
+    color: "#ff2bb5ff",
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  textScene1: {
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -226,7 +276,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -237,7 +286,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

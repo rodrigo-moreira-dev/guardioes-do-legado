@@ -5,7 +5,7 @@ interface FloatingTextProps {
   children: React.ReactNode;
 }
 
-const FloatingText: React.FC<FloatingTextProps> = ({ children }) => {
+const FloatingBugText: React.FC<FloatingTextProps> = ({ children }) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -13,12 +13,12 @@ const FloatingText: React.FC<FloatingTextProps> = ({ children }) => {
       Animated.sequence([
         Animated.timing(animatedValue, {
           toValue: 1,
-          duration: 4000,
+          duration: 1000,
           useNativeDriver: true, // Performance nativa
         }),
         Animated.timing(animatedValue, {
           toValue: 0,
-          duration: 4000,
+          duration: 1000,
           useNativeDriver: true,
         }),
       ])
@@ -30,12 +30,7 @@ const FloatingText: React.FC<FloatingTextProps> = ({ children }) => {
   // Animação de posição
   const translateY = animatedValue.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
-    outputRange: [0, -12, -20, -12, 0],
-  });
-
-  const rotate = animatedValue.interpolate({
-    inputRange: [0, 0.25, 0.5, 0.75, 1],
-    outputRange: ["0deg", "-1deg", "0deg", "1deg", "0.1deg"],
+    outputRange: [0, -4, -6, -4, 0],
   });
 
   // Animação de brilho (usando canal alpha na cor)
@@ -53,7 +48,7 @@ const FloatingText: React.FC<FloatingTextProps> = ({ children }) => {
       style={[
         styles.wizardText,
         {
-          transform: [{ translateY }, { rotate }],
+          transform: [{ translateY }],
         },
       ]}
     >
@@ -77,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FloatingText;
+export default FloatingBugText;

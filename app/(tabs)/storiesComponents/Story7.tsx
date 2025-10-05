@@ -105,8 +105,8 @@ export const Story7 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="— Eu fui esquecida… — disse a árvore bem baixinho. — Fui esquecida por quem me plantou, e quem repousava à minha sombra nunca mais voltou."
-            style={styles.textScene2}
+            text="— Eu fui esquecida… — disse a árvore bem baixinho — Fui esquecida por quem me plantou, e quem repousava à minha sombra nunca mais voltou."
+            style={styles.textSceneIpe}
           ></TypingText>
         </View>
       </View>
@@ -120,8 +120,8 @@ export const Story7 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="E, por fim, o Sol nos abandonou. Já não tenho mais utilidade…"
-            style={styles.textScene2}
+            text="— E, por fim, o Sol nos abandonou. Já não tenho mais utilidade…"
+            style={styles.textSceneIpe}
           ></TypingText>
         </View>
       </View>
@@ -165,7 +165,7 @@ export const Story7 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="Retirou um dos galhos do grande ipê e o transformou em uma pequena nuvem."
+            text="Retirou um dos galhos do grande ipê e o transformou em uma pequena nuvem. Galhos secos também contam histórias!"
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -180,7 +180,7 @@ export const Story7 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="Dentro dela, era possível enxergar um enorme ipê, com flores de todas as cores e várias pessoas repousando em sua sombra."
+            text="Dentro da nuvem, era possível enxergar um enorme ipê, com flores de todas as cores e várias pessoas repousando em sua sombra."
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -196,7 +196,7 @@ export const Story7 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Nossa, ele era incrível! Vamos lembrar dele, mago? — pediu o girassol."
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -212,7 +212,7 @@ export const Story7 = ({
           <FloatingText
             children={
               <TypingText
-                text="— Ora, claro! Ele era inesquecível! — disse o mago."
+                text="— Ora, mas é claro! Ele era inesquecível! — disse o mago."
                 style={styles.textScene2}
               ></TypingText>
             }
@@ -287,8 +287,37 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  textSceneIpe: {
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    fontFamily: "Palatino",
+    shadowColor: "black",
+    color: "#d9d9d9ff",
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+  },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -299,7 +328,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -310,7 +338,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

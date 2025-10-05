@@ -115,7 +115,7 @@ export const Story9 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Entendi! Vamos parar por hoje, dormiremos aqui! — respondeu ela, preocupada."
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -164,7 +164,7 @@ export const Story9 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Alonso?! Não vá! Eu preciso de você, não me abandone agora! — implorou ela."
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -197,7 +197,7 @@ export const Story9 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="E então flutuou aos céus."
+            text="E flutuou aos céus."
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -255,8 +255,27 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -267,7 +286,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -278,7 +296,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

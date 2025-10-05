@@ -92,7 +92,7 @@ export const Story10 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Isso não é justo! — soluçava."
-            style={styles.textScene1}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -136,8 +136,8 @@ export const Story10 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="— Eu… eu não consegui te proteger, eu não sou um Sol!! — chorou."
-            style={styles.textScene2}
+            text="— Eu… eu não consegui te proteger, eu... eu não sou um Sol!! — chorou."
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -166,7 +166,7 @@ export const Story10 = ({
         />
         <View style={styles.textOverlayScene2}>
           <TypingText
-            text="Naquele momento, entendeu algo muito importante."
+            text="Naquele momento, o girassol enfim entendeu algo muito importante!"
             style={styles.textScene2}
           ></TypingText>
         </View>
@@ -421,7 +421,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -432,7 +431,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -453,19 +451,47 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
   },
-  textScene4: {
-    textShadowColor: "white",
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-    shadowColor: "black",
-    color: "white",
-    fontSize: 24,
-    fontWeight: "bold",
-    lineHeight: 24,
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
     textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  textScene4: {
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    color: "#fff6c2ff",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#ffffffff",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    letterSpacing: 0.8,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",

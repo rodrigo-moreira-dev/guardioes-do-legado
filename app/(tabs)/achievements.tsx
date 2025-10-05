@@ -554,10 +554,11 @@ const styles = StyleSheet.create({
   progressBar: {
     height: 12,
     backgroundColor: "#543C75",
-    borderRadius: 4,
+    borderRadius: 8,
     overflow: "hidden",
-    borderWidth: 0.5,
-    borderColor: "#4a0a8a",
+    // Efeito 3D para a barra de progresso
+    borderWidth: 1,
+    borderColor: "#A6F500",
   },
   progressFill: {
     height: "100%",

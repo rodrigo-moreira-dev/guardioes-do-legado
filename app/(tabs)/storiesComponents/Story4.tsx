@@ -117,7 +117,7 @@ export const Story4 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Mago, afinal, o que houve com o Sol?"
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -151,7 +151,7 @@ export const Story4 = ({
         <View style={styles.textOverlayScene2}>
           <TypingText
             text="— Mas a luz não era suficiente para todos?"
-            style={styles.textScene2}
+            style={styles.textSceneGirassol}
           ></TypingText>
         </View>
       </View>
@@ -227,8 +227,27 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
+  textSceneGirassol: {
+    color: "#FFD700",
+    fontSize: 20,
+    fontWeight: "600",
+    lineHeight: 26,
+    textAlign: "center",
+    textShadowColor: "#B8860B",
+    textShadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    textShadowRadius: 4,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+    letterSpacing: 0.3,
+    backgroundColor: "rgba(19, 139, 23, 0.1)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
   textScene1: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -239,7 +258,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textScene2: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
@@ -250,7 +268,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   normalText: {
-    textShadowColor: "black",
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,
     shadowColor: "black",
