@@ -257,6 +257,7 @@ export default function TabFourScreen() {
     <TouchableOpacity
       onPress={() => handleAchievementPress(achievement)}
       activeOpacity={0.7}
+      style={styles.touchableWrapper}
     >
       <View
         style={[
@@ -484,38 +485,47 @@ const styles = StyleSheet.create({
   listContent: {
     paddingBottom: 20,
   },
+  touchableWrapper: {
+    alignSelf: "flex-start",
+    width: "100%",
+  },
   achievementItem: {
     flexDirection: "row",
-    padding: 16, // Reduzido para economizar espaço
-    marginVertical: 8,
-    borderRadius: 16,
-    alignItems: "center", // Importante! Alinha no topo, não no centro
+    padding: 12, // Reduzido de 16
+    marginVertical: 6, // Reduzido de 8
+    borderRadius: 12, // Reduzido de 16
+    alignItems: "flex-start", // Mudado de "center" para evitar esticamento vertical
     borderWidth: 1,
-    borderBottomWidth: 6,
-    borderRightWidth: 3,
+    borderBottomWidth: 4, // Reduzido de 6
+    borderRightWidth: 2, // Reduzido de 3
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 }, // Reduzido de 4
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowRadius: 6, // Reduzido de 8
+    elevation: 3, // Reduzido de 5
+    minHeight: 0, // Remove altura mínima padrão
+    flexShrink: 1, // Permite encolher
+    flexGrow: 0, // Não expande além do necessário
   },
+
   emblemaContainer: {
     backgroundColor: "transparent",
     alignContent: "center",
     alignItems: "center",
-    marginRight: 16,
-    // Garante que o container não cresça além do necessário
+    marginRight: 12, // Reduzido de 16
     flexShrink: 0,
-    // Opcional: limite máximo para telas grandes
-    maxWidth: 120,
+    maxWidth: 80, // Reduzido de 120
+    width: 80, // Largura fixa para controle melhor
   },
+
   achievementImage: {
     alignSelf: "center",
     width: "100%",
-    aspectRatio: 1, // Mantém proporção quadrada
-    borderRadius: 12,
-    // Evita que a imagem ultrapasse o container
-    maxHeight: 120,
+    aspectRatio: 1,
+    borderRadius: 8, // Reduzido de 12
+    maxHeight: 80, // Reduzido de 120
+    // Adiciona limites explícitos
+    height: 80,
   },
   completedBadge: {
     position: "absolute",
@@ -579,15 +589,24 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    flexShrink: 1, // Permite encolher se necessário
+    flexShrink: 1,
     backgroundColor: "transparent",
-    minWidth: 0, // Essencial para permitir quebra de linha em flex
+    minWidth: 0,
+    // Remove qualquer padding/margin interno
+    padding: 0,
+    margin: 0,
+    // Permite que o texto ocupe apenas o espaço necessário
+    justifyContent: "flex-start",
   },
+
   achievementTitle: {
-    fontSize: 18,
+    fontSize: 16, // Reduzido de 18
     fontWeight: "bold",
-    marginBottom: 6,
+    marginBottom: 4, // Reduzido de 6
+    // Garante que o texto não expanda desnecessariamente
+    flexShrink: 1,
   },
+
   incompleteText: {
     color: "white",
   },
@@ -595,9 +614,11 @@ const styles = StyleSheet.create({
     color: "#2d3748",
   },
   achievementDescription: {
-    fontSize: 14,
-    marginBottom: 8,
-    lineHeight: 18,
+    fontSize: 13, // Reduzido de 14
+    marginBottom: 6, // Reduzido de 8
+    lineHeight: 16, // Reduzido de 18
+    // Limita o número de linhas se necessário
+    flexShrink: 1,
   },
   incompleteDescription: {
     color: "rgba(255,255,255,0.9)",
