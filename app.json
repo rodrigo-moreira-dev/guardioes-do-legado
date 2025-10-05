@@ -18,7 +18,10 @@
       "bundleIdentifier": "com.rrmdev.myapp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSCameraUsageDescription": "O aplicativo precisa de acesso."
+        "NSCameraUsageDescription": "O aplicativo precisa de acesso.",
+        "NSPhotoLibraryUsageDescription": "O aplicativo precisa de acesso.",
+        "NSLocationAlwaysUsageDescription": "O aplicativo precisa de acesso.",
+        "NSLocationWhenInUseUsageDescription": "O aplicativo precisa de acesso."
       }
     },
     "android": {

@@ -56,12 +56,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
         </View>
       </View>
 
-      <View
-        style={[
-          lastStory ? styles.lastContent : styles.content,
-          { marginBottom: FOOTER_HEIGHT },
-        ]}
-      >
+      <View style={[lastStory ? styles.lastContent : styles.content]}>
         {steps[currentStep]}
       </View>
 
