@@ -1,7 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Asset } from "expo-asset";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -231,23 +230,25 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Converte o asset (require) em URI
-      const asset = Asset.fromModule(selectedAchievement.image);
-      await asset.downloadAsync(); // Garante que o arquivo esteja disponível localmente
+      // Método mais direto para obter a URI
+      const imageSource = selectedAchievement.image;
+      const imageUri = Image.resolveAssetSource(imageSource).uri;
 
-      await Sharing.shareAsync(asset.localUri!, {
+      console.log("Tentando compartilhar URI:", imageUri); // Para debug
+
+      // Compartilha apenas a imagem
+      await Sharing.shareAsync(imageUri, {
         mimeType: "image/png",
-        dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.png", // ou "public.image"
+        dialogTitle: `Conquista: ${selectedAchievement.title}`,
       });
 
       await registerAppShared();
       await loadAchievements();
     } catch (error) {
-      console.error("Erro ao compartilhar:", error);
+      console.error("Erro detalhado ao compartilhar:", error);
       Alert.alert(
         "Erro ao compartilhar",
-        "Não foi possível compartilhar a conquista. Tente novamente."
+        "Não foi possível compartilhar a conquista. Verifique se o arquivo de imagem existe."
       );
     }
   };
