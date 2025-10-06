@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     shadowColor: "black",
     textShadowColor: "#ffffffff",
-    fontSize: 32,
+    fontSize: 20,
     fontWeight: "bold",
     lineHeight: 24,
     textAlign: "center",
