@@ -2,6 +2,7 @@ import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Asset } from "expo-asset";
+import FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -231,16 +232,31 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Converte o asset (require) em URI
+      // 1. Obter o asset
       const asset = Asset.fromModule(selectedAchievement.image);
-      await asset.downloadAsync(); // Garante que o arquivo esteja disponível localmente
+      await asset.downloadAsync();
 
-      await Sharing.shareAsync(asset.localUri!, {
-        mimeType: "image/png",
-        dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.png", // ou "public.image"
+      if (!asset.localUri) {
+        throw new Error("Não foi possível obter o URI local da imagem.");
+      }
+
+      // 2. Copiar para um local compartilhável (necessário no iOS)
+      const fileName = `achievement_${selectedAchievement.id}.png`;
+      const shareableUri = `${FileSystem.cacheDirectory}${fileName}`;
+
+      await FileSystem.copyAsync({
+        from: asset.localUri,
+        to: shareableUri,
       });
 
+      // 3. Compartilhar
+      await Sharing.shareAsync(shareableUri, {
+        mimeType: "image/png",
+        dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
+        UTI: "public.png",
+      });
+
+      // 4. Atualizar estado
       await registerAppShared();
       await loadAchievements();
     } catch (error) {
