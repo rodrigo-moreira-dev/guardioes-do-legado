@@ -1,7 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Asset } from "expo-asset";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -231,14 +230,10 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Converte o asset (require) em URI
-      const asset = Asset.fromModule(selectedAchievement.image);
-      await asset.downloadAsync(); // Garante que o arquivo esteja disponível localmente
-
-      await Sharing.shareAsync(asset.localUri!, {
+      await Sharing.shareAsync(selectedAchievement.image, {
         mimeType: "image/png",
         dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.png", // ou "public.image"
+        UTI: "public.image",
       });
 
       await registerAppShared();

@@ -1,7 +1,13 @@
 // storiesComponents/BaseStory.tsx
 import { FontAwesome5 } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context"; // 👈
 
 interface BaseStoryProps {
@@ -14,7 +20,7 @@ interface BaseStoryProps {
   lastStory?: boolean;
 }
 
-export const FOOTER_HEIGHT = 60;
+export const FOOTER_HEIGHT = 70;
 
 const BaseStory: React.FC<BaseStoryProps> = ({
   steps,
@@ -26,6 +32,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
   lastStory = false,
 }) => {
   const insets = useSafeAreaInsets(); // 👈 Obtém os insets de segurança
+  const topInset = Platform.OS === "ios" ? insets.top : 0;
 
   const goToPreviousStep = () => {
     if (currentStep > 0) {
@@ -41,7 +48,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
 
   return (
     // 👇 Aplica o paddingTop apenas no topo
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: topInset }]}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={onClose}>
           <FontAwesome5 name="arrow-left" size={20} color="#6500F5" />
@@ -72,7 +79,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
         >
           <FontAwesome5
             name="arrow-left"
-            size={20}
+            size={14}
             color={currentStep === 0 ? "#ccc" : "#6500F5ffe"}
           />
         </TouchableOpacity>
@@ -86,7 +93,7 @@ const BaseStory: React.FC<BaseStoryProps> = ({
             }
             onPress={goToNextStep}
           >
-            <FontAwesome5 name="arrow-right" size={20} color="white" />
+            <FontAwesome5 name="arrow-right" size={14} color="white" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
@@ -169,14 +176,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9d81fff",
   },
   footer: {
-    height: FOOTER_HEIGHT,
+    minHeight: FOOTER_HEIGHT,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 8,
     backgroundColor: "#fff",
   },
   button: {
-    paddingVertical: 12,
+    paddingVertical: 6,
     paddingHorizontal: 24,
     borderRadius: 8,
     // Efeito 3D base
@@ -196,12 +203,10 @@ const styles = StyleSheet.create({
     borderColor: "#4a0a8a",
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
-    justifyContent: "center",
   },
   lastStoryNextButton: {
     backgroundColor: "#A6F500", // Roxo para avançar
     borderColor: "#97D800",
-    justifyContent: "center",
   },
   completeButton: {
     backgroundColor: "#A6F500", // Verde para concluir

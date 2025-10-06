@@ -152,7 +152,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
       "O mercado de trabalho valoriza juventude e inovação, por isso é natural preferir candidatos mais novos.",
       "A escolha por alguém mais jovem é estratégica, pois pessoas com mais idade tendem a ter mais dificuldades com tecnologia.",
       "Pessoas com muita experiência podem se tornar inflexíveis, então é razoável a empresa evitar esse tipo de contratação",
-      "Nenhuma das alternativas",
+      "Trata-se de etarismo: discriminação ilegal baseada na idade, que viola o direito à igualdade e desvaloriza a experiência profissional.",
     ],
     correctAnswer: 3,
     completed: false,
