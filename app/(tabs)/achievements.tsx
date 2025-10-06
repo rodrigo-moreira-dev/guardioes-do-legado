@@ -1,6 +1,7 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Asset } from "expo-asset";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -221,8 +222,6 @@ export default function TabFourScreen() {
     if (!selectedAchievement) return;
 
     try {
-      console.log("Iniciando compartilhamento...");
-
       const isSharingAvailable = await Sharing.isAvailableAsync();
       if (!isSharingAvailable) {
         Alert.alert(
@@ -232,50 +231,24 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Obter a URI da imagem
-      const imageSource = Image.resolveAssetSource(selectedAchievement.image);
+      // Converte o asset (require) em URI
+      const asset = Asset.fromModule(selectedAchievement.image);
+      await asset.downloadAsync(); // Garante que o arquivo esteja disponível localmente
 
-      if (!imageSource || !imageSource.uri) {
-        throw new Error("Não foi possível carregar a imagem");
-      }
-
-      console.log("URI da imagem:", imageSource.uri);
-
-      // Compartilhar a imagem
-      await Sharing.shareAsync(imageSource.uri, {
+      await Sharing.shareAsync(asset.localUri!, {
         mimeType: "image/png",
         dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.image", // Mais genérico para iOS
+        UTI: "public.png", // ou "public.image"
       });
 
-      console.log("Compartilhamento realizado com sucesso");
-
-      // Registrar o compartilhamento e atualizar
       await registerAppShared();
       await loadAchievements();
     } catch (error) {
-      console.error("Erro detalhado ao compartilhar:", error);
-
-      // Mensagem de erro mais específica
-      let errorMessage =
-        "Não foi possível compartilhar a conquista. Tente novamente.";
-
-      if (error instanceof Error) {
-        if (
-          error.message.includes("permission") ||
-          error.message.includes("permissão")
-        ) {
-          errorMessage =
-            "Permissão negada. Verifique as permissões do aplicativo.";
-        } else if (
-          error.message.includes("file") ||
-          error.message.includes("arquivo")
-        ) {
-          errorMessage = "Arquivo de imagem não encontrado.";
-        }
-      }
-
-      Alert.alert("Erro ao compartilhar", errorMessage);
+      console.error("Erro ao compartilhar:", error);
+      Alert.alert(
+        "Erro ao compartilhar",
+        "Não foi possível compartilhar a conquista. Tente novamente."
+      );
     }
   };
 
