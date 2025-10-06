@@ -198,11 +198,12 @@ const styles = StyleSheet.create({
     color: "#6500F5ff",
   },
   separator: {
-    marginVertical: 8,
-    height: 4,
-    width: "100%",
-    backgroundColor: "#acf500",
+    alignSelf: "center",
+    width: 4,
+    height: 40,
+    backgroundColor: "#a6f500",
     borderRadius: 8,
+    marginVertical: 32,
   },
   subtitle: {
     fontSize: 16,
@@ -248,20 +249,22 @@ const styles = StyleSheet.create({
   unlockedCard: {
     backgroundColor: "#6500F5", // Roxo para missões desbloqueadas
     // Efeito 3D para missões desbloqueadas
-    borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
     borderColor: "#4a0a8a",
-    borderBottomWidth: 6, // Mais espesso conforme solicitado
-    borderRightWidth: 3,
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
   completedCard: {
     backgroundColor: "#A6F500", // Verde para missões concluídas
     // Efeito 3D para missões concluídas
-    borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
     borderColor: "#48BB78",
-    borderBottomWidth: 6, // Mais espesso conforme solicitado
-    borderRightWidth: 3,
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
   },
@@ -299,7 +302,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
     borderWidth: 1,
-    borderColor: "#A6F500",
+    borderColor: "#eebdffff",
   },
   progressFill: {
     height: "100%",

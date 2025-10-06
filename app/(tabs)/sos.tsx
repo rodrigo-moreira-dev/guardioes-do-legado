@@ -164,11 +164,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   separator: {
-    marginVertical: 8,
-    height: 4,
-    width: "100%",
-    backgroundColor: "#acf500",
+    alignSelf: "center",
+    width: 4,
+    height: 40,
+    backgroundColor: "#a6f500",
     borderRadius: 8,
+    marginVertical: 32,
   },
   title: {
     fontSize: 32,

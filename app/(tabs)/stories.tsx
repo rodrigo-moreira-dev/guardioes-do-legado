@@ -338,11 +338,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1ff",
   },
   separator: {
-    marginVertical: 8,
-    height: 4,
-    width: "100%",
-    backgroundColor: "#acf500",
+    alignSelf: "center",
+    width: 4,
+    height: 40,
+    backgroundColor: "#a6f500",
     borderRadius: 8,
+    marginVertical: 32,
   },
   progressContainer: {
     backgroundColor: "#6500F5ff",
@@ -369,7 +370,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
     borderWidth: 1,
-    borderColor: "#A6F500",
+    borderColor: "#eebdffff",
   },
   progressFill: {
     height: "100%",
@@ -475,8 +476,8 @@ const styles = StyleSheet.create({
     // Efeito 3D para histórias desbloqueadas
     borderWidth: 1,
     borderColor: "#4a0a8a",
-    borderBottomWidth: 6,
-    borderRightWidth: 3,
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
   },
@@ -484,11 +485,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#A6F500", // Verde para histórias concluídas
     // Efeito 3D para histórias concluídas
     borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
     borderColor: "#48BB78",
-    borderBottomWidth: 6,
-    borderRightWidth: 3,
-    borderTopColor: "#9AE6B4",
-    borderLeftColor: "#9AE6B4",
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
   },
   lockedCard: {
     backgroundColor: "#f5f5f5",

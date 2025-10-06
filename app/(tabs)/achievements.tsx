@@ -473,11 +473,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {
-    marginTop: 8,
-    height: 4,
-    width: "100%",
+    alignSelf: "center",
+    width: 4,
+    height: 40,
     backgroundColor: "#a6f500",
     borderRadius: 8,
+    marginVertical: 32,
   },
   list: {
     width: "100%",

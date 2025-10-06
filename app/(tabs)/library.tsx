@@ -195,11 +195,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1ff",
   },
   separator: {
-    marginVertical: 8,
-    height: 4,
-    width: "100%",
-    backgroundColor: "#acf500",
+    alignSelf: "center",
+    width: 4,
+    height: 40,
+    backgroundColor: "#a6f500",
     borderRadius: 8,
+    marginVertical: 32,
   },
   title: {
     fontSize: 24,
@@ -220,8 +221,8 @@ const styles = StyleSheet.create({
     // Efeito 3D para o container de progresso também
     borderWidth: 1,
     borderColor: "#4a0a8a",
-    borderBottomWidth: 3,
-    borderRightWidth: 2,
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
   },
   progressText: {
     textAlign: "center",
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     // Efeito 3D para a barra de progresso
     borderWidth: 1,
-    borderColor: "#A6F500",
+    borderColor: "#eebdffff",
   },
   progressFill: {
     height: "100%",
@@ -265,8 +266,8 @@ const styles = StyleSheet.create({
     // Efeito 3D - bordas para dar profundidade
     borderWidth: 1,
     borderColor: "#4a0a8a", // Cor mais escura para a borda
-    borderBottomWidth: 4, // Borda inferior mais grossa para efeito de profundidade
-    borderRightWidth: 3, // Borda direita mais grossa para efeito de luz vinda do canto superior esquerdo
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
 
     // Bordas internas claras para efeito de relevo
     borderTopColor: "#8B5FDC", // Cor mais clara para a borda superior
@@ -278,6 +279,8 @@ const styles = StyleSheet.create({
     borderColor: "#48BB78", // Verde mais escuro
     borderTopColor: "#9AE6B4", // Verde mais claro para borda superior
     borderLeftColor: "#9AE6B4", // Verde mais claro para borda esquerda
+    borderBottomWidth: 5,
+    borderRightWidth: 4,
   },
   pdfButtonContent: {
     flexDirection: "row",
