@@ -2,13 +2,14 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context"; // 👈
 
 interface BaseStoryProps {
-  steps: React.ReactNode[]; // Array de slides (cada slide é um componente React)
+  steps: React.ReactNode[];
   currentStep: number;
   onStepChange: (step: number) => void;
   onComplete: () => void;
-  onClose: () => void; // Nova prop para fechar o modal
+  onClose: () => void;
   storyTitle: string;
   lastStory?: boolean;
 }
@@ -20,10 +21,12 @@ const BaseStory: React.FC<BaseStoryProps> = ({
   currentStep,
   onStepChange,
   onComplete,
-  onClose, // Recebe a função para fechar o modal
+  onClose,
   storyTitle,
   lastStory = false,
 }) => {
+  const insets = useSafeAreaInsets(); // 👈 Obtém os insets de segurança
+
   const goToPreviousStep = () => {
     if (currentStep > 0) {
       onStepChange(currentStep - 1);
@@ -37,13 +40,10 @@ const BaseStory: React.FC<BaseStoryProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      {/* Header com botão Voltar e título alinhados */}
+    // 👇 Aplica o paddingTop apenas no topo
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={onClose} // Agora fecha o modal
-        >
+        <TouchableOpacity style={styles.backButton} onPress={onClose}>
           <FontAwesome5 name="arrow-left" size={20} color="#6500F5" />
           <Text style={styles.backText}>Voltar</Text>
         </TouchableOpacity>
@@ -106,6 +106,8 @@ const BaseStory: React.FC<BaseStoryProps> = ({
     </View>
   );
 };
+
+// ... (seus estilos permanecem iguais)
 
 const styles = StyleSheet.create({
   container: {
@@ -181,6 +183,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 4,
     borderRightWidth: 2,
+    justifyContent: "center",
   },
   backButtonFooter: {
     backgroundColor: "#f8f8f8",
@@ -193,26 +196,31 @@ const styles = StyleSheet.create({
     borderColor: "#4a0a8a",
     borderTopColor: "#8B5FDC",
     borderLeftColor: "#8B5FDC",
+    justifyContent: "center",
   },
   lastStoryNextButton: {
     backgroundColor: "#A6F500", // Roxo para avançar
     borderColor: "#97D800",
+    justifyContent: "center",
   },
   completeButton: {
     backgroundColor: "#A6F500", // Verde para concluir
     borderColor: "#48BB78",
     borderTopColor: "#9AE6B4",
     borderLeftColor: "#9AE6B4",
+    justifyContent: "center",
   },
   lastStoryCompleteButton: {
     backgroundColor: "#DBBA00", // Verde para concluir
     borderColor: "#BEA200",
+    justifyContent: "center",
   },
   disabledButton: {
     backgroundColor: "#f5f5f5",
     borderColor: "#d1d1d1",
     borderTopColor: "#f5f5f5",
     borderLeftColor: "#f5f5f5",
+    justifyContent: "center",
   },
   buttonText: {
     color: "white",
@@ -223,6 +231,8 @@ const styles = StyleSheet.create({
     color: "#3B371E", // Texto escuro para contraste com verde
     fontWeight: "bold",
     fontSize: 16,
+    justifyContent: "center",
+    alignContent: "center",
   },
 
   disabledButtonText: {

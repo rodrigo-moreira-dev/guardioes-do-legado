@@ -217,6 +217,16 @@ export default function StoriesScreen() {
     return styles.unlockedNumber;
   };
 
+  const getStoryNumberTextStyle = (story: any) => {
+    if (!story.unlocked) {
+      return styles.lockedTextNumber;
+    }
+    if (story.completed) {
+      return styles.completedTextNumber;
+    }
+    return styles.unlockedTextNumber;
+  };
+
   // Função para determinar o texto de status baseado no estado da história
   const getStoryStatusText = (story: any) => {
     if (!story.unlocked) {
@@ -293,7 +303,7 @@ export default function StoriesScreen() {
                   getStoryNumberStyle(story),
                 ]}
               >
-                <Text style={styles.storyNumber}>{story.id}</Text>
+                <Text style={getStoryNumberTextStyle(story)}>{story.id}</Text>
               </View>
               <Text
                 style={[
@@ -303,7 +313,7 @@ export default function StoriesScreen() {
                   story.unlocked && !story.completed && styles.unlockedText,
                 ]}
               >
-                Capítulo {story.id}
+                {story.title}
               </Text>
             </View>
             <Text
@@ -337,6 +347,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f1f1f1ff",
   },
+  lockedTextNumber: {},
+  unlockedTextNumber: {
+    color: "#2d3748",
+    fontWeight: "bold",
+    backgroundColor: "#a6f500",
+  },
+  completedTextNumber: { color: "white", fontWeight: "bold" },
   separator: {
     alignSelf: "center",
     width: 4,
@@ -511,13 +528,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomWidth: 2,
     borderRightWidth: 2,
+    backgroundColor: "#A6F500",
   },
   unlockedNumber: {
-    backgroundColor: "#8B5FDC",
+    backgroundColor: "#a6f500",
     borderColor: "#6500F5",
   },
   completedNumber: {
-    backgroundColor: "#9AE6B4",
+    backgroundColor: "#6500F5",
+    color: "white",
     borderColor: "#A6F500",
   },
   lockedNumber: {

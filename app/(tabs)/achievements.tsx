@@ -413,8 +413,7 @@ export default function TabFourScreen() {
                   </>
                 ) : (
                   <Text style={styles.modalLockedText}>
-                    🔒 Complete esta conquista para compartilhar suas
-                    conquistas!
+                    🔒 Complete esta conquista para compartilhá-las!
                   </Text>
                 )}
 
