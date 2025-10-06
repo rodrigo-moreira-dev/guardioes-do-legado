@@ -1,8 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Asset } from "expo-asset";
-import FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -223,6 +221,8 @@ export default function TabFourScreen() {
     if (!selectedAchievement) return;
 
     try {
+      console.log("Iniciando compartilhamento...");
+
       const isSharingAvailable = await Sharing.isAvailableAsync();
       if (!isSharingAvailable) {
         Alert.alert(
@@ -232,39 +232,50 @@ export default function TabFourScreen() {
         return;
       }
 
-      // 1. Obter o asset
-      const asset = Asset.fromModule(selectedAchievement.image);
-      await asset.downloadAsync();
+      // Obter a URI da imagem
+      const imageSource = Image.resolveAssetSource(selectedAchievement.image);
 
-      if (!asset.localUri) {
-        throw new Error("Não foi possível obter o URI local da imagem.");
+      if (!imageSource || !imageSource.uri) {
+        throw new Error("Não foi possível carregar a imagem");
       }
 
-      // 2. Copiar para um local compartilhável (necessário no iOS)
-      const fileName = `achievement_${selectedAchievement.id}.png`;
-      const shareableUri = `${FileSystem.cacheDirectory}${fileName}`;
+      console.log("URI da imagem:", imageSource.uri);
 
-      await FileSystem.copyAsync({
-        from: asset.localUri,
-        to: shareableUri,
-      });
-
-      // 3. Compartilhar
-      await Sharing.shareAsync(shareableUri, {
+      // Compartilhar a imagem
+      await Sharing.shareAsync(imageSource.uri, {
         mimeType: "image/png",
         dialogTitle: `Compartilhar conquista: ${selectedAchievement.title}`,
-        UTI: "public.png",
+        UTI: "public.image", // Mais genérico para iOS
       });
 
-      // 4. Atualizar estado
+      console.log("Compartilhamento realizado com sucesso");
+
+      // Registrar o compartilhamento e atualizar
       await registerAppShared();
       await loadAchievements();
     } catch (error) {
-      console.error("Erro ao compartilhar:", error);
-      Alert.alert(
-        "Erro ao compartilhar",
-        "Não foi possível compartilhar a conquista. Tente novamente."
-      );
+      console.error("Erro detalhado ao compartilhar:", error);
+
+      // Mensagem de erro mais específica
+      let errorMessage =
+        "Não foi possível compartilhar a conquista. Tente novamente.";
+
+      if (error instanceof Error) {
+        if (
+          error.message.includes("permission") ||
+          error.message.includes("permissão")
+        ) {
+          errorMessage =
+            "Permissão negada. Verifique as permissões do aplicativo.";
+        } else if (
+          error.message.includes("file") ||
+          error.message.includes("arquivo")
+        ) {
+          errorMessage = "Arquivo de imagem não encontrado.";
+        }
+      }
+
+      Alert.alert("Erro ao compartilhar", errorMessage);
     }
   };
 
