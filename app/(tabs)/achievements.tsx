@@ -1,6 +1,7 @@
 import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { useEffect, useState } from "react";
 import {
@@ -8,6 +9,7 @@ import {
   FlatList,
   Image,
   Modal,
+  Platform,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -221,7 +223,11 @@ export default function TabFourScreen() {
     if (!selectedAchievement) return;
 
     try {
+      console.log("=== Iniciando compartilhamento ===");
+
       const isSharingAvailable = await Sharing.isAvailableAsync();
+      console.log("Sharing disponível:", isSharingAvailable);
+
       if (!isSharingAvailable) {
         Alert.alert(
           "Erro",
@@ -230,25 +236,71 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Método mais direto para obter a URI
+      // Verifica se está no web e usa fallback
+      if (Platform.OS === "web") {
+        Alert.alert(
+          "Aviso",
+          "O compartilhamento de imagens não está disponível na versão web. Use o aplicativo mobile para compartilhar conquistas."
+        );
+        return;
+      }
+
+      // Obtém a URI do asset local usando expo-asset
       const imageSource = selectedAchievement.image;
-      const imageUri = Image.resolveAssetSource(imageSource).uri;
+      console.log("Image source:", imageSource);
 
-      console.log("Tentando compartilhar URI:", imageUri); // Para debug
+      // Carrega o asset
+      const asset = Asset.fromModule(imageSource);
+      await asset.downloadAsync();
+      console.log("Asset URI:", asset.localUri || asset.uri);
 
-      // Compartilha apenas a imagem
-      await Sharing.shareAsync(imageUri, {
+      const sourceUri = asset.localUri || asset.uri;
+
+      if (!sourceUri) {
+        throw new Error("Não foi possível obter a URI da imagem");
+      }
+
+      // Cria um caminho temporário para a imagem
+      const filename = `conquista_${selectedAchievement.id}.png`;
+      const fileUri = `${FileSystem.cacheDirectory}${filename}`;
+      console.log("Destino:", fileUri);
+
+      // Copia o asset para o sistema de arquivos local
+      console.log("Copiando arquivo...");
+      await FileSystem.copyAsync({
+        from: sourceUri,
+        to: fileUri,
+      });
+      console.log("Arquivo copiado com sucesso!");
+
+      // Verifica se o arquivo existe
+      const fileInfo = await FileSystem.getInfoAsync(fileUri);
+      console.log("Info do arquivo:", fileInfo);
+
+      // Compartilha o arquivo copiado
+      console.log("Compartilhando arquivo:", fileUri);
+      await Sharing.shareAsync(fileUri, {
         mimeType: "image/png",
         dialogTitle: `Conquista: ${selectedAchievement.title}`,
       });
 
+      console.log("Compartilhamento concluído!");
+
+      // Registra o compartilhamento e atualiza as conquistas
       await registerAppShared();
       await loadAchievements();
     } catch (error) {
-      console.error("Erro detalhado ao compartilhar:", error);
+      console.error("=== Erro detalhado ao compartilhar ===");
+      console.error("Tipo do erro:", error);
+      console.error(
+        "Mensagem:",
+        error instanceof Error ? error.message : String(error)
+      );
+      console.error("Stack:", error instanceof Error ? error.stack : "N/A");
+
       Alert.alert(
         "Erro ao compartilhar",
-        "Não foi possível compartilhar a conquista. Verifique se o arquivo de imagem existe."
+        `Detalhes: ${error instanceof Error ? error.message : String(error)}`
       );
     }
   };
