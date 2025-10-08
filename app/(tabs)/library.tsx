@@ -24,7 +24,7 @@ export default function TabTwoScreen() {
       title: "Cartilha dos direitos",
       fileName: require("@/assets/pdfs/cartilha_direitos.pdf"),
       webUrl:
-        "https://drive.google.com/uc?export=download&id=1Yz-HLuU5Fqw00NtJ3NS1mnLqNEjxEeMC",
+        "https://drive.google.com/uc?export=download&id=1Yg2XjZXxApK1RB5LDWC1_InQRKCi-8a_",
     },
     {
       id: 2,
