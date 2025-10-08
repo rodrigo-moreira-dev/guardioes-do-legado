@@ -111,7 +111,7 @@ export const DEFAULT_CHALLENGES: Array<Challenge> = [
     id: "5",
     title: "Empréstimos indevidos - Sr. Antônio",
     description:
-      "O Sr. Antônio é aposentado e sempre ajudou com as contas de casa. Um dia, descobriu que vários empréstimos haviam sido feitos em seu nome. Para sua tristeza, percebeu que quem havia realizado esses empréstimos era um de seus filhos, que só aparece de vez em quando e nunca para ajudá-lo de verdade. Quando tentou reclamar, ouviu uma justificativa fria: “Você não usa mesmo esse dinheiro. Desde então, a vida do Sr. Antônio ficou muito difícil. Quase toda a sua aposentadoria vai para pagar dívidas que ele não contraiu. Com o pouco que sobra, precisa comprar seus remédios e, por isso, quase não consegue se alimentar bem. Muitas vezes sente fraqueza e passa fome, porque a prioridade é não deixar de tomar a medicação.",
+      "O Sr. Antônio é aposentado e sempre ajudou com as contas de casa. Um dia, descobriu que vários empréstimos haviam sido feitos em seu nome. Para sua tristeza, percebeu que quem havia realizado esses empréstimos era um de seus filhos, que só aparece de vez em quando e nunca para ajudá-lo de verdade. Quando tentou reclamar, ouviu uma justificativa fria: “Você não usa mesmo esse dinheiro”. Desde então, a vida do Sr. Antônio ficou muito difícil. Quase toda a sua aposentadoria vai para pagar dívidas que ele não contraiu. Com o pouco que sobra, precisa comprar seus remédios e, por isso, quase não consegue se alimentar bem. Muitas vezes sente fraqueza e passa fome, porque a prioridade é não deixar de tomar a medicação.",
     questionText:
       "O que podemos identificar na situação vivida por Sr. Antônio e qual deve ser a conduta correta nesse tipo de caso?",
     answerOptions: [
