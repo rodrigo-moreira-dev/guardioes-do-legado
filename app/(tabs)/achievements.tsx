@@ -9,10 +9,10 @@ import {
   Image,
   Modal,
   Platform,
-  Share,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import Share from "react-native-share";
 
 // Tipos para as conquistas
 interface Achievement {
@@ -223,7 +223,6 @@ export default function TabFourScreen() {
     if (!selectedAchievement) return;
 
     try {
-      // Verifica se está no web
       if (Platform.OS === "web") {
         Alert.alert(
           "Aviso",
@@ -232,72 +231,43 @@ export default function TabFourScreen() {
         return;
       }
 
-      // Obtém a URI do asset
       const imageSource = selectedAchievement.image;
       const resolvedAsset = Image.resolveAssetSource(imageSource);
 
-      if (!resolvedAsset || !resolvedAsset.uri) {
-        throw new Error("Não foi possível carregar a imagem");
+      if (!resolvedAsset?.uri) {
+        throw new Error("Não foi possível carregar a imagem da conquista.");
       }
 
-      // Define o caminho no cache do FileSystem
-      const fileUri = `${FileSystem.cacheDirectory}conquista_${selectedAchievement.id}.png`;
+      // Caminho no cache
+      const fileName = `conquista_${selectedAchievement.id}.png`;
+      const fileUri = `${FileSystem.cacheDirectory}${fileName}`;
 
-      // Baixa a imagem para o cache usando FileSystem
-      const downloadResult = await FileSystem.downloadAsync(
-        resolvedAsset.uri,
-        fileUri
-      );
+      // Baixa a imagem para o cache
+      await FileSystem.downloadAsync(resolvedAsset.uri, fileUri);
 
-      if (downloadResult.status !== 200) {
-        throw new Error("Erro ao baixar a imagem");
-      }
-
-      // Verifica se o arquivo existe
       const fileInfo = await FileSystem.getInfoAsync(fileUri);
       if (!fileInfo.exists) {
-        throw new Error("Arquivo não foi criado corretamente");
+        throw new Error("Falha ao salvar a imagem no cache.");
       }
 
-      // Compartilha usando react-native-share
+      // Prepara o objeto para o react-native-share
       const shareOptions = {
-        title: `Conquista: ${selectedAchievement.title}`,
-        message: `Conquistei "${selectedAchievement.title}" no app! 🎉\n\n${selectedAchievement.description}`,
-        url: `file://${fileUri}`, // Usa file:// para acessar o arquivo local
-        type: "image/png",
+        title: selectedAchievement.title,
+        message: `Conquista desbloqueada: ${selectedAchievement.title}! 🎉`,
+        url: fileUri, // react-native-share aceita file:// diretamente
         failOnCancel: false,
       };
 
+      // Compartilha
       await Share.open(shareOptions);
 
-      // Registra o compartilhamento (para a conquista da comunidade)
-      if (selectedAchievement.id === "6") {
-        await registerAppShared();
-        await loadAchievements(); // Recarrega as conquistas para atualizar o estado
-      }
-
-      // Limpa o arquivo temporário após o compartilhamento
-      try {
-        await FileSystem.deleteAsync(fileUri);
-      } catch (deleteError) {
-        console.warn(
-          "Não foi possível deletar o arquivo temporário:",
-          deleteError
-        );
-      }
+      // Registra o compartilhamento
+      await registerAppShared();
+      await loadAchievements();
 
       closeModal();
-    } catch (error: any) {
-      console.error("Erro ao compartilhar:", error);
-
-      // Se for cancelamento pelo usuário, não mostra erro
-      if (
-        error.message?.includes("cancel") ||
-        error.error?.includes("cancel")
-      ) {
-        return;
-      }
-
+    } catch (error) {
+      console.error("Erro ao compartilhar conquista:", error);
       Alert.alert(
         "Erro ao compartilhar",
         "Não foi possível compartilhar a conquista. Tente novamente."
