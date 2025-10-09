@@ -2,6 +2,7 @@ import { Text, View } from "@/components/Themed";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -12,7 +13,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import Share from "react-native-share";
 
 // Tipos para as conquistas
 interface Achievement {
@@ -49,7 +49,7 @@ export default function TabFourScreen() {
   const checkAllMandatoryAchievements = (
     achievements: Achievement[]
   ): boolean => {
-    const mandatoryIds = ["1", "2", "3", "4", "5", "6"]; // IDs das conquistas obrigatórias
+    const mandatoryIds = ["1", "2", "3", "4", "5", "6"];
     const mandatoryAchievements = achievements.filter((achievement) =>
       mandatoryIds.includes(achievement.id)
     );
@@ -58,7 +58,6 @@ export default function TabFourScreen() {
 
   const loadAchievements = async () => {
     try {
-      // Carrega os dados do localStorage
       const [storiesData, challengesData, missionsData, libraryData] =
         await Promise.all([
           AsyncStorage.getItem("@stories_state"),
@@ -67,7 +66,6 @@ export default function TabFourScreen() {
           AsyncStorage.getItem("@library"),
         ]);
 
-      // Parse dos dados
       const stories = storiesData ? JSON.parse(storiesData) : [];
       const challenges = challengesData ? JSON.parse(challengesData) : [];
       const missions = missionsData ? JSON.parse(missionsData) : [];
@@ -75,7 +73,6 @@ export default function TabFourScreen() {
         ? JSON.parse(libraryData)
         : { openedPdfs: [] };
 
-      // Cria as conquistas base sem o Guardião do Legado
       const baseAchievements: Achievement[] = [
         {
           id: "1",
@@ -126,14 +123,13 @@ export default function TabFourScreen() {
           id: "6",
           title: "Guardião da Comunidade",
           description:
-            "Conquistado ao compartilhar o app nas redes sociais, ajudando a espalhar a mensagem de combate ao etarismo.",
+            "Conquistado ao salvar uma conquista: compartilhe nas redes sociais, ajude a espalhar a mensagem de combate ao etarismo.",
           completed: await checkAppShared(),
           icon: "📣",
           image: achievementImages["6"],
         },
       ];
 
-      // Agora adiciona o Guardião do Legado baseado nas conquistas base
       const allAchievements: Achievement[] = [
         ...baseAchievements,
         {
@@ -153,32 +149,26 @@ export default function TabFourScreen() {
     }
   };
 
-  // Verifica se todas as histórias foram completadas
   const checkAllStoriesCompleted = (stories: any[]): boolean => {
     if (!stories || stories.length === 0) return false;
     return stories.every((story: any) => story.completed === true);
   };
 
-  // Verifica se todos os desafios foram completados
   const checkAllChallengesCompleted = (challenges: any[]): boolean => {
     if (!challenges || challenges.length === 0) return false;
     return challenges.every((challenge: any) => challenge.completed === true);
   };
 
-  // Verifica se todas as missões foram completadas
   const checkAllMissionsCompleted = (missions: any[]): boolean => {
     if (!missions || missions.length === 0) return false;
     return missions.every((mission: any) => mission.completed === true);
   };
 
-  // Verifica se todos os documentos da biblioteca foram acessados
   const checkAllLibraryDocumentsOpened = (library: any): boolean => {
     if (!library || !library.openedPdfs) return false;
-    // Considerando que temos 6 PDFs no total (IDs de 1 a 6)
     return library.openedPdfs.length >= 6;
   };
 
-  // Verifica se o SOS foi acessado
   const checkSOSAccessed = async (): Promise<boolean> => {
     try {
       const sosAccessed = await AsyncStorage.getItem("@sos_accessed");
@@ -189,7 +179,6 @@ export default function TabFourScreen() {
     }
   };
 
-  // Verifica se o app foi compartilhado
   const checkAppShared = async (): Promise<boolean> => {
     try {
       const appShared = await AsyncStorage.getItem("@app_shared");
@@ -200,7 +189,6 @@ export default function TabFourScreen() {
     }
   };
 
-  // Função para registrar que o usuário compartilhou uma conquista
   const registerAppShared = async () => {
     try {
       await AsyncStorage.setItem("@app_shared", "true");
@@ -219,15 +207,14 @@ export default function TabFourScreen() {
     setSelectedAchievement(null);
   };
 
-  const shareAchievement = async () => {
+  const saveAchievementImage = async () => {
     if (!selectedAchievement) return;
+
+    registerAppShared();
 
     try {
       if (Platform.OS === "web") {
-        Alert.alert(
-          "Aviso",
-          "O compartilhamento está disponível apenas no aplicativo mobile."
-        );
+        Alert.alert("Aviso", "Salvar imagem não é suportado no navegador.");
         return;
       }
 
@@ -238,11 +225,9 @@ export default function TabFourScreen() {
         throw new Error("Não foi possível carregar a imagem da conquista.");
       }
 
-      // Caminho no cache
       const fileName = `conquista_${selectedAchievement.id}.png`;
       const fileUri = `${FileSystem.cacheDirectory}${fileName}`;
 
-      // Baixa a imagem para o cache
       await FileSystem.downloadAsync(resolvedAsset.uri, fileUri);
 
       const fileInfo = await FileSystem.getInfoAsync(fileUri);
@@ -250,32 +235,31 @@ export default function TabFourScreen() {
         throw new Error("Falha ao salvar a imagem no cache.");
       }
 
-      // Prepara o objeto para o react-native-share
-      const shareOptions = {
-        title: selectedAchievement.title,
-        message: `Conquista desbloqueada: ${selectedAchievement.title}! 🎉`,
-        url: fileUri, // react-native-share aceita file:// diretamente
-        failOnCancel: false,
-      };
+      // Solicita permissão e salva na galeria
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        // Se negado, oferece salvar no cache (usuário pode acessar via gerenciador de arquivos)
+        Alert.alert(
+          "Permissão negada",
+          "A imagem foi salva no cache do app. Você pode acessá-la via gerenciador de arquivos.",
+          [{ text: "OK" }]
+        );
+        return;
+      }
 
-      // Compartilha
-      await Share.open(shareOptions);
+      const asset = await MediaLibrary.createAssetAsync(fileUri);
+      await MediaLibrary.createAlbumAsync("Guardiões do Legado", asset, false);
 
-      // Registra o compartilhamento
-      await registerAppShared();
-      await loadAchievements();
-
-      closeModal();
+      Alert.alert("Sucesso", "Imagem salva na galeria!");
     } catch (error) {
-      console.error("Erro ao compartilhar conquista:", error);
+      console.error("Erro ao salvar conquista:", error);
       Alert.alert(
-        "Erro ao compartilhar",
-        "Não foi possível compartilhar a conquista. Tente novamente."
+        "Erro ao salvar",
+        "Não foi possível salvar a imagem. Tente novamente."
       );
     }
   };
 
-  // Componente para cada item da lista de conquistas
   const AchievementItem = ({ achievement }: { achievement: Achievement }) => (
     <TouchableOpacity
       onPress={() => handleAchievementPress(achievement)}
@@ -288,7 +272,6 @@ export default function TabFourScreen() {
           achievement.completed ? styles.completedCard : styles.incompleteCard,
         ]}
       >
-        {/* Emblema com destaque - tamanho dobrado */}
         <View style={styles.emblemaContainer}>
           <Image
             source={achievement.image}
@@ -344,7 +327,6 @@ export default function TabFourScreen() {
         Complete atividades para desbloqueá-las
       </Text>
 
-      {/* Barra de progresso */}
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
           Progresso:{" "}
@@ -386,7 +368,6 @@ export default function TabFourScreen() {
         />
       )}
 
-      {/* Modal de compartilhamento */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -397,7 +378,6 @@ export default function TabFourScreen() {
           <View style={styles.modalContent}>
             {selectedAchievement && (
               <>
-                {/* Emblema em destaque no modal */}
                 <View style={styles.modalEmblemaContainer}>
                   <Image
                     source={selectedAchievement.image}
@@ -419,25 +399,23 @@ export default function TabFourScreen() {
                 </Text>
 
                 {selectedAchievement.completed ? (
-                  <>
-                    <Text style={styles.modalSuccessText}>
-                      🎉 Parabéns! Você desbloqueou esta conquista!
-                    </Text>
-
-                    <TouchableOpacity
-                      style={styles.shareButton}
-                      onPress={shareAchievement}
-                    >
-                      <FontAwesome5 name="share-alt" size={20} color="white" />
-                      <Text style={styles.shareButtonText}>
-                        Compartilhar Conquista
-                      </Text>
-                    </TouchableOpacity>
-                  </>
+                  <Text style={styles.modalSuccessText}>
+                    🎉 Parabéns! Você desbloqueou esta conquista!
+                  </Text>
                 ) : (
                   <Text style={styles.modalLockedText}>
-                    🔒 Complete esta conquista para compartilhá-las!
+                    🔒 Complete esta conquista para salvá-la!
                   </Text>
+                )}
+
+                {selectedAchievement.completed && (
+                  <TouchableOpacity
+                    style={styles.saveButton}
+                    onPress={saveAchievementImage}
+                  >
+                    <FontAwesome5 name="download" size={20} color="white" />
+                    <Text style={styles.saveButtonText}>Salvar conquista</Text>
+                  </TouchableOpacity>
                 )}
 
                 <TouchableOpacity
@@ -460,13 +438,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#f1f1f1ff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 8,
-    color: "#6500F5ff",
   },
   subtitle: {
     fontSize: 16,
@@ -514,40 +485,35 @@ const styles = StyleSheet.create({
   },
   achievementItem: {
     flexDirection: "row",
-    padding: 12, // Reduzido de 16
-    marginVertical: 6, // Reduzido de 8
-    borderRadius: 12, // Reduzido de 16
-    alignItems: "flex-start", // Mudado de "center" para evitar esticamento vertical
+    padding: 12,
+    marginVertical: 6,
+    borderRadius: 12,
+    alignItems: "flex-start",
     borderWidth: 1,
-    borderBottomWidth: 4, // Reduzido de 6
-    borderRightWidth: 2, // Reduzido de 3
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 }, // Reduzido de 4
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 6, // Reduzido de 8
-    elevation: 3, // Reduzido de 5
-    minHeight: 0, // Remove altura mínima padrão
-    flexShrink: 1, // Permite encolher
-    flexGrow: 0, // Não expande além do necessário
+    shadowRadius: 6,
+    elevation: 3,
+    minHeight: 0,
+    flexShrink: 1,
+    flexGrow: 0,
   },
-
   emblemaContainer: {
     backgroundColor: "transparent",
-    alignContent: "center",
     alignItems: "center",
-    marginRight: 12, // Reduzido de 16
+    marginRight: 12,
     flexShrink: 0,
-    maxWidth: 80, // Reduzido de 120
-    width: 80, // Largura fixa para controle melhor
+    maxWidth: 80,
+    width: 80,
   },
-
   achievementImage: {
     alignSelf: "center",
     width: "100%",
     aspectRatio: 1,
-    borderRadius: 8, // Reduzido de 12
-    maxHeight: 80, // Reduzido de 120
-    // Adiciona limites explícitos
+    borderRadius: 8,
     height: 80,
   },
   completedBadge: {
@@ -589,7 +555,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#543C75",
     borderRadius: 8,
     overflow: "hidden",
-    // Efeito 3D para a barra de progresso
     borderWidth: 1,
     borderColor: "#A6F500",
   },
@@ -613,22 +578,16 @@ const styles = StyleSheet.create({
   textContainer: {
     flexShrink: 1,
     backgroundColor: "transparent",
-    minWidth: 0,
-    // Remove qualquer padding/margin interno
     padding: 0,
     margin: 0,
-    // Permite que o texto ocupe apenas o espaço necessário
     justifyContent: "flex-start",
   },
-
   achievementTitle: {
-    fontSize: 16, // Reduzido de 18
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 4, // Reduzido de 6
-    // Garante que o texto não expanda desnecessariamente
+    marginBottom: 4,
     flexShrink: 1,
   },
-
   incompleteText: {
     color: "white",
   },
@@ -636,10 +595,9 @@ const styles = StyleSheet.create({
     color: "#2d3748",
   },
   achievementDescription: {
-    fontSize: 13, // Reduzido de 14
-    marginBottom: 6, // Reduzido de 8
-    lineHeight: 16, // Reduzido de 18
-    // Limita o número de linhas se necessário
+    fontSize: 13,
+    marginBottom: 6,
+    lineHeight: 16,
     flexShrink: 1,
   },
   incompleteDescription: {
@@ -692,8 +650,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalImage: {
-    width: 150, // Tamanho aumentado no modal
-    height: 150, // Tamanho aumentado no modal
+    width: 150,
+    height: 150,
     borderRadius: 16,
   },
   modalCompletedBadge: {
@@ -742,39 +700,30 @@ const styles = StyleSheet.create({
     color: "#666",
     fontWeight: "600",
   },
-  shareButton: {
-    backgroundColor: "#6500F5",
+  saveButton: {
+    backgroundColor: "#007AFF",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    padding: 8,
+    padding: 12,
     borderRadius: 12,
-    marginBottom: 8,
+    marginBottom: 16,
     width: "100%",
     borderWidth: 1,
-    borderColor: "#4a0a8a",
+    borderColor: "#0066CC",
     borderBottomWidth: 4,
     borderRightWidth: 2,
-    borderTopColor: "#8B5FDC",
-    borderLeftColor: "#8B5FDC",
   },
-  shareButtonText: {
+  saveButtonText: {
     color: "white",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
     marginLeft: 10,
   },
-  shareHint: {
-    fontSize: 12,
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 16,
-    fontStyle: "italic",
-  },
   closeModalButton: {
     backgroundColor: "#E1306C",
-    padding: 8,
-    borderRadius: 8,
+    padding: 12,
+    borderRadius: 12,
     width: "100%",
     alignItems: "center",
     borderWidth: 1,
@@ -786,7 +735,7 @@ const styles = StyleSheet.create({
   },
   closeModalButtonText: {
     color: "white",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });
