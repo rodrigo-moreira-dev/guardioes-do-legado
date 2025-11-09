@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.guardiesdolegado"
+    namespace 'com.rrmdev.guardioesdolegado'
     defaultConfig {
-        applicationId 'com.rrmdev.myapp'
+        applicationId 'com.rrmdev.guardioesdolegado'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

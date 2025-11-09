@@ -30,7 +30,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.rrmdev.myapp"
+      "package": "com.rrmdev.guardioesdolegado"
     },
     "web": {
       "bundler": "metro",
