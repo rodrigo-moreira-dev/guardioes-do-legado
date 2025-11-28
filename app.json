@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rrmdev.guardioesdolegado",
+      "bundleIdentifier": "com.rrmdev.guardioeslegado",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "O aplicativo precisa de acesso.",
